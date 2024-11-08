@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    # Oracle
+    # url: jdbc:oracle:thin:@localhost:1521:XE
+    # username: c##java
+    # password: 1234
+    # driver-class-name: oracle.jdbc.driver.OracleDriver
+
+    # MySQL
+    # url: jdbc:mysql://localhost:3306/mydb?serverTimezone=Asia/Seoul
+    # username: root
+    # password: 51255125
+    # driver-class-name: com.mysql.cj.jdbc.Driver
+
+    # MySQL - NAVER Cloud
+    url: jdbc:mysql://db-pf2bl-kr.vpc-pub-cdb.ntruss.com:3306/studydb?serverTimezone=Asia/Seoul
+    username: study
+    password: bitcamp123!@#
+    driver-class-name: com.mysql.cj.jdbc.Driver
