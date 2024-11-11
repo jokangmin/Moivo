@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'; // Link 가져오기
 import styles from '../css/Main_index.module.css';
 import video from '../image/main_banner1.mp4';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 const Main_index = () => {
-
-     const [menuOpen, setMenuOpen] = useState(false); // 메뉴 상태 관리
-     const toggleMenu = () => {
-          setMenuOpen(!menuOpen); // 메뉴 상태 토글
-      };
+    const [menuOpen, setMenuOpen] = useState(false); // 메뉴 상태 관리
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen); // 메뉴 상태 토글
+    };
 
     useEffect(() => {
         // AOS 초기화
@@ -29,18 +29,22 @@ const Main_index = () => {
                     <source src={video} type="video/mp4" />
                 </video>
                 {/* 메뉴바 */}
-                <div className={styles.menuBar} onClick={toggleMenu}>
+                <div
+                    className={`${styles.menuBar} ${menuOpen ? styles.menuOpen : ''}`}
+                    onClick={toggleMenu}
+                >
                     <div className={styles.menuBarLine}></div>
                     <div className={styles.menuBarLine}></div>
                     <div className={styles.menuBarLine}></div>
                 </div>
+
                 {/* 토글 메뉴 */}
                 <div className={`${styles.menu} ${menuOpen ? styles.menuOpen : ''}`}>
                     <ul className={styles.menuList}>
-                        <li><a href="#">About us</a></li>
-                        <li><a href="#">Help & Support</a></li>
-                        <li><a href="#">Career</a></li>
-                        <li><a href="#">Refund Policy</a></li>
+                        <li><Link to="/login">Login</Link></li>
+                        <li><Link to="/store">STORE</Link></li>
+                        <li><a href="#">토글메뉴 3번</a></li>
+                        <li><a href="#">토글메뉴 4번</a></li>
                     </ul>
                 </div>
             </div>
@@ -107,7 +111,6 @@ const Main_index = () => {
                 ></div>
             </div>
 
-
             {/* Footer */}
             <footer id="main-footer" className={styles.mainFooter}>
                 <div className="container">
@@ -148,7 +151,6 @@ const Main_index = () => {
                 </div>
             </footer>
         </div>
-        
     );
 };
 
