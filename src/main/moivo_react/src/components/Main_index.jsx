@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'; // Link 가져오기
 import styles from '../css/Main_index.module.css';
 import video from '../image/main_banner1.mp4';
+import { Link } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import store from './Store/Store_board';
-
+import { useRef } from 'react';
 
 const Main_index = () => {
-    const [menuOpen, setMenuOpen] = useState(false); // 메뉴 상태 관리
-    const toggleMenu = () => {
-        setMenuOpen(!menuOpen); // 메뉴 상태 토글
-    };
+
+     const [menuOpen, setMenuOpen] = useState(false); // 메뉴 상태 관리
+     const toggleMenu = () => {
+          setMenuOpen(!menuOpen); // 메뉴 상태 토글
+      };
 
     useEffect(() => {
         // AOS 초기화
@@ -21,6 +21,41 @@ const Main_index = () => {
             offset: 0,        // 애니메이션 트리거 위치
         });
         AOS.refresh();
+    }, []);
+
+    const parentDivRef = useRef(null);
+    const childDivRef = useRef(null);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const parentDiv = parentDivRef.current;
+            const viewportHeight = window.innerHeight;
+            const fromViewportToParentHeight = parentDiv.getBoundingClientRect().top;
+            const scrollPassedAmount = viewportHeight - fromViewportToParentHeight;
+
+            // Determine div height
+            let divHeight = parentDiv.clientHeight > viewportHeight ? viewportHeight : parentDiv.clientHeight;
+            let scrollRate = (scrollPassedAmount / divHeight) * 100;
+
+            // Clamp scrollRate to [0, 100] range
+            if (scrollRate < 0) {
+                scrollRate = 0;
+            } else if (scrollRate > 100) {
+                scrollRate = 100;
+            }
+
+            // Apply style
+            const childDiv = childDivRef.current;
+            childDiv.style.transform = `scale(${scrollRate / 100})`;
+        };
+
+        // Attach scroll event listener
+        window.addEventListener('scroll', handleScroll);
+
+        // Clean up event listener on component unmount
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
     }, []);
 
     return (
@@ -113,6 +148,24 @@ const Main_index = () => {
                 ></div>
             </div>
 
+            {/* main_part3 */}
+            <div ref={parentDivRef} className={styles.stickyContainer3}>
+                <div ref={childDivRef} className={styles.child_div2}>
+                    <div 
+                        className={styles.textSection3} 
+                        data-aos="fade-up" 
+                        data-aos-offset="100%"  
+                        data-aos-delay="1200"   
+                    ><h1 className={styles.title3}>Today’s weather, my mood</h1>
+                    <p className={styles.text3}>
+                        기온에 따라 변하는 나만의 룩, 
+                        오늘의 무드에 맞는 스타일을 찾아보세요.
+                    </p>
+                    </div>
+                </div>
+            </div>
+
+
             {/* Footer */}
             <footer id="main-footer" className={styles.mainFooter}>
                 <div className="container">
@@ -153,6 +206,7 @@ const Main_index = () => {
                 </div>
             </footer>
         </div>
+        
     );
 };
 
