@@ -4,6 +4,8 @@ import styles from '../css/Main_index.module.css';
 import video from '../image/main_banner1.mp4';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import store from './Store/Store_board';
+
 
 const Main_index = () => {
     const [menuOpen, setMenuOpen] = useState(false); // 메뉴 상태 관리
