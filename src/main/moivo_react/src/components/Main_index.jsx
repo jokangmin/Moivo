@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import styles from '../css/Main_index.module.css';
-import video from '../image/main_banner1.mp4';
+import styles from '../assets/css/Main_index.module.css';
+import video from '../assets/image/main_banner1.mp4';
 import { Link } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';

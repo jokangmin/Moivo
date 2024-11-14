@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Main_index from './components/Main_index';
-import StoreBoard from './components/Store/Store_board'; 
-import StoreList from './components/Store/Store_list';
+import Main_index from './components/main_index';
+import StoreBoard from './containers/Store/Store_board'; 
+import StoreList from './containers/Store/Store_list';
 import MainProvider from './contexts/MainContext';
+
 
 const App = () => {
   return (
