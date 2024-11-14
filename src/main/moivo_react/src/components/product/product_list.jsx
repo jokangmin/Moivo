@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import styles from '../../css/Store_list.module.css';
+import styles from "../../assets/css/product_list.module.css";
 
-const StoreList = () => {
+
+
+const ProductList = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -11,6 +13,12 @@ const StoreList = () => {
       { id: 1, title: '상품명 1', description: '상품 설명 1', image: 'https://via.placeholder.com/300' },
       { id: 2, title: '상품명 2', description: '상품 설명 2', image: 'https://via.placeholder.com/300' },
       { id: 3, title: '상품명 3', description: '상품 설명 3', image: 'https://via.placeholder.com/300' },
+      { id: 3, title: '상품명 4', description: '상품 설명 4', image: 'https://via.placeholder.com/300' },
+      { id: 3, title: '상품명 5', description: '상품 설명 5', image: 'https://via.placeholder.com/300' },
+      { id: 3, title: '상품명 6', description: '상품 설명 6', image: 'https://via.placeholder.com/300' },
+      { id: 3, title: '상품명 7', description: '상품 설명 7', image: 'https://via.placeholder.com/300' },
+      { id: 3, title: '상품명 8', description: '상품 설명 8', image: 'https://via.placeholder.com/300' },
+      { id: 3, title: '상품명 9', description: '상품 설명 9', image: 'https://via.placeholder.com/300' }
     ]);
   }, []);
 
@@ -30,4 +38,4 @@ const StoreList = () => {
   );
 };
 
-export default StoreList;
+export default ProductList;

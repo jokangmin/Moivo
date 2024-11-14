@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import styles from '../css/Main_index.module.css';
-import video from '../image/main_banner1.mp4';
+import styles from '../assets/css/Main_index.module.css';
+import video from '../assets/image/main_banner1.mp4';
 import { Link } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -79,7 +79,7 @@ const Main_index = () => {
                 <div className={`${styles.menu} ${menuOpen ? styles.menuOpen : ''}`}>
                     <ul className={styles.menuList}>
                         <li><Link to="/login">Login</Link></li>
-                        <li><Link to="/store">STORE</Link></li>
+                        <li><Link to="/product">STORE</Link></li>
                         <li><a href="#">토글메뉴 3번</a></li>
                         <li><a href="#">토글메뉴 4번</a></li>
                     </ul>

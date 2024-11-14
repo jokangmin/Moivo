@@ -103,20 +103,7 @@
      color: #777;
    }
    
-   /* 푸터 스타일 */
-   .footer {
-     background-color: #333;
-     color: #fff;
-     padding: 20px;
-     text-align: center;
-     margin-top: 40px;
-   }
-   
-   .footerContent p {
-     margin: 5px 0;
-     font-size: 0.9rem;
-   }
-   
+
 
    /* 기존 스타일링에 애니메이션 및 효과 추가 */
 .productItem {
@@ -149,4 +136,58 @@
      font-weight: bold;
      color: #fff;
    }
+
+
+   /* Footer */
+.mainFooter {
+  background: #2F2E2C;
+  font-family: 'Italiana', sans-serif;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  padding: 2rem 0;
+}
+
+.footerGridContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1.5rem;
+}
+
+.footerGridContainer div {
+  padding: 1rem;
+}
+
+.mainFooter .nav-logo {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.mainFooter ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.mainFooter ul li {
+  padding: 0.3rem 0;
+}
+
+.mainFooter ul li a {
+  text-decoration: none;
+  color: #F6F2EE;
+}
+
+.mainFooter input[type="email"] {
+  width: 90%;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.mainFooter .btn {
+  background-color: #333;
+  color: #F6F2EE;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+}
    
