@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-<<<<<<<< HEAD:src/main/moivo_react/src/components/product/product_list.jsx
 import styles from "../../assets/css/product_list.module.css";
-========
-import styles from '../../assets/css/Store_list.module.css';
->>>>>>>> 3d7a206 (디렉토리 추가 및 경로 수정):src/main/moivo_react/src/containers/Store/Store_list.jsx
-
-
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);

@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from "../../assets/css/product_board.module.css";
-
 const ProductBoard = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-
   const products = [
     { id: 1, title: '상품명 1', price: 1000, image: 'https://via.placeholder.com/300?text=Product+1' },
     { id: 2, title: '상품명 2', price: 2000, image: 'https://via.placeholder.com/300?text=Product+2' },
@@ -13,22 +11,18 @@ const ProductBoard = () => {
     { id: 5, title: '상품명 5', price: 5000, image: 'https://via.placeholder.com/300?text=Product+5' },
     { id: 6, title: '상품명 6', price: 6000, image: 'https://via.placeholder.com/300?text=Product+6' },
   ];
-
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % products.length);
     }, 2000);
     return () => clearInterval(interval); // 컴포넌트가 언마운트되면 타이머 제거
   }, [products.length]);
-
   const goToPrevious = () => {
     setActiveIndex((prevIndex) => (prevIndex === 0 ? products.length - 1 : prevIndex - 1));
   };
-
   const goToNext = () => {
     setActiveIndex((prevIndex) => (prevIndex + 1) % products.length);
   };
-
   return (
     <div className={styles.container}>
       {/* 네비게이션 바 */}
@@ -39,7 +33,6 @@ const ProductBoard = () => {
           <li><Link to="/store-list">상품리스트</Link></li>
         </ul>
       </nav>
-
       {/* 상단 배너 섹션 */}
       <section className="container">
         <div className="row" id="slider-text">
@@ -48,7 +41,6 @@ const ProductBoard = () => {
           </div>
         </div>
       </section>
-
       {/* 상품 리스트 섹션 */}
       <div className={`${styles.slider} container-fluid`}>
         <h1 className="text-center">Product Slider</h1>
@@ -82,7 +74,6 @@ const ProductBoard = () => {
           </button>
         </div>
       </div>
-
       {/* 푸터 섹션 */}
       <footer id="main-footer" className={styles.mainFooter}>
         <div className="container">
@@ -125,5 +116,4 @@ const ProductBoard = () => {
     </div>
   );
 };
-
 export default ProductBoard;
