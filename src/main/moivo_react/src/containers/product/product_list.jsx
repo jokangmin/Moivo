@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../../assets/css/Store_list.module.css';
 
-const StoreList = () => {
+const ProductList = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -30,4 +30,4 @@ const StoreList = () => {
   );
 };
 
-export default StoreList;
+export default ProductList;

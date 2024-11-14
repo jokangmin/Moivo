@@ -79,7 +79,7 @@ const Main_index = () => {
                 <div className={`${styles.menu} ${menuOpen ? styles.menuOpen : ''}`}>
                     <ul className={styles.menuList}>
                         <li><Link to="/login">Login</Link></li>
-                        <li><Link to="/store">STORE</Link></li>
+                        <li><Link to="/product">STORE</Link></li>
                         <li><a href="#">토글메뉴 3번</a></li>
                         <li><a href="#">토글메뉴 4번</a></li>
                     </ul>
