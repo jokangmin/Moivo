@@ -73,7 +73,7 @@ const ProductBoard = () => {
       </div>
 
       {/* 슬라이더 섹션 */}
-      <h1 className="text-center">Product Slider</h1>
+      <h1 className="text-center">슬라이더 섹션 자리, 상단에 네비게이션 바 예정</h1>
       <div className="container-fluid">
         <div className={styles.carousel}>
           <div className={styles.carouselInner} style={{ transform: `translateX(-${activeIndex * 100}%)` }}>
