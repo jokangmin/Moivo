@@ -4,15 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.user.service.UserService;
+import com.example.demo.user.service.QuestionsService;
 
 @RestController
-@RequestMapping("/api/user")
-public class UserController {
+@RequestMapping("/api/qna/answer")
+public class AnswerController {
     @Autowired
-    private UserService userService;
-    // 회원가입
-    // 로그인
-    // 소셜 로그인
-
+    private QuestionsService questionsService;
+    // 답변 작성
+    // 답변 수정
 }
