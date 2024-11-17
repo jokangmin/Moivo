@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.user.entity.AttendanceEntity;
 
-@Repository
+// @Repository
 public interface AttendanceRepository extends JpaRepository<AttendanceEntity, Integer> {
 
 }

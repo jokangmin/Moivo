@@ -12,6 +12,6 @@ public class CartServiceImpl implements CartService {
     @Autowired
     private UserRepository userRepository; // 사용자
 
-    @Autowired
+    // @Autowired
     private CartRepository cartRepository; // 장바구니
 }

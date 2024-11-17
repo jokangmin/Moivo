@@ -12,6 +12,6 @@ public class MypageServiceImpl implements MypageService {
     @Autowired
     private UserRepository userRepository; // 사용자
 
-    @Autowired
+    // @Autowired
     private AttendanceRepository attendanceRepository; // 출석
 }

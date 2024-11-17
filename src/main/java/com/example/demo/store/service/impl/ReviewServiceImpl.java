@@ -9,6 +9,6 @@ import com.example.demo.store.service.ReviewService;
 @Service
 public class ReviewServiceImpl implements ReviewService {
 
-    @Autowired
+    // @Autowired
     private ReviewRepository reviewRepository;
 }
