@@ -59,7 +59,7 @@ const Main_index = () => {
     }, []);
 
     return (
-        <div>
+        <div className={styles.maindiv}>
             {/* banner */}
             <div className={styles.videoContainer}>
                 <video className={styles.video} autoPlay muted loop>
@@ -163,6 +163,112 @@ const Main_index = () => {
                     </p>
                     </div>
                 </div>
+            </div>
+
+            {/* main_part4 */}
+            <div class="marquee_conts">
+                <ul>
+                <li class="big">
+                <a href="javascript:">
+                    <img src="./image/book1.jpeg" alt="sample"/>
+                </a>
+                </li>
+                <li class="small">
+                <a href="javascript:">
+                    <img src="./image/book2.jpeg" alt="sample"/>
+                </a>
+                </li>
+                <li class="big">
+                <a href="javascript:">
+                    <img src="./image/book3.jpeg" alt="sample"/>
+                </a>
+                </li>
+                <li class="small">
+                <a href="javascript:">
+                    <img src="./image/book4.jpeg" alt="sample"/>
+                </a>
+                </li>
+                <li class="big">
+                <a href="javascript:">
+                    <img src="./image/book5.jpeg" alt="sample"/>
+                </a>
+                </li>
+                <li class="small">
+                <a href="javascript:">
+                    <img src="./image/book6.jpeg" alt="sample"/>
+                </a>
+                </li>
+                <li class="big">
+                <a href="javascript:">
+                    <img src="./image/book7.jpeg" alt="sample"/>
+                </a>
+                </li>
+                <li class="small">
+                <a href="javascript:">
+                    <img src="./image/book8.jpeg" alt="sample"/>
+                </a>
+                </li>
+                </ul>
+            </div>
+            <div class="marquee_conts2">
+                <ul>
+                <li class="big">
+                <a href="javascript:">
+                    <img src="./image/book9.jpeg" alt="sample"/>
+                </a>
+                </li>
+                <li class="small">
+                <a href="javascript:">
+                    <img src="./image/book10.jpeg" alt="sample"/>
+                </a>
+                </li>
+                <li class="big">
+                <a href="javascript:">
+                    <img src="./image/book11.jpeg" alt="sample"/>
+                </a>
+                </li>
+                <li class="small">
+                <a href="javascript:">
+                    <img src="./image/book12.jpeg" alt="sample"/>
+                </a>
+                </li>
+                <li class="big">
+                <a href="javascript:">
+                    <img src="./image/book13.jpeg" alt="sample"/>
+                </a>
+                </li>
+                <li class="small">
+                <a href="javascript:">
+                    <img src="./image/book14.jpeg" alt="sample"/>
+                </a>
+                </li>
+                <li class="big">
+                <a href="javascript:">
+                    <img src="./image/book15.jpeg" alt="sample"/>
+                </a>
+                </li>
+                <li class="small">
+                <a href="javascript:">
+                    <img src="./image/book16.jpeg" alt="sample"/>
+                </a>
+                </li>
+                </ul>
+            </div>
+
+
+            {/* main_part5 */}
+            <div className={styles.book}>
+                <section className={styles.pageSection}>
+                    <div className={styles.page1}>
+                    <h2>Moivo</h2>
+                    <span>f/w 최대 90% Sale</span>
+                    </div>
+
+                    <div className={styles.page2}>
+                    <h2>Sale Product</h2>
+                    <span>This is second page...</span>
+                    </div>
+                </section>
             </div>
 
 
