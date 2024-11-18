@@ -6,11 +6,37 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useRef } from 'react';
 
+//확인하기 위해 아래 사용 NCP 연동 시 수정 및 삭제
+import image1 from "../assets/image/1_outer.jpg";
+import image2 from "../assets/image/2_outer.jpg";
+import image3 from "../assets/image/4_outer.jpg";
+import image4 from "../assets/image/6_outer.jpg";
+
+
 const Main_index = () => {
+    const [animate, setAnimate] = useState(true);
+
+    //확인하기 위해 아래 사용 NCP 연동 시 수정 및 삭제
+    const slides = [
+        { src: image1 },
+        { src: image2 },
+        { src: image3 },
+        { src: image4 },
+    ];
+
+    const onStop = () => setAnimate(false);
+    const onRun = () => setAnimate(true);
 
      const [menuOpen, setMenuOpen] = useState(false); // 메뉴 상태 관리
+     const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
+
      const toggleMenu = () => {
           setMenuOpen(!menuOpen); // 메뉴 상태 토글
+      };
+
+      const handleLogout = () => {
+        setIsLoggedIn(false); // 로그아웃 처리
+        alert('로그아웃 상태 적용.');
       };
 
     useEffect(() => {
@@ -77,12 +103,31 @@ const Main_index = () => {
 
                 {/* 토글 메뉴 */}
                 <div className={`${styles.menu} ${menuOpen ? styles.menuOpen : ''}`}>
-                    <ul className={styles.menuList}>
-                        <li><Link to="/login">Login</Link></li>
-                        <li><Link to="/product">STORE</Link></li>
-                        <li><a href="#">토글메뉴 3번</a></li>
-                        <li><a href="#">토글메뉴 4번</a></li>
-                    </ul>
+                <ul className={styles.menuList}>
+                    {isLoggedIn ? (
+                    <>
+                        <li>
+                        <Link to="/mypage">MyPage</Link> {/* 로그인 상태: 마이페이지 */}
+                        </li>
+                        <li>
+                        <a href="#" onClick={handleLogout}>Logout</a> {/* 로그아웃 */}
+                        </li>
+                    </>
+                    ) : (
+                    <li>
+                        <Link to="/login">Login</Link> {/* 비로그인 상태: 로그인 */}
+                    </li>
+                    )}
+                    <li>
+                    <Link to="/product">STORE</Link>
+                    </li>
+                    <li>
+                    <a href="#">토글메뉴 3번</a>
+                    </li>
+                    <li>
+                    <a href="#">토글메뉴 4번</a>
+                    </li>
+                </ul>
                 </div>
             </div>
 
@@ -166,94 +211,57 @@ const Main_index = () => {
             </div>
 
             {/* main_part4 */}
-            <div class="marquee_conts">
-                <ul>
-                <li class="big">
-                <a href="javascript:">
-                    <img src="./image/book1.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="small">
-                <a href="javascript:">
-                    <img src="./image/book2.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="big">
-                <a href="javascript:">
-                    <img src="./image/book3.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="small">
-                <a href="javascript:">
-                    <img src="./image/book4.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="big">
-                <a href="javascript:">
-                    <img src="./image/book5.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="small">
-                <a href="javascript:">
-                    <img src="./image/book6.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="big">
-                <a href="javascript:">
-                    <img src="./image/book7.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="small">
-                <a href="javascript:">
-                    <img src="./image/book8.jpeg" alt="sample"/>
-                </a>
-                </li>
+            <div className={styles.slide_container}>
+                <ul
+                    className={styles.slide_wrapper}
+                    onMouseEnter={onStop}
+                    onMouseLeave={onRun}
+                >
+                    {/* Original 슬라이드 */}
+                    <div
+                        className={`${styles.slide} ${styles.original} ${
+                            !animate ? styles.stop : ""
+                        }`}
+                    >
+                        {slides.map((s, i) => (
+                            <Link to="/product">
+                                <li key={i} className={styles.slide_list}>
+                                    
+                                        <img
+                                            src={s.src}
+                                            alt={`Slide ${i + 1}`}
+                                            className={styles.item}
+                                        />
+                                    
+                                </li>
+                            </Link>
+                        ))}
+                    </div>
+                    {/* Clone 슬라이드 */}
+                    <div
+                        className={`${styles.slide} ${styles.clone} ${
+                            !animate ? styles.stop : ""
+                        }`}
+                    >
+                        {slides.map((s, i) => (
+                            <Link to="/product">
+                                <li key={i} className={styles.slide_list}>
+                                        <img
+                                            src={s.src}
+                                            alt={`Slide ${i + 1}`}
+                                            className={styles.item}
+                                        />
+                                </li>
+                            </Link>
+                        ))}
+                    </div>
                 </ul>
+                <div className={styles.main4Title}>
+                    <p>Moivo 만의 감성과 편안함, <br/>
+                        그리고 다양한 스타일을 사용자 맞춤으로 추천합니다.</p>
+                </div>
             </div>
-            <div class="marquee_conts2">
-                <ul>
-                <li class="big">
-                <a href="javascript:">
-                    <img src="./image/book9.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="small">
-                <a href="javascript:">
-                    <img src="./image/book10.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="big">
-                <a href="javascript:">
-                    <img src="./image/book11.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="small">
-                <a href="javascript:">
-                    <img src="./image/book12.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="big">
-                <a href="javascript:">
-                    <img src="./image/book13.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="small">
-                <a href="javascript:">
-                    <img src="./image/book14.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="big">
-                <a href="javascript:">
-                    <img src="./image/book15.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="small">
-                <a href="javascript:">
-                    <img src="./image/book16.jpeg" alt="sample"/>
-                </a>
-                </li>
-                </ul>
-            </div>
+            {/* main_part4 end */}
 
 
             {/* main_part5 */}
@@ -263,11 +271,12 @@ const Main_index = () => {
                     <h2>Moivo</h2>
                     <span>f/w 최대 90% Sale</span>
                     </div>
-
-                    <div className={styles.page2}>
-                    <h2>Sale Product</h2>
-                    <span>This is second page...</span>
-                    </div>
+                    <Link to="/product">
+                        <div className={styles.page2}>
+                        <h2>Sale Product</h2>
+                        <span>This is second page...</span>
+                        </div>
+                    </Link>
                 </section>
             </div>
 

@@ -40,7 +40,7 @@ const Sidebar = () => {
 
       {/* 사이드바 */}
       <div ref={sidebarRef} className={`${styles.sidebar} ${sidebarOpen ? styles.open : ''}`}>
-        <button onClick={closeSidebar} className={styles.closeButton}>×</button>
+        <button onClick={closeSidebar} className={styles.closeButton}> X </button>
         <ul className={styles.sidebarList}>
           <li className={styles.sidebarItem}><Link to="/" className={styles.sidebarAnchor}>Home</Link></li>
           <li className={styles.sidebarItem}><Link to="/product-list" className={styles.sidebarAnchor}>상품리스트</Link></li>

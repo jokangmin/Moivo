@@ -361,7 +361,7 @@
 }
 
 .text3 {
-    margin-top: 21%;
+    margin-top: 27%;
     font-size: 39px;
     line-height: 46px;
     width: 530px;
@@ -375,6 +375,121 @@
 }
 
 /* main3 end */
+
+/* main4 start */
+.slide_list {
+    list-style: none;
+    margin: 0 2px;
+    cursor: pointer;
+    z-index: 2;
+    transition: transform 0.3s;
+    transform: scale(1);
+    position: relative;
+}
+.slide_list:hover {
+    transform: scale(0.98);
+}
+.slide_list:hover::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.slide_container {
+    overflow: hidden;
+    position: relative;
+}
+
+.slide_wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 0;
+    margin: 0;
+}
+
+.item {
+    width: 400px;
+    height: 642px;
+    display: inline-block; 
+    margin: 0 10px;
+}
+
+.slide {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    position: relative;
+    padding: 100px 0;
+    padding-bottom: 50px;
+}
+
+.slide::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.slide.original {
+    animation: infiniteAnimation1 45s linear infinite;
+}
+
+.slide.clone {
+    animation: infiniteAnimation2 45s linear infinite;
+}
+
+.slide.stop {
+    animation-play-state: paused;
+}
+
+.main4Title p{
+    font-size: 20pt;
+    color: #2F2E2C;
+    line-height: 46px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 45px;
+    text-align: center;
+    letter-spacing: 0.05em;
+    margin-bottom: 100px;
+}
+
+@keyframes infiniteAnimation1 {
+    0% {
+        transform: translateX(0%);
+    }
+    50% {
+        transform: translateX(-100%);
+    }
+    50.1% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes infiniteAnimation2 {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-200%);
+    }
+}
+/* main4 end */
+
 
 /* 기온에 따라 변하는 나만의 룩, 오늘의 무드에 맞는 스타일을 찾아보세요. */
 
@@ -517,3 +632,128 @@
     z-index: 0;
 }
 /* main5 book end */
+
+/* 반응형 웹 페이지 */
+@media (max-width: 700px) {
+    .book {
+        width: 100%;
+    }
+
+    .stickyContainer {
+        height: 31vh;
+    }
+
+    .divider {
+        width: 20px;
+        height: 100%;
+        background: #D9D9D9;
+        border: 1px solid #DEDEDE;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    .title{
+        font-size: 10vw;
+        line-height: 65px;
+    }
+
+    .text{
+        font-size: 4.5vw;
+        width: 150%;
+        line-height: 20px;
+    }
+
+    .stickyContainer2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 31vh;
+        background: #F6F2EE;
+        color: #2F2E2C;
+        font-family: 'Italiana', serif;
+        position: relative;
+        flex-direction: row;
+    }
+
+    .divider2 {
+        width: 20px;
+        height: 100%;
+        background: #D9D9D9;
+        border: 1px solid #DEDEDE;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    .title2{
+        font-size: 10vw;
+        line-height: 65px;
+    }
+
+    .text2{
+        font-size: 4.3vw;
+        width: 150%;
+        line-height: 20px;
+    }
+
+    .stickyContainer3{
+        margin-top: 100px;
+        margin-bottom: 100px;
+        width: 100%;
+        height: 560px;
+    }
+    
+    .child_div2{
+        margin: 0% auto;
+        width: 100%;
+        height: 450px;
+        background-image: url('../image/main_image3.jpg');
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+    }
+    
+    .textSection3 {
+        flex: 1;
+        padding: 0 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .title3 {
+        font-size: 95px;
+        line-height: 97px;
+    }
+    
+    .text3 {
+        width: 320px;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 31px;
+        text-align: center;
+        letter-spacing: 0.05em;
+    }
+
+    .item{
+        width: 200px;
+        height: 300px;
+    }
+
+    .slide {
+        padding: 50px 0;
+        padding-bottom: 30px;
+    }
+
+    .main4Title p{
+        font-size: 18pt;
+        line-height: 35px;
+        margin-bottom: 100px;
+    }
+
+    .pageSection {
+        width: 100%;
+        height: 600px;
+        margin-left: 0px;
+        perspective: 1000px;
+    }
+}
