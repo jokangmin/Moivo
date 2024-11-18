@@ -224,15 +224,17 @@ const Main_index = () => {
                         }`}
                     >
                         {slides.map((s, i) => (
-                            <li key={i} className={styles.slide_list}>
-                                <a>
-                                    <img
-                                        src={s.src}
-                                        alt={`Slide ${i + 1}`}
-                                        className={styles.item}
-                                    />
-                                </a>
-                            </li>
+                            <Link to="/product">
+                                <li key={i} className={styles.slide_list}>
+                                    
+                                        <img
+                                            src={s.src}
+                                            alt={`Slide ${i + 1}`}
+                                            className={styles.item}
+                                        />
+                                    
+                                </li>
+                            </Link>
                         ))}
                     </div>
                     {/* Clone 슬라이드 */}
@@ -242,15 +244,15 @@ const Main_index = () => {
                         }`}
                     >
                         {slides.map((s, i) => (
-                            <li key={i} className={styles.slide_list}>
-                                <a>
-                                    <img
-                                        src={s.src}
-                                        alt={`Slide ${i + 1}`}
-                                        className={styles.item}
-                                    />
-                                </a>
-                            </li>
+                            <Link to="/product">
+                                <li key={i} className={styles.slide_list}>
+                                        <img
+                                            src={s.src}
+                                            alt={`Slide ${i + 1}`}
+                                            className={styles.item}
+                                        />
+                                </li>
+                            </Link>
                         ))}
                     </div>
                 </ul>
@@ -269,11 +271,12 @@ const Main_index = () => {
                     <h2>Moivo</h2>
                     <span>f/w 최대 90% Sale</span>
                     </div>
-
-                    <div className={styles.page2}>
-                    <h2>Sale Product</h2>
-                    <span>This is second page...</span>
-                    </div>
+                    <Link to="/product">
+                        <div className={styles.page2}>
+                        <h2>Sale Product</h2>
+                        <span>This is second page...</span>
+                        </div>
+                    </Link>
                 </section>
             </div>
 
