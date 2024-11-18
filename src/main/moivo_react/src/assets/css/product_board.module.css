@@ -1,0 +1,130 @@
+/* product_board.module.css */
+
+/* 전체 컨테이너 스타일 */
+.container {
+  width: 100%;
+  max-width: 100vw;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+/* 사이드바 토글 버튼 */
+.navRight {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  z-index: 1100;
+}
+
+.button {
+  cursor: pointer;
+  display: inline-block;
+  z-index: 1100;
+}
+
+.bar {
+  height: 5px;
+  width: 35px;
+  background-color: #353433;
+  margin: 6px auto;
+  transition: all 0.5s ease;
+}
+
+.active .top {
+  transform: translateY(11px) rotate(45deg);
+}
+
+.active .bottom {
+  transform: translateY(-11px) rotate(-45deg);
+}
+
+.active .middle {
+  opacity: 0;
+}
+
+/* 사이드바 */
+.sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: rgb(180, 165, 155);
+  transform: translateX(100%);
+  transition: transform 0.7s ease-in-out;
+  z-index: 1000;
+}
+
+.open {
+  transform: translateX(0);
+}
+
+.sidebarList {
+  list-style: none;
+  padding: 0;
+  margin: 100px 0 0;
+  text-align: center;
+}
+
+.sidebarItem {
+  margin: 20px 0;
+}
+
+.sidebarAnchor {
+  color: #FFF;
+  text-decoration: none;
+  font-size: 1.5em;
+  display: block;
+}
+
+/* 슬라이더 */
+.carousel {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.carouselInner {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carouselItem {
+  min-width: 100%;
+}
+
+.carouselControlPrev,
+.carouselControlNext {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.carouselControlPrev {
+  left: 10px;
+}
+
+.carouselControlNext {
+  right: 10px;
+}
+
+/* 푸터 */
+.mainFooter {
+  background: rgb(170, 166, 162);
+  padding: 2rem 0;
+}
+
+.footerGridContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1.5rem;
+}
+
+.anchorLinks {
+  list-style-type: none;
+}
