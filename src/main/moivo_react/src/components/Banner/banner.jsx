@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styles from '../../assets/css/banner.module.css';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "../../assets/css/banner.module.css";
+import axios from "axios"; // Spring Boot와 통신
 
 const Banner = () => {
   const navigate = useNavigate();
@@ -9,58 +10,79 @@ const Banner = () => {
   const [openMenuIndex, setOpenMenuIndex] = useState(null); // 현재 열린 서브메뉴 인덱스
 
   useEffect(() => {
-    // 세션 값을 가져와 로그인 상태를 설정
-    const sessionValue = sessionStorage.getItem('isLoggedIn');
-    setIsLoggedIn(sessionValue === 'true');
+    // JWT 토큰 확인 및 로그인 상태 설정
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token); // 토큰이 있으면 로그인 상태로 설정
   }, []);
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    sessionStorage.removeItem('isLoggedIn');
-    alert('너는 로그아웃 상태야.');
-    navigate('/');
+  const handleLogout = async () => {
+    try {
+      // Spring Boot 서버로 로그아웃 요청
+      const token = localStorage.getItem("token");
+      if (token) {
+        await axios.post(
+          "/api/logout", // 로그아웃 API 엔드포인트
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // JWT 토큰 추가
+            },
+          }
+        );
+        // 토큰 제거 및 상태 업데이트
+        localStorage.removeItem("token");
+        setIsLoggedIn(false);
+        alert("로그아웃되었습니다.");
+        navigate("/");
+      } else {
+        alert("이미 로그아웃 상태입니다.");
+      }
+    } catch (error) {
+      console.error("로그아웃 실패:", error);
+      alert("로그아웃에 실패했습니다.");
+    }
   };
 
   const navLinks = [
     {
-      title: 'New',
-      submenu: ['Latest Trends', 'Seasonal Picks', 'Editors\' Choice'],
-      navigateTo: '/product',
+      title: "New",
+      submenu: ["Latest Trends", "Seasonal Picks", "Editors' Choice"],
+      navigateTo: "/product",
     },
     {
-      title: 'Best Things',
-      submenu: ['Best Sellers', 'Customer Favorites', 'Highly Rated'],
-      navigateTo: '/product-list'
+      title: "Best Things",
+      submenu: ["Best Sellers", "Customer Favorites", "Highly Rated"],
+      navigateTo: "/product-list",
     },
     {
-      title: 'Shop All',
-      submenu: ['All Products', 'New Arrivals', 'Exclusives'],
-      navigateTo: '/product-list',
+      title: "Shop All",
+      submenu: ["All Products", "New Arrivals", "Exclusives"],
+      navigateTo: "/product-list",
     },
   ];
 
   const utilityLinks = [
     {
-      label: 'Search',
-      href: '/product-search',
-      onClick: () => navigate('/product-search'),
+      label: "Search",
+      href: "/product-search",
+      onClick: () => navigate("/product-search"),
     },
     ...(isLoggedIn
       ? [
-          { label: 'MyPage', href: '/mypage', onClick: () => navigate('/mypage') },
-          { label: 'Logout', href: '#', onClick: handleLogout },
+          { label: "MyPage", href: "/mypage", onClick: () => navigate("/mypage") },
+          { label: "Logout", href: "#", onClick: handleLogout },
         ]
-      : [{ label: 'Login', href: '/login', onClick: () => navigate('/login') }]),
+      : [{ label: "Login", href: "/login", onClick: () => navigate("/login") }]),
     {
-      label: 'WishList',
-      href: '#',
+      label: "WishList",
+      href: "#",
       visible: isLoggedIn,
       onClick: () => setWishListActive(!wishListActive),
     },
     {
-      label: 'FAQ',
-      href: '/faq',
-      onClick: () => navigate('/faq'),
+      label: "FAQ",
+      href: "/faq",
+      onClick: () => navigate("/faq"),
     },
   ];
 
@@ -74,7 +96,7 @@ const Banner = () => {
       <div className={styles.inner}>
         {/* 로고 */}
         <h1 className={styles.logo}>
-          <a className={styles.logoLink} onClick={() => navigate('/')}>
+          <a className={styles.logoLink} onClick={() => navigate("/")}>
             Moivo
           </a>
         </h1>
