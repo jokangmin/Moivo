@@ -115,7 +115,7 @@ const Main_index = () => {
                     </>
                     ) : (
                     <li>
-                        <Link to="/login">Login</Link> {/* 비로그인 상태: 로그인 */}
+                        <Link to="/user">Login</Link> {/* 비로그인 상태: 로그인 */}
                     </li>
                     )}
                     <li>
