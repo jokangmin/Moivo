@@ -7,13 +7,15 @@ const Slider = () => {
   const images = [
     "https://static.zara.net/assets/public/367c/3a7e/8f13446db501/6375e147fa9e/image-landscape-8b3ed02c-d286-4182-afd5-137c7958ad3d-default_0/image-landscape-8b3ed02c-d286-4182-afd5-137c7958ad3d-default_0.jpg?ts=1730907764587&w=1775",
     "https://static.zara.net/assets/public/b567/b1ff/c40a4eafae24/693cc78ba17e/image-landscape-7589e724-ce17-4083-acfe-e1dcf345fdea-default_0/image-landscape-7589e724-ce17-4083-acfe-e1dcf345fdea-default_0.jpg?ts=1731590140965&w=1920",
-    "https://static.zara.net/assets/public/d241/4ae3/4e3145d182c6/942a76f830af/image-landscape-5b432a32-f01f-45d2-9726-5d66ff8aed41-default_0/image-landscape-5b432a32-f01f-45d2-9726-5d66ff8aed41-default_0.jpg?ts=1731516447084&w=1920"
+    "https://static.zara.net/assets/public/d241/4ae3/4e3145d182c6/942a76f830af/image-landscape-5b432a32-f01f-45d2-9726-5d66ff8aed41-default_0/image-landscape-5b432a32-f01f-45d2-9726-5d66ff8aed41-default_0.jpg?ts=1731516447084&w=1920",
+    "https://artifacts.co.kr/artfinger/main/main01.jpg",
+    "https://artifacts.co.kr/artfinger/main/main02.jpg"
   ];
 
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 2000);
+    }, 4590);
     return () => clearInterval(interval);
   }, [images.length]);
 
