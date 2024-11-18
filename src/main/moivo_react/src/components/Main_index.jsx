@@ -9,8 +9,15 @@ import { useRef } from 'react';
 const Main_index = () => {
 
      const [menuOpen, setMenuOpen] = useState(false); // 메뉴 상태 관리
+     const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
+
      const toggleMenu = () => {
           setMenuOpen(!menuOpen); // 메뉴 상태 토글
+      };
+
+      const handleLogout = () => {
+        setIsLoggedIn(false); // 로그아웃 처리
+        alert('로그아웃 상태 적용.');
       };
 
     useEffect(() => {
@@ -77,12 +84,31 @@ const Main_index = () => {
 
                 {/* 토글 메뉴 */}
                 <div className={`${styles.menu} ${menuOpen ? styles.menuOpen : ''}`}>
-                    <ul className={styles.menuList}>
-                        <li><Link to="/login">Login</Link></li>
-                        <li><Link to="/product">STORE</Link></li>
-                        <li><a href="#">토글메뉴 3번</a></li>
-                        <li><a href="#">토글메뉴 4번</a></li>
-                    </ul>
+                <ul className={styles.menuList}>
+                    {isLoggedIn ? (
+                    <>
+                        <li>
+                        <Link to="/mypage">MyPage</Link> {/* 로그인 상태: 마이페이지 */}
+                        </li>
+                        <li>
+                        <a href="#" onClick={handleLogout}>Logout</a> {/* 로그아웃 */}
+                        </li>
+                    </>
+                    ) : (
+                    <li>
+                        <Link to="/login">Login</Link> {/* 비로그인 상태: 로그인 */}
+                    </li>
+                    )}
+                    <li>
+                    <Link to="/product">STORE</Link>
+                    </li>
+                    <li>
+                    <a href="#">토글메뉴 3번</a>
+                    </li>
+                    <li>
+                    <a href="#">토글메뉴 4번</a>
+                    </li>
+                </ul>
                 </div>
             </div>
 

@@ -1,12 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../../assets/css/banner.module.css';
 
 const Banner = () => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
   const [wishListActive, setWishListActive] = useState(false);
   const [openMenu, setOpenMenu] = useState(null); // 드롭다운 상태 관리
+
+  useEffect(() => {
+    // 여기서 세션 값을 가져와 로그인 상태를 설정
+    const sessionValue = sessionStorage.getItem('isLoggedIn'); // 예: 세션에서 로그인 여부 확인
+    setIsLoggedIn(sessionValue === 'true');
+  }, []);
+
+  const handleLogout = () => {
+    setIsLoggedIn(false); // 로그아웃 상태로 변경
+    sessionStorage.removeItem('isLoggedIn'); // 세션 값 제거
+    alert('You have been logged out.');
+    navigate('/'); // 로그아웃 후 메인 페이지로 이동
+  };
 
   const navLinks = [
     {
@@ -25,15 +38,29 @@ const Banner = () => {
   ];
 
   const utilityLinks = [
-    { label: 'Search', href: '#' }, // 예시로 검색 페이지 연결
-    { label: isLoggedIn ? 'Logout' : 'Login', href: '#', onClick: () => setIsLoggedIn(!isLoggedIn) },
+    { 
+      label: 'Search', 
+      href: '/product-search', // 검색 페이지로 연결
+      onClick: () => navigate('/product-search') // Router를 통한 이동
+    },
+    // 로그인 상태에 따라 버튼이 달라짐
+    ...(isLoggedIn
+      ? [
+          { label: 'MyPage', href: '/mypage', onClick: () => navigate('/mypage') },
+          { label: 'Logout', href: '#', onClick: handleLogout },
+        ]
+      : [{ label: 'Login', href: '/login', onClick: () => navigate('/login') }]),
     { 
       label: 'WishList', 
       href: '#', 
       visible: isLoggedIn, 
-      onClick: () => setWishListActive(!wishListActive),
+      onClick: () => setWishListActive(!wishListActive) 
     },
-    { label: 'FAQ', href: '/faq' }, // FAQ 페이지 연결
+    { 
+      label: 'FAQ', 
+      href: '/faq', 
+      onClick: () => navigate('/faq') // FAQ 페이지로 이동
+    },
   ];
 
   const handleToggleMenu = (index) => {
