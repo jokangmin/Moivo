@@ -1,0 +1,128 @@
+/* banner.module.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap');
+
+/* 배너 */
+.banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  height: 100px; /* 높이를 늘려 중단 정렬 */
+  background-color: rgba(255, 255, 255, 0.4); /* 기본 투명 배경 */
+  backdrop-filter: blur(10px);
+  transition: background-color 0.5s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.banner:hover {
+  background-color: rgba(255, 255, 255, 0.9); /* hover 시 배경 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* hover 시 그림자 */
+}
+
+/* 내부 정렬 */
+.inner {
+  width: 90%;
+  max-width: 1280px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+
+/* 로고 */
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1b1a1a;
+  cursor: pointer;
+}
+
+.logoLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 네비게이션 */
+.navList {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navItem {
+  position: relative;
+}
+
+.navLink {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.navItem:hover .navLink {
+  color: #e63946;
+}
+
+/* 드롭다운 메뉴 */
+.subMenu {
+  position: absolute;
+  top: 50px; /* 메뉴가 아래로 표시되도록 조정 */
+  left: 0;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  padding: 10px 15px;
+  z-index: 1001;
+}
+
+.subLink {
+  display: block;
+  padding: 8px 0;
+  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+  color: #555;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.subLink:hover {
+  color: #e63946;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+/* 유틸리티 메뉴 */
+.utility {
+  display: flex;
+  gap: 20px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
+
+.utilityLink {
+text-decoration: none;
+font-size: 16px;
+color: #333;
+cursor: pointer;
+transition: color 0.3s ease;
+}
+
+.utilityLink:hover {
+color: #e63946;
+}
