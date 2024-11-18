@@ -128,7 +128,9 @@ const ProductDetail = () => {
           ⬆️
         </button>
       )}
+      <div>
       <Footer />
+      </div>
     </div>
   );
 };
