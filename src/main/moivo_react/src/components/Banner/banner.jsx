@@ -6,29 +6,31 @@ const Banner = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
   const [wishListActive, setWishListActive] = useState(false);
-  const [openMenu, setOpenMenu] = useState(null); // 드롭다운 상태 관리
+  const [openMenuIndex, setOpenMenuIndex] = useState(null); // 현재 열린 서브메뉴 인덱스
 
   useEffect(() => {
-    // 여기서 세션 값을 가져와 로그인 상태를 설정
-    const sessionValue = sessionStorage.getItem('isLoggedIn'); // 예: 세션에서 로그인 여부 확인
+    // 세션 값을 가져와 로그인 상태를 설정
+    const sessionValue = sessionStorage.getItem('isLoggedIn');
     setIsLoggedIn(sessionValue === 'true');
   }, []);
 
   const handleLogout = () => {
-    setIsLoggedIn(false); // 로그아웃 상태로 변경
-    sessionStorage.removeItem('isLoggedIn'); // 세션 값 제거
-    alert('You have been logged out.');
-    navigate('/'); // 로그아웃 후 메인 페이지로 이동
+    setIsLoggedIn(false);
+    sessionStorage.removeItem('isLoggedIn');
+    alert('너는 로그아웃 상태야.');
+    navigate('/');
   };
 
   const navLinks = [
     {
       title: 'New',
       submenu: ['Latest Trends', 'Seasonal Picks', 'Editors\' Choice'],
+      navigateTo: '/product',
     },
     {
       title: 'Best Things',
       submenu: ['Best Sellers', 'Customer Favorites', 'Highly Rated'],
+      navigateTo: '/product-list'
     },
     {
       title: 'Shop All',
@@ -38,33 +40,33 @@ const Banner = () => {
   ];
 
   const utilityLinks = [
-    { 
-      label: 'Search', 
-      href: '/product-search', // 검색 페이지로 연결
-      onClick: () => navigate('/product-search') // Router를 통한 이동
+    {
+      label: 'Search',
+      href: '/product-search',
+      onClick: () => navigate('/product-search'),
     },
-    // 로그인 상태에 따라 버튼이 달라짐
     ...(isLoggedIn
       ? [
           { label: 'MyPage', href: '/mypage', onClick: () => navigate('/mypage') },
           { label: 'Logout', href: '#', onClick: handleLogout },
         ]
       : [{ label: 'Login', href: '/login', onClick: () => navigate('/login') }]),
-    { 
-      label: 'WishList', 
-      href: '#', 
-      visible: isLoggedIn, 
-      onClick: () => setWishListActive(!wishListActive) 
+    {
+      label: 'WishList',
+      href: '#',
+      visible: isLoggedIn,
+      onClick: () => setWishListActive(!wishListActive),
     },
-    { 
-      label: 'FAQ', 
-      href: '/faq', 
-      onClick: () => navigate('/faq') // FAQ 페이지로 이동
+    {
+      label: 'FAQ',
+      href: '/faq',
+      onClick: () => navigate('/faq'),
     },
   ];
 
   const handleToggleMenu = (index) => {
-    setOpenMenu(openMenu === index ? null : index); // 클릭 시 드롭다운 열기/닫기
+    // 클릭한 메뉴의 인덱스만 열고 나머지는 닫음
+    setOpenMenuIndex(openMenuIndex === index ? null : index);
   };
 
   return (
@@ -84,11 +86,11 @@ const Banner = () => {
               <li key={idx} className={styles.navItem}>
                 <button
                   className={styles.navLink}
-                  onClick={() => handleToggleMenu(idx)}
+                  onClick={() => handleToggleMenu(idx)} // 특정 서브메뉴 열기/닫기
                 >
                   {link.title}
                 </button>
-                {openMenu === idx && (
+                {openMenuIndex === idx && (
                   <div className={styles.subMenu}>
                     {link.submenu.map((item, subIdx) => (
                       <button
@@ -96,7 +98,6 @@ const Banner = () => {
                         className={styles.subLink}
                         onClick={() => {
                           if (link.navigateTo) navigate(link.navigateTo);
-                          setOpenMenu(null); // 서브메뉴 선택 후 닫기
                         }}
                       >
                         {item}
@@ -111,18 +112,19 @@ const Banner = () => {
 
         {/* 유틸리티 메뉴 */}
         <div className={styles.utility}>
-          {utilityLinks.map((link, idx) => (
-            link.visible !== false && ( // 로그인 여부에 따라 WishList 표시
-              <a
-                key={idx}
-                href={link.href}
-                className={styles.utilityLink}
-                onClick={link.onClick}
-              >
-                {link.label}
-              </a>
-            )
-          ))}
+          {utilityLinks.map(
+            (link, idx) =>
+              link.visible !== false && (
+                <a
+                  key={idx}
+                  href={link.href}
+                  className={styles.utilityLink}
+                  onClick={link.onClick}
+                >
+                  {link.label}
+                </a>
+              )
+          )}
         </div>
       </div>
     </header>

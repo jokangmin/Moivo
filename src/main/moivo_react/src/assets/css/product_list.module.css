@@ -1,12 +1,12 @@
 /* product_lsit.module.css */
 
-.container {
+.cntr {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
-.title {
+.ttl {
   text-align: center;
   font-size: 2rem;
   margin-bottom: 30px;
@@ -14,39 +14,43 @@
   color: #333;
 }
 
-.productGrid {
+.grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
 }
 
-/* 상품 카드 */
-.productCard {
+.card {
   position: relative;
   background: #f8f5f1;
   border-radius: 10px;
   overflow: hidden;
-  margin-bottom: 10px;
+  transition: transform 0.3s ease;
 }
 
-.productImageWrapper {
+.card:hover {
+  transform: scale(1.03);
+}
+
+.imgWrap {
   position: relative;
-  height: 640px;
+  width: 100%;
+  height: 400px;
   overflow: hidden;
 }
 
-.productImage {
+.img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
 
-.productImageWrapper:hover .productImage {
-  transform: scale(1.1);
+.imgWrap:hover .img {
+  transform: scale(1.2);
 }
 
-.overlay {
+.ovr {
   position: absolute;
   top: 0;
   left: 0;
@@ -62,29 +66,29 @@
   transition: opacity 0.3s ease;
 }
 
-.productImageWrapper:hover .overlay {
+.imgWrap:hover .ovr {
   opacity: 1;
 }
 
-.overlayTitle {
+.ovrTtl {
   font-size: 1.5rem;
   font-weight: bold;
   color: #333;
   margin-bottom: 10px;
 }
 
-.overlayCategory {
+.ovrCat {
   font-size: 1rem;
   color: #666;
   margin-bottom: 20px;
 }
 
-.overlayLinks {
+.ovrLnk {
   display: flex;
   gap: 15px;
 }
 
-.actionButton {
+.actBtn {
   background: none;
   border: none;
   font-size: 20px;
@@ -93,12 +97,12 @@
   transition: color 0.3s ease;
 }
 
-.actionButton:hover {
+.actBtn:hover {
   color: #e63946;
 }
 
-
-.cart, .wishlist {
+.cart,
+.wish {
   position: fixed;
   top: 50%;
   right: 20px;
@@ -112,14 +116,14 @@
   justify-content: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transform: translateY(-50%);
-  margin-bottom: 70px;
 }
 
-.wishlist {
+.wish {
   margin-top: 70px;
 }
 
-.cart::before, .wishlist::before {
+.cart::before,
+.wish::before {
   content: attr(data-totalitems);
   position: absolute;
   top: -10px;
@@ -132,7 +136,22 @@
   font-weight: bold;
 }
 
-.cart.shake, .wishlist.shake {
+.cart.shake,
+.wish.shake {
   animation: shakeCart 0.4s ease-in-out;
 }
 
+@keyframes shakeCart {
+  0%, 100% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
+  25% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  50% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+  75% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+}

@@ -9,45 +9,56 @@
   left: 0;
   width: 100%;
   z-index: 1000;
-  height: 100px; /* 높이를 늘려 중단 정렬 */
-  background-color: rgba(255, 255, 255, 0.4); /* 기본 투명 배경 */
+  height: 100px;
+  background-color: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(10px);
   transition: background-color 0.5s ease, box-shadow 0.2s ease;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: space-between; /* 좌우 정렬 */
+  align-items: center; /* 중단 정렬 */
+  padding: 0 20px;
 }
 
 .banner:hover {
-  background-color: rgba(255, 255, 255, 0.9); /* hover 시 배경 */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* hover 시 그림자 */
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* 내부 정렬 */
 .inner {
-  width: 90%;
-  max-width: 1280px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  text-align: center;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
 /* 로고 */
 .logo {
-  font-family: 'Playfair Display', serif;
   font-size: 32px;
   font-weight: 700;
-  color: #1b1a1a;
+  font-family: 'Playfair Display', serif;
   cursor: pointer;
+  text-align: left;
 }
 
 .logoLink {
-  text-decoration: none;
-  color: inherit;
+  text-decoration: none; /* 밑줄 제거 */
+  color: #333; /* 기본 텍스트 색상 */
+  transition: color 0.3s ease; /* 부드러운 전환 */
+}
+
+.logoLink:hover {
+  color: #8B7355; /* 다크 크림베이지 색상 */
 }
 
 /* 네비게이션 */
+.nav {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center; /* 네비게이션을 중앙에 배치 */
+}
+
 .navList {
   display: flex;
   gap: 30px;
@@ -61,68 +72,89 @@
 }
 
 .navLink {
-  font-family: 'Roboto', sans-serif;
   font-size: 18px;
   font-weight: 500;
   color: #333;
-  text-decoration: none;
-  transition: color 0.3s ease;
   background: none;
   border: none;
   cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 .navItem:hover .navLink {
-  color: #e63946;
+  color: #8B7355; /* 다크 크림베이지 색상 */
 }
 
 /* 드롭다운 메뉴 */
 .subMenu {
   position: absolute;
-  top: 50px; /* 메뉴가 아래로 표시되도록 조정 */
+  top: 100%;
   left: 0;
-  background: rgba(255, 255, 255, 0.95);
+  width: 200px;
+  background: rgba(245, 245, 245, 0.95); /* 부드러운 베이지 배경 */
   border-radius: 10px;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-  padding: 10px 15px;
+  padding: 10px;
   z-index: 1001;
+  opacity: 0; /* 초기 상태는 투명 */
+  transform: translateY(-10px); /* 살짝 위로 이동 */
+  transition: opacity 0.4s ease, transform 0.4s ease; /* 부드러운 효과 */
+  pointer-events: none; /* 클릭 비활성화 */
+}
+
+.navItem:hover .subMenu {
+  opacity: 1; /* 보이게 변경 */
+  transform: translateY(0); /* 원래 위치로 이동 */
+  pointer-events: auto; /* 클릭 활성화 */
+  animation: slideDown 0.5s ease; /* 애니메이션 추가 */
 }
 
 .subLink {
   display: block;
   padding: 8px 0;
   font-size: 14px;
-  font-family: 'Roboto', sans-serif;
-  color: #555;
+  color: #333; /* 기본 텍스트 색상 */
   text-decoration: none;
   background: none;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: color 0.3s ease, background-color 0.3s ease; /* 부드러운 전환 */
 }
 
 .subLink:hover {
-  color: #e63946;
-  background-color: #f9f9f9;
+  color: #8B7355; /* 다크 크림베이지 */
+  background-color: rgba(0, 0, 0, 0.05); /* 연한 블랙 */
   border-radius: 5px;
+}
+
+/* 애니메이션 추가 */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px); /* 위에서 내려오는 효과 */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* 유틸리티 메뉴 */
 .utility {
   display: flex;
   gap: 20px;
-  font-family: 'Roboto', sans-serif;
   font-size: 16px;
+  justify-content: flex-end; /* 오른쪽 정렬 */
 }
 
 .utilityLink {
-text-decoration: none;
-font-size: 16px;
-color: #333;
-cursor: pointer;
-transition: color 0.3s ease;
+  text-decoration: none; /* 밑줄 제거 */
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 .utilityLink:hover {
-color: #e63946;
+  color: #8B7355; /* 다크 크림베이지 색상 */
 }

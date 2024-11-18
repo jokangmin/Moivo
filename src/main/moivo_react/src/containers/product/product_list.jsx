@@ -1,104 +1,69 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "../../assets/css/product_list.module.css";
 import Banner from "../../components/Banner/banner";
 import Footer from "../../components/Footer/Footer";
+import products from "../../assets/dummydata/productDTO";
 
 const ProductList = () => {
-  const [products, setProducts] = useState([]);
-  const [cartCount, setCartCount] = useState(0);
-  const [wishListCount, setWishListCount] = useState(0);
+  const [cart, setCart] = useState(0);
+  const [wish, setWish] = useState(0);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    setProducts([
-      {
-        id: 1,
-        title: "Denim Jacket",
-        category: "Outerwear",
-        image: "https://i.imgur.com/Hyc4BLG.jpg",
-        badge: "Hot",
-        link: "#",
-      },
-      {
-        id: 2,
-        title: "Classic Shoes",
-        category: "Shoes",
-        image: "https://i.imgur.com/KJvC35p.jpg",
-        badge: "New",
-        link: "#",
-      },
-      {
-        id: 3,
-        title: "Modern Sunglasses",
-        category: "Accessories",
-        image: "https://i.imgur.com/2i0EIjq.jpg",
-        badge: "Limited",
-        link: "#",
-      },
-      {
-        id: 4,
-        title: "Smart Watch",
-        category: "Gadgets",
-        image: "https://i.imgur.com/dxAHOUn.jpg",
-        badge: "Trending",
-        link: "#",
-      },
-      {
-        id: 5,
-        title: "Leather Jacket",
-        category: "Clothing",
-        image: "https://i.imgur.com/NVguAZA.jpg",
-        badge: "Best Seller",
-        link: "#",
-      },
-    ]);
-  }, []);
-
-  const handleAddToCart = () => {
-    setCartCount(cartCount + 1);
-    const cartIcon = document.getElementById("cart");
+  const addToCart = () => {
+    setCart(cart + 1);
+    const cartIcon = document.getElementById("crt");
     cartIcon.classList.add(styles.shake);
-    setTimeout(() => {
-      cartIcon.classList.remove(styles.shake);
-    }, 500);
+    setTimeout(() => cartIcon.classList.remove(styles.shake), 300);
   };
 
-  const handleAddToWishList = () => {
-    setWishListCount(wishListCount + 1);
-    const heartIcon = document.getElementById("wishlist");
+  const addToWish = () => {
+    setWish(wish + 1);
+    const heartIcon = document.getElementById("wsh");
     heartIcon.classList.add(styles.shake);
-    setTimeout(() => {
-      heartIcon.classList.remove(styles.shake);
-    }, 500);
+    setTimeout(() => heartIcon.classList.remove(styles.shake), 300);
+  };
+
+  const goToDetail = (product) => {
+    navigate(`/product-detail/${product.id}`, { state: { product } });
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.cntr}>
       <Banner />
-      <div id="cart" className={styles.cart} data-totalitems={cartCount}>
+      <br />
+      <br />
+      <br />
+      <div id="crt" className={styles.cart} data-totalitems={cart}>
         <i className="fas fa-shopping-cart"></i>
       </div>
-      <div id="wishlist" className={styles.wishlist} data-totalitems={wishListCount}>
+      <div id="wsh" className={styles.wish} data-totalitems={wish}>
         <i className="fas fa-heart"></i>
       </div>
-      <h2 className={styles.title}>Product List</h2>
-      <div className={styles.productGrid}>
-        {products.map((product) => (
-          <div key={product.id} className={styles.productCard}>
-            {product.badge && <div className={styles.badge}>{product.badge}</div>}
-            <div className={styles.productImageWrapper}>
-              <img src={product.image} alt={product.title} className={styles.productImage} />
-              <div className={styles.overlay}>
-                <h3 className={styles.overlayTitle}>{product.title}</h3>
-                <p className={styles.overlayCategory}>{product.category}</p>
-                <div className={styles.overlayLinks}>
-                  <button className={styles.actionButton} onClick={handleAddToWishList}>
-                    <i className="fa fa-heart"></i>
-                  </button>
-                  <button className={styles.actionButton} onClick={handleAddToCart}>
-                    <i className="fa fa-shopping-cart"></i>
-                  </button>
-                </div>
+      <h2 className={styles.ttl}>Product List</h2>
+      <div className={styles.grid}>
+        {products.map((prod) => (
+          <div key={prod.id} className={styles.card}>
+            {prod.badge && <div className={styles.badge}>{prod.badge}</div>}
+            <div className={styles.imgWrap}>
+              <img src={prod.image} alt={prod.title} className={styles.img} />
+              <div className={styles.ovr}>
+                <h3
+                  className={styles.ovrTtl}
+                  onClick={() => goToDetail(prod)}>
+                  {prod.title}
+              </h3> 
+                {/*  상품명 클릭 시 이동 */}
+                <p className={styles.ovrCat}>{prod.category}</p>
               </div>
+            </div>
+            <div className={styles.ovrLnk}>
+              <button className={styles.actBtn} onClick={addToWish}>
+                <i className="fa fa-heart"></i>
+              </button>
+              <button className={styles.actBtn} onClick={addToCart}>
+                <i className="fa fa-shopping-cart"></i>
+              </button>
             </div>
           </div>
         ))}
