@@ -6,7 +6,26 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useRef } from 'react';
 
+//확인하기 위해 아래 사용 NCP 연동 시 수정 및 삭제
+import image1 from "../assets/image/1_outer.jpg";
+import image2 from "../assets/image/2_outer.jpg";
+import image3 from "../assets/image/4_outer.jpg";
+import image4 from "../assets/image/6_outer.jpg";
+
+
 const Main_index = () => {
+    const [animate, setAnimate] = useState(true);
+
+    //확인하기 위해 아래 사용 NCP 연동 시 수정 및 삭제
+    const slides = [
+        { src: image1 },
+        { src: image2 },
+        { src: image3 },
+        { src: image4 },
+    ];
+
+    const onStop = () => setAnimate(false);
+    const onRun = () => setAnimate(true);
 
      const [menuOpen, setMenuOpen] = useState(false); // 메뉴 상태 관리
      const toggleMenu = () => {
@@ -166,94 +185,55 @@ const Main_index = () => {
             </div>
 
             {/* main_part4 */}
-            <div class="marquee_conts">
-                <ul>
-                <li class="big">
-                <a href="javascript:">
-                    <img src="./image/book1.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="small">
-                <a href="javascript:">
-                    <img src="./image/book2.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="big">
-                <a href="javascript:">
-                    <img src="./image/book3.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="small">
-                <a href="javascript:">
-                    <img src="./image/book4.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="big">
-                <a href="javascript:">
-                    <img src="./image/book5.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="small">
-                <a href="javascript:">
-                    <img src="./image/book6.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="big">
-                <a href="javascript:">
-                    <img src="./image/book7.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="small">
-                <a href="javascript:">
-                    <img src="./image/book8.jpeg" alt="sample"/>
-                </a>
-                </li>
+            <div className={styles.slide_container}>
+                <ul
+                    className={styles.slide_wrapper}
+                    onMouseEnter={onStop}
+                    onMouseLeave={onRun}
+                >
+                    {/* Original 슬라이드 */}
+                    <div
+                        className={`${styles.slide} ${styles.original} ${
+                            !animate ? styles.stop : ""
+                        }`}
+                    >
+                        {slides.map((s, i) => (
+                            <li key={i} className={styles.slide_list}>
+                                <a>
+                                    <img
+                                        src={s.src}
+                                        alt={`Slide ${i + 1}`}
+                                        className={styles.item}
+                                    />
+                                </a>
+                            </li>
+                        ))}
+                    </div>
+                    {/* Clone 슬라이드 */}
+                    <div
+                        className={`${styles.slide} ${styles.clone} ${
+                            !animate ? styles.stop : ""
+                        }`}
+                    >
+                        {slides.map((s, i) => (
+                            <li key={i} className={styles.slide_list}>
+                                <a>
+                                    <img
+                                        src={s.src}
+                                        alt={`Slide ${i + 1}`}
+                                        className={styles.item}
+                                    />
+                                </a>
+                            </li>
+                        ))}
+                    </div>
                 </ul>
+                <div className={styles.main4Title}>
+                    <p>Moivo 만의 감성과 편안함, <br/>
+                        그리고 다양한 스타일을 사용자 맞춤으로 추천합니다.</p>
+                </div>
             </div>
-            <div class="marquee_conts2">
-                <ul>
-                <li class="big">
-                <a href="javascript:">
-                    <img src="./image/book9.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="small">
-                <a href="javascript:">
-                    <img src="./image/book10.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="big">
-                <a href="javascript:">
-                    <img src="./image/book11.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="small">
-                <a href="javascript:">
-                    <img src="./image/book12.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="big">
-                <a href="javascript:">
-                    <img src="./image/book13.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="small">
-                <a href="javascript:">
-                    <img src="./image/book14.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="big">
-                <a href="javascript:">
-                    <img src="./image/book15.jpeg" alt="sample"/>
-                </a>
-                </li>
-                <li class="small">
-                <a href="javascript:">
-                    <img src="./image/book16.jpeg" alt="sample"/>
-                </a>
-                </li>
-                </ul>
-            </div>
+            {/* main_part4 end */}
 
 
             {/* main_part5 */}
