@@ -24,7 +24,7 @@ public class UserEntity { // 사용자 & 관리자
     }
 
     public enum Grade {
-        FAMILY, SILVER, GOLD, VIP, VVIP
+        NEWBIE, FAMILY, SILVER, GOLD, VIP
     }
 
     @Id

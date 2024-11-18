@@ -14,7 +14,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "productStock")
+@Table(name = "productstock")
 public class ProductStockEntity {
 
     public enum Size {
@@ -40,7 +40,7 @@ public class ProductStockEntity {
 
     // 사이즈 3개 : 상품 1개
     @ManyToOne
-    @JoinColumn(name = "productSeq", nullable = false)
+    @JoinColumn(name = "productseq", nullable = false)
     private ProductEntity productEntity; // 상품 고유 키 (Product 테이블과 연관)
 
     @Enumerated(EnumType.STRING)

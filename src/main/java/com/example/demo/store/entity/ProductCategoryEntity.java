@@ -15,8 +15,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "category")
-public class CategoryEntity { // 카테고리
+@Table(name = "productcategory")
+public class ProductCategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "categoryseq")
@@ -26,6 +26,6 @@ public class CategoryEntity { // 카테고리
     private String name;
 
     // 카테고리 1개 : 상품 n개
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ProductEntity> products; // 상품 목록
+    @OneToMany(mappedBy = "categoryEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ProductEntity> productList; // 상품 목록
 }

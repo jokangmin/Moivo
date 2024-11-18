@@ -24,12 +24,16 @@ public class ProductImgEntity {
     @JoinColumn(name = "productseq", nullable = false)
     private ProductEntity productEntity; // 상품
 
-    @Column(length = 100, nullable = false)
-    private String productFileName; // 이미지 파일 이름
+    @Column(name = "filename", length = 100, nullable = false)
+    private String fileName; // 이미지 파일 이름
 
-    @Column(length = 100, nullable = false)
-    private String productOriginalFileName; // 원본 이미지 파일 이름
+    @Column(name = "originalfilename", length = 100, nullable = false)
+    private String originalFileName; // 원본 이미지 파일 이름
 
     @Column(nullable = false)
-    private int productLayer; // 이미지 계층
+    private int layer; // 이미지 계층
+    // 1: 메인
+    // 2: 상세 1
+    // 3: 상세 2
+    // 4: 주문 이미지
 }

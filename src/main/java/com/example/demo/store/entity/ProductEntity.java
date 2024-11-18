@@ -14,7 +14,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -43,7 +42,7 @@ public class ProductEntity { // 상품
     // 상품 n개 : 카테고리 1개
     @ManyToOne
     @JoinColumn(name = "categoryseq", nullable = false)
-    private CategoryEntity category;
+    private ProductCategoryEntity categoryEntity;
 
     // 상품 n개 : 장바구니 1개
     @ManyToOne

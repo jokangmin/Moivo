@@ -20,5 +20,5 @@ public class MypageController {
     // 회원정보 수정
     // 회원 탈퇴
     // 출석
-
+    // 찜
 }
