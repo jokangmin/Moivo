@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.user.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/user")
@@ -16,9 +17,9 @@ public class UserController {
     // 로그인
     // 소셜 로그인
 
-    @GetMapping("")
+    @GetMapping("/")
     public String getMethodName() {
-        return "hi hi";
+        return "hi";
     }
 
 }

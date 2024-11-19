@@ -1,0 +1,283 @@
+/* product_board.module.css */
+
+/* 전체 컨테이너 스타일 */
+.container {
+  width: 100%;
+  max-width: 100vw;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+/* FAQ 섹션 */
+.faqSection {
+  margin-top: 50px;
+  padding: 40px;
+  border-radius: 12px;
+  background-color: #fffaf5; 
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* 깊이감 있는 그림자 */
+  font-family: 'Georgia', serif; 
+}
+
+.faqSection h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #5c4328; 
+  margin-bottom: 20px;
+  border-bottom: 3px solid #d97706; /* 하단 강조 라인 */
+  display: inline-block;
+  padding-bottom: 10px;
+}
+
+.faqSection details {
+  margin: 20px 0;
+}
+
+.faqSection summary {
+  font-weight: bold;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #7a563c;
+  transition: color 0.3s ease;
+}
+
+.faqSection summary:hover {
+  color: #d97706; /* 호버 시 오렌지 브라운 */
+}
+
+.faqSection p {
+  margin-left: 25px;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #666; /* 부드러운 회색 */
+}
+
+/* 브랜드 소개 섹션 */
+.brandInfo {
+  margin-top: 50px;
+  padding: 40px;
+  border-radius: 12px;
+  background-color: #f9f9f9; /* 깨끗한 화이트 배경 */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.brandInfo h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #5c4328;
+  margin-bottom: 15px;
+  font-family: 'Georgia', serif;
+}
+
+.brandInfo p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #555;
+}
+
+/* SNS 공유 섹션 */
+.snsShare {
+  margin-top: 50px;
+  text-align: center;
+  background-color: #fffaf5;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.snsShare h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #5c4328;
+  font-family: 'Georgia', serif;
+}
+
+.snsIcons {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.snsIcons a {
+  font-size: 2.5rem; /* 아이콘 크기 증가 */
+  color: #7a563c;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.snsIcons a:hover {
+  color: #d97706; /* 호버 시 포인트 색상 */
+  transform: scale(1.3); /* 호버 시 확대 */
+}
+
+/* 배송 및 환불 정책 섹션 */
+.policySection {
+  margin-top: 50px;
+  padding: 40px;
+  border-radius: 12px;
+  background-color: #fffefb; /* 따뜻한 화이트 배경 */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.policySection h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #5c4328;
+  margin-bottom: 15px;
+  font-family: 'Georgia', serif;
+}
+
+.policySection p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+/* 전체 섹션 여백 및 간격 */
+.faqSection,
+.brandInfo,
+.snsShare,
+.policySection {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .faqSection,
+  .brandInfo,
+  .snsShare,
+  .policySection {
+    padding: 20px;
+  }
+
+  .snsIcons a {
+    font-size: 2rem;
+  }
+}
+
+
+/* 사이드바 토글 버튼 */
+.navRight {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  z-index: 1100;
+}
+
+.button {
+  cursor: pointer;
+  display: inline-block;
+  z-index: 1100;
+}
+
+.bar {
+  height: 5px;
+  width: 35px;
+  background-color: #353433;
+  margin: 6px auto;
+  transition: all 0.5s ease;
+}
+
+.active .top {
+  transform: translateY(11px) rotate(45deg);
+}
+
+.active .bottom {
+  transform: translateY(-11px) rotate(-45deg);
+}
+
+.active .middle {
+  opacity: 0;
+}
+
+/* 사이드바 */
+.sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: rgb(180, 165, 155);
+  transform: translateX(100%);
+  transition: transform 0.7s ease-in-out;
+  z-index: 1000;
+}
+
+.open {
+  transform: translateX(0);
+}
+
+.sidebarList {
+  list-style: none;
+  padding: 0;
+  margin: 100px 0 0;
+  text-align: center;
+}
+
+.sidebarItem {
+  margin: 20px 0;
+}
+
+.sidebarAnchor {
+  color: #FFF;
+  text-decoration: none;
+  font-size: 1.5em;
+  display: block;
+}
+
+/* 슬라이더 */
+.carousel {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.carouselInner {
+  display: flex;
+  transition: transform 1.5s ease-in-out;
+}
+
+.carouselItem {
+  min-width: 100%;
+}
+
+.carouselControlPrev,
+.carouselControlNext {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.carouselControlPrev {
+  left: 10px;
+}
+
+.carouselControlNext {
+  right: 10px;
+}
+
+/* 푸터 */
+.mainFooter {
+  background: rgb(170, 166, 162);
+  padding: 2rem 0;
+}
+
+.footerGridContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1.5rem;
+}
+
+.anchorLinks {
+  list-style-type: none;
+}
+
+
