@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Italiana&display=swap');
+
+.signupContainer {
+  height: calc(100vh);
+  background-color: #F6F2EE;
+  padding: 20px;
+  font-family: "Italiana", sans-serif;
+  font-style: normal;
+}
+
+.pageName {
+  display: flex;
+  justify-content: center;  /* 가로 방향 중앙 정렬 */
+  align-items: center;      /* 세로 방향 중앙 정렬 */
+  font-size: 36px;          /* 글씨 크기 크게 설정 */
+  font-weight: bold;        /* 글씨를 볼드 처리 */
+  color: #333;              /* 글씨 색상 설정 */
+  margin-top: 100px;                /* 부모 요소의 기본 여백 제거 */
+  height: 10%;
+}
+
+.signupline {
+  border: none;
+  border-top: 1px dashed black;
+}
+
+.signupDiv {
+  margin: 20px;
+  border: 1px solid #988C73;
+  padding: 10px;
+}
+
+.formRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  
+}
+
+.formRow span {
+  margin-left: 2%;
+  font-weight: bold;
+  color: #333;
+  width: 200px;
+}
+
+.formRow input {
+  width: 50%;
+  padding: 10px;
+  border: 1px solid #988C73;
+  font-size: 14px;
+  outline: none;
+  background-color: transparent;
+}
+
+.addressContainer {
+  display: flex;
+  flex-direction: column; /* 세로로 배치 */
+  gap: 10px;
+  width: 80%;
+}
+
+.addressContainer .postalRow {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  width: 30%;
+}
+
+.addressContainer .postalRow input {
+  flex: 2;
+  border: 1px solid #988C73;
+}
+
+.addressContainer .postalRow button {
+  flex: 1;
+  padding: 10px;
+  height: 40px;
+  background-color: #aaa6a2;
+  color: #2F2E2C;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.addressContainer .postalRow button:hover {
+  background-color: #B4A59B;
+}
+
+/* 수정된 부분: input과 에러 메시지를 같은 줄에 표시 */
+.addressContainer .formRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 입력과 에러 메시지 사이에 공간을 설정 */
+}
+
+.addressContainer .formRow input {
+    width: 62%; /* 다른 입력 필드와 동일한 너비 */
+    padding: 10px;
+    border: 1px solid #988C73;
+    font-size: 14px;
+    outline: none;
+    background-color: transparent;
+}
+
+.exception {
+  color: red;
+  font-size: 12px;
+  margin-left: 50px;
+  flex: 1; /* 에러 메시지가 입력 필드 옆에 배치되도록 flex 적용 */
+}
+
+.phoneRow {
+  display: flex;
+  width: 51%;
+}
+
+.phoneRow p {
+  margin-left: 20px;
+  width: 30px;
+  font-weight: bold;
+}
+
+.phoneRow input {
+  width: 10%;
+  padding: 10px;
+  border: 1px solid #988C73;
+  font-size: 14px;
+  text-align: center;
+  height: 20px;
+}
+
+.signupbtn {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.submitButton {
+  padding: 10px;
+  background-color: #aaa6a2;
+  color: #2F2E2C;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 150px;
+}
+
+.submitButton:hover {
+  background-color: #B4A59B;
+}
