@@ -31,3 +31,9 @@ spring:
       secret-key: E59E91B8E8475F97570C5CC1B44F87162DCDBF24
       region: kr-standard
       endpoint: http://kr.object.ncloudstorage.com
+  
+  com:
+    joeun:
+      jwt:
+        secret-key: "|+<T%0h;[G97|I$5Lr?h]}`8rUX.7;0gw@bF<R/|\"-U0n:_6j={'.T'GHs~<AxU9"
+
