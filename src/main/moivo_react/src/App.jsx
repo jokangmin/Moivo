@@ -8,6 +8,7 @@ import ProductList from './containers/product/product_list';
 import ProductSearch from './containers/product/product_search';
 import ProductDetail from './containers/product/product_detail';
 import MainProvider from './contexts/MainContext';
+import Upload from './containers/test/upload';
 
 const routeConfig = [
   { path: "/", element: <Main_index /> },
@@ -17,6 +18,7 @@ const routeConfig = [
   { path: "/product-list", element: <ProductList /> },
   { path: "/product-search", element: <ProductSearch /> },
   { path: "/product-detail/:id", element: <ProductDetail /> },
+  { path: "/upload", element: <Upload /> },
 ];
 
 
