@@ -1,14 +1,21 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
+import axios from 'axios';
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  const [api, setApi] = useState('');
+
+  const onAPI = () => {
+    axios.get("http://localhost:8080/api/user").then(response => setApi(response.data)).catch(error => setApi(error))
+  }
 
   return (
     <>
       <div>
+        <button onClick={onAPI}>onAPI</button>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>

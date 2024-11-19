@@ -10,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableScheduling
 @EnableTransactionManagement
 public class CrosConfiguration implements WebMvcConfigurer {
+    // Cros 환경 설정
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
