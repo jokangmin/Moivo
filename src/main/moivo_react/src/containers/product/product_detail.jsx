@@ -106,13 +106,31 @@ const ProductDetail = () => {
         </div>
       </div>
 
+      {/* 설명문 추가 */}
+      <div className={styles.description}>
+        <h2>상품 설명</h2>
+        <p>{product.description || "해당 상품에 대한 설명이 없습니다."}</p>
+      </div>
+
+      {/* 리뷰 섹션 */}
+      <div>
+            <h2> 리뷰 섹션 </h2>
+            <p> Ah aaaaa </p>
+            <p> Ah aaaaa </p>
+            <p> Ah aaaaa </p>
+            <p> Ah aaaaa </p>
+            <p> Ah aaaaa </p>
+      </div>      
+
       {/* 상단 이동 버튼 */}
       {showTopButton && (
         <button className={styles.topButton} onClick={scrollToTop}>
           ⬆️
         </button>
       )}
+      <div>
       <Footer />
+      </div>
     </div>
   );
 };
