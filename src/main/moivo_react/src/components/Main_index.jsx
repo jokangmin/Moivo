@@ -122,7 +122,7 @@ const Main_index = () => {
                     <Link to="/product">STORE</Link>
                     </li>
                     <li>
-                    <a href="#">토글메뉴 3번</a>
+                    <Link to="/qna_faqboard">QnA</Link>
                     </li>
                     <li>
                     <a href="#">토글메뉴 4번</a>
