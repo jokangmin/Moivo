@@ -1,9 +1,7 @@
 .memberFrame {
-    width: 100%;
     margin: 0 auto;
-    padding: 20px; /* 내부 여백 추가 */
+    padding: 130px; /* 내부 여백 추가 */
     background: #f6f2ee;
-    box-sizing: border-box;
 }
 
 .order {
@@ -43,12 +41,10 @@
 .table {
     width: 100%; /* 테이블 전체 크기 조정 */
     border: 1px solid #988c73;
-    overflow: hidden;
     border-collapse: collapse; /* 경계선이 깔끔하게 보이도록 설정 */
 }
 
 .row {
-
     display: flex;
     align-items: center; /* 행의 모든 요소를 수직 중앙 정렬 */
     padding: 15px;
@@ -213,61 +209,6 @@
     transform: scale(1.05);
 }
 
-
-/* Footer */
-.mainFooter {
-    background: #2F2E2C;
-    font-family: 'Italiana', sans-serif;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    padding: 2rem 0;
-    margin-top: 50px;
-}
-
-.footerGridContainer {
-    color: #F6F2EE;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 1.5rem;
-}
-
-.footerGridContainer div {
-    padding: 1rem;
-}
-
-.mainFooter .nav-logo {
-    font-size: 2rem;
-    font-weight: bold;
-}
-
-.mainFooter ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.mainFooter ul li {
-    padding: 0.3rem 0;
-}
-
-.mainFooter ul li a {
-    text-decoration: none;
-    color: #F6F2EE;
-}
-
-.mainFooter input[type="email"] {
-    width: 90%;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.mainFooter .btn {
-    background-color: #333;
-    color: #F6F2EE;
-    padding: 0.5rem 1rem;
-    border: none;
-    cursor: pointer;
-}
 
 @media (max-width: 768px) {
     .moivo {

@@ -4,7 +4,6 @@
     margin: 20px auto; /* 가운데 정렬 */
 }
 
-/* 멤버십 박스 */
 .membershipBox {
     display: flex;
     align-items: center;
@@ -15,7 +14,40 @@
     background: #F6F2EE;
     border: 1px solid #988C73;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative; 
+    margin-top: 50px; /* 삭제 버튼과 더 가까워지도록 위쪽 마진을 조정 */
 }
+
+/* 기존 .postalCodeContainer 스타일 수정 */
+.postalCodeContainer {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* 버튼과 입력란 간격을 좁게 */
+}
+
+/* 우편번호 입력란 */
+.addressContainer input[name="postalCode"] {
+    width: 100px; /* 적절한 너비로 설정 */
+    padding: 8px;
+    border: 1px solid #988C73;
+    font-size: 14px;
+}
+
+/* 우편번호 찾기 버튼 */
+.postalCodeButton {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 5px 10px; /* 버튼 크기를 조정 */
+    font-size: 12px; /* 버튼 글자 크기를 줄이기 */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    height: 38px; /* 입력창과 높이를 맞추기 */
+}
+
+.postalCodeButton:hover {
+    background-color: #e0e0e0;
+}
+
 
 
 .membershipImage {
@@ -54,6 +86,7 @@
     background-color: #f6f2ee;
     padding: 20px;
     font-family: "Italiana", sans-serif;
+    padding-bottom: 100px;
   }
   
   .pageName {
@@ -61,7 +94,9 @@
     font-size: 36px;
     font-weight: bold;
     color: #333;
+
     margin-bottom: 20px;
+    padding-top: 130px;
   }
   
   .memberStatus {
@@ -163,6 +198,83 @@
 }
 
 
+.deleteButton {
+    position: absolute;
+    top: 200px; /* 삭제 버튼을 멤버십 박스 바로 위에 배치 */
+    right: 20px; 
+    padding: 8px 18px;
+    background-color: #E6E3E2; 
+    color: black;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+    margin-right: 13px;
+    font-size: 13px;
+}
+
+.deleteButton:hover {
+    background-color: #beb9b8; /* 마우스 오버 시 색상 변경 */
+}
+
+/* Footer */
+.mainFooter {
+    background: #2F2E2C;
+    font-family: 'Italiana', sans-serif;
+    position: relative;
+    width: 100%;
+    padding: 2rem 0;
+    margin-top: 50px;
+    min-height: 200px;  /* 푸터의 최소 높이 설정 */
+    margin-top: auto;    /* 푸터를 화면 하단에 고정 */
+    color: #F6F2EE;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  /* 내용 세로 중앙 정렬 */
+}
+
+.footerGridContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1.5rem;
+}
+
+.footerGridContainer div {
+    padding: 1rem;
+}
+
+.mainFooter .nav-logo {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.mainFooter ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.mainFooter ul li {
+    padding: 0.3rem 0;
+}
+
+.mainFooter ul li a {
+    text-decoration: none;
+    color: #F6F2EE;
+}
+
+.mainFooter input[type="email"] {
+    width: 90%;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.mainFooter .btn {
+    background-color: #333;
+    color: #F6F2EE;
+    padding: 0.5rem 1rem;
+    border: none;
+    cursor: pointer;
+}
+
 /* 미디어 쿼리: 화면 크기가 768px 이하일 때 적용 */
 @media (max-width: 768px) {
     .membershipBox {
@@ -211,3 +323,4 @@
         font-size: 14px; /* 멤버십 정보 폰트 크기 축소 */
     }
 }
+

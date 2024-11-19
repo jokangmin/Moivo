@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "../../assets/css/Mypage.module.css";
+import Banner from "../../components/Banner/banner";
+import Footer from "../../components/Footer/Footer";
 
 const MypageMain = () => {
   const [startIndex, setStartIndex] = useState(0);
+
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  const handleMouseEnter = () => {
+    setShowTooltip(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowTooltip(false);
+  };
 
   const productList = [
     { image: "../image/only1.jpg", name: "Angel wing tee", price: "KRW 62,000" },
@@ -36,118 +48,110 @@ const MypageMain = () => {
     return () => clearInterval(interval);
   }, [maxIndex]);
   return (
-    <div className={styles.memberFrame}>
-      {/* 타이틀 */}
-      <div className={styles.title}>MY ACCOUNT</div>
+    <div>
+      <div className={styles.memberFrame}>
+        <Banner/>
+        {/* 타이틀 */}
+        <div className={styles.title}>MY ACCOUNT</div>
 
-      {/* 멤버십 박스 */}
-      <div className={styles.membershipBox}>
-        <div className={styles.membershipImage}>
-          <img src="../image/level5.png" alt="Profile" />
-        </div>
-        <div>
-          <div className={styles.membershipInfo}>
-            전수민님의 멤버십 등급은 [GOLD]입니다.<br />
-            VIP까지 남은 구매금액은 KRW 100,000원입니다.
+        {/* 멤버십 박스 */}
+        <div className={styles.membershipBox}>
+          <div className={styles.membershipImage}>
+            <img src="../image/level5.png" alt="Profile" />
           </div>
-          <div className={styles.pointCoupon}>POINT : 5,000 | COUPON : 10</div>
+          <div>
+            <div className={styles.membershipInfo}>
+              전수민님의 멤버십 등급은 [GOLD]입니다.<br />
+              VIP까지 남은 구매금액은 KRW 100,000원입니다.
+            </div>
+            <div className={styles.pointCoupon}>POINT : 5,000 | COUPON : 10</div>
+          </div>
+            {/* 아이콘 영역 (우측 상단에 배치) */}
+            <div 
+              className={styles.tooltipIcon} 
+              onMouseEnter={handleMouseEnter} 
+              onMouseLeave={handleMouseLeave}
+            >
+              <img src="../image/info.png" alt="Info Icon"/>
+              {showTooltip && (
+                <div className={styles.tooltip}>
+                  <p>
+                    LV 1 : 일반회원<br />
+                    LV 2: 월 구매 10만원 이상<br />
+                    LV 3: 월 구매 30만원 이상<br />
+                    LV 4: 월 구매 50만원 이상<br />
+                    LV 5: 월 구매 70만원 이상<br /><br/>
+                    <strong>LV 2 혜택:</strong> 할인 쿠폰 1개 제공<br />
+                    <strong>LV 3 혜택:</strong> 무료 배송, 할인 쿠폰 3개 제공<br />
+                    <strong>LV 4 혜택:</strong> 무료 배송, 할인 쿠폰 4개 제공<br />
+                    <strong>LV 5 혜택:</strong> 무료 배송, 할인 쿠폰 5개 제공<br />
+                   
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+
+
+
+        {/* 좌우 배치 영역 */}
+        <div className={styles.contentWrapper}>
+          {/* ONLY FOR YOU */}
+          <div className={styles.onlyForYouBox}>
+            <div className={styles.onlyForYou}>ONLY FOR YOU</div>
+            {/* 좌우 화살표 버튼 */}
+          <button className={`${styles.arrow} ${styles.arrowLeft}`} onClick={handleLeftArrowClick}>
+            <img src="../image/arrow.png" alt="Left Arrow" />
+          </button>
+          <button className={`${styles.arrow} ${styles.arrowRight}`} onClick={handleRightArrowClick}>
+            <img src="../image/arrow.png" alt="Right Arrow" />
+          </button>
+
+          <div className={styles.productList}>
+            {productList.slice(startIndex, startIndex + 3).map((product, index) => (
+              <div key={index} className={styles.product}>
+                <div className={styles.productImage}>
+                  <img src={product.image} alt={product.name} />
+                </div>
+                <div className={styles.productText}>
+                  {product.name} <br /> {product.price}
+                </div>
+              </div>
+            ))}
+          </div>
+
+            {/* 하단 바 */}
+            <div className={styles.bottomBar}></div>
+            
+          </div>
+
+          {/* 오른쪽 메뉴 */}
+          <div className={styles.menuWrapper}>
+            <div className={styles.crossLine}>
+              <div className={styles.horizontal}></div>
+              <div className={styles.vertical}></div>
+            </div>
+              <Link to="/mypage/profile" className={styles.menuItem}>
+                <img src="../image/profile.png" alt="Profile" />
+                PROFILE
+              </Link>
+              <Link to="/mypage/order" className={styles.menuItem}>
+                <img src="../image/order.png" alt="Order" />
+                ORDER
+              </Link>
+              <Link to="/mypage/board" className={styles.menuItem}>
+                <img src="../image/board.png" alt="Board" />
+                BOARD
+              </Link>
+              <Link to="/mypage/wish" className={styles.menuItem}>
+                <img src="../image/wish.png" alt="Wishlist" />
+                WISHLIST
+              </Link>
+
+          </div>
         </div>
       </div>
-
-      {/* 좌우 배치 영역 */}
-      <div className={styles.contentWrapper}>
-        {/* ONLY FOR YOU */}
-        <div className={styles.onlyForYouBox}>
-          <div className={styles.onlyForYou}>ONLY FOR YOU</div>
-          {/* 좌우 화살표 버튼 */}
-        <button className={`${styles.arrow} ${styles.arrowLeft}`} onClick={handleLeftArrowClick}>
-          <img src="../image/arrow.png" alt="Left Arrow" />
-        </button>
-        <button className={`${styles.arrow} ${styles.arrowRight}`} onClick={handleRightArrowClick}>
-          <img src="../image/arrow.png" alt="Right Arrow" />
-        </button>
-
-        <div className={styles.productList}>
-          {productList.slice(startIndex, startIndex + 3).map((product, index) => (
-            <div key={index} className={styles.product}>
-              <div className={styles.productImage}>
-                <img src={product.image} alt={product.name} />
-              </div>
-              <div className={styles.productText}>
-                {product.name} <br /> {product.price}
-              </div>
-            </div>
-          ))}
-        </div>
-
-          {/* 하단 바 */}
-          <div className={styles.bottomBar}></div>
-          
-        </div>
-
-        {/* 오른쪽 메뉴 */}
-        <div className={styles.menuWrapper}>
-          <div className={styles.crossLine}>
-            <div className={styles.horizontal}></div>
-            <div className={styles.vertical}></div>
-          </div>
-            <Link to="/mypage/profile" className={styles.menuItem}>
-              <img src="../image/profile.png" alt="Profile" />
-              PROFILE
-            </Link>
-            <Link to="/mypage/order" className={styles.menuItem}>
-              <img src="../image/order.png" alt="Order" />
-              ORDER
-            </Link>
-            <Link to="/mypage/board" className={styles.menuItem}>
-              <img src="../image/board.png" alt="Board" />
-              BOARD
-            </Link>
-            <Link to="/mypage/wish" className={styles.menuItem}>
-              <img src="../image/wish.png" alt="Wishlist" />
-              WISHLIST
-            </Link>
-
-        </div>
-      </div>
-      
-      {/* Footer */}
-      <footer id="main-footer" className={styles.mainFooter}>
-        <div className="container">
-          <div className={styles.footerGridContainer}> 
-            <div>
-              <section className={styles.navLogo}>Moivo</section>
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque provident labore suscipit, id illo magni odit?
-              </p>
-            </div>
-            <div>
-              <h2>PRIVACY & TERMS</h2>
-              <ul className={styles.anchorLinks}>
-                <li><a href="#">Privacy & Security</a></li>
-                <li><a href="#">Terms and Conditions</a></li>
-                <li><a href="#">Policy</a></li>
-              </ul>
-            </div>
-            <div>
-              <h2>GET NOTIFIED FOR NEW PRODUCTS</h2>
-              <form>
-                <input type="email" placeholder="Email" />
-                <input type="submit" className={styles.btn} value="Submit" />
-              </form>
-            </div>
-            <div> 
-              <h2>SITE LINKS</h2>
-              <ul className={styles.anchorLinks}>
-                <li><a href="#">About us</a></li>
-                <li><a href="#">Help & Support</a></li>
-                <li><a href="#">Career</a></li>
-                <li><a href="#">Refund Policy</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

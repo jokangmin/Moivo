@@ -9,6 +9,7 @@
 
 /* 헤더 */
 .header {
+    padding-top: 130px;
     text-align: center;
     margin-bottom: 30px;
 }
@@ -305,6 +306,7 @@
     margin-left: auto;
     margin-right: auto;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-bottom: 100px;
 }
 
 .backToOrders:hover {
