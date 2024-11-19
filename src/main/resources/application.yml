@@ -23,3 +23,11 @@ spring:
     show-sql: true
     properties:
       hibernate.format_sql: true
+
+  mvc:
+    cors:
+      mappings:
+        # React 개발 서버와의 연동 허용
+        "/api/**": 
+          allowed-origins: "http://localhost:5173"
+          allowed-methods: "GET, POST, PUT, DELETE, OPTIONS"

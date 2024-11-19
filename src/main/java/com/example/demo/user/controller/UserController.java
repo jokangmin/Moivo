@@ -16,9 +16,4 @@ public class UserController {
     // 로그인
     // 소셜 로그인
 
-    @GetMapping("")
-    public String getMethodName() {
-        return "hi hi";
-    }
-
 }
