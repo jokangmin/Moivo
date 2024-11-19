@@ -5,7 +5,6 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.springframework.stereotype.Service;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,6 +12,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
+
+import org.springframework.stereotype.Service;
+
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 
 @Service
 public class NCPObjectStorageService {
@@ -35,8 +41,7 @@ public class NCPObjectStorageService {
                     bucketName,
                     directoryPath + fileName,
                     fileInputStream,
-                    objectMetadata
-            ).withCannedAcl(CannedAccessControlList.PublicRead);
+                    objectMetadata).withCannedAcl(CannedAccessControlList.PublicRead);
 
             amazonS3.putObject(putObjectRequest);
             return fileName;
@@ -44,6 +49,6 @@ public class NCPObjectStorageService {
         } catch (IOException e) {
             throw new RuntimeException("File upload failed", e);
         }
-        
+
     }
 }

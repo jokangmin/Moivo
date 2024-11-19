@@ -19,8 +19,10 @@ const routeConfig = [
   { path: "/product-detail/:id", element: <ProductDetail /> },
 ];
 
+
 const App = () => {
   return (
+
     <MainProvider>
       <Router>
         <Routes>
@@ -32,5 +34,6 @@ const App = () => {
     </MainProvider>
   );
 };
+
 
 export default App;

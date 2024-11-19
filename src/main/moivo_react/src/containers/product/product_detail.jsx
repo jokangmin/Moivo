@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import styles from "../../assets/css/product_detail.module.css";
 import Banner from "../../components/Banner/banner";
 import Footer from "../../components/Footer/Footer";
+import axios  from "axios";
 
 const ProductDetail = () => {
   const { state } = useLocation();
@@ -13,6 +14,18 @@ const ProductDetail = () => {
   const [cartCount, setCartCount] = useState(0);
   const [mainImg, setMainImg] = useState(product?.image);
   const [showTopButton, setShowTopButton] = useState(false);
+
+  // axios 테스트
+  const onTest = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/store/review/test");
+      alert(`연결 성공: ${response.data.message}`);
+    } catch (error) {
+      console.error("API 테스트 실패:", error);
+      alert(`연결 실패: ${error.response?.data?.message || "서버 오류"}`);
+    }
+  };
+
 
   if (!product) {
     return (
@@ -46,6 +59,12 @@ const ProductDetail = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const onAPI = () => {
+    axios.get('http://localhost:8080/api/auth/onAPI')
+          .then(res => setAPI(res.data))
+
+  }; 
 
   return (
     <div className={styles.container}>
@@ -113,13 +132,14 @@ const ProductDetail = () => {
       </div>
 
       {/* 리뷰 섹션 */}
-      <div>
+      <div className="review-section">
             <h2> 리뷰 섹션 </h2>
             <p> Ah aaaaa </p>
             <p> Ah aaaaa </p>
             <p> Ah aaaaa </p>
             <p> Ah aaaaa </p>
             <p> Ah aaaaa </p>
+            <button onClick={ onTest }>API 테스트</button>
       </div>      
 
       {/* 상단 이동 버튼 */}
