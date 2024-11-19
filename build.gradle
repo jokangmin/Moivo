@@ -54,6 +54,8 @@ dependencies {
    testImplementation 'io.projectreactor:reactor-test'
    // testImplementation 'org.springframework.security:spring-security-test'
    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+   //AWS S3 추가한거임
+   implementation 'com.amazonaws:aws-java-sdk-s3:1.12.565'
 }
 
 dependencyManagement {
