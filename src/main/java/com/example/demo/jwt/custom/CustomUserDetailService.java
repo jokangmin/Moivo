@@ -19,9 +19,14 @@ public class CustomUserDetailService implements UserDetailsService  {
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("login = " + username);
-
-        UserEntity userEntity = userRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(String userseq) throws UsernameNotFoundException {
+        UserEntity userEntity = userRepository.findById(Integer.parseInt(userseq))
+            .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + userseq));
+        
+        return org.springframework.security.core.userdetails.User.builder()
+            .username(String.valueOf(userEntity.getUserSeq()))
+            .password(userEntity.getPwd())
+            .roles(userEntity.isAdmin() ? "ADMIN" : "USER")
+            .build();
     }
 }

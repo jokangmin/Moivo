@@ -67,7 +67,7 @@ public class LoginController {
         String jwt = Jwts.builder()
             .setHeaderParam("typ", SecurityConstants.TOKEN_TYPE)  // 헤더 설정
             .signWith(Keys.hmacShaKeyFor(signingKey), SignatureAlgorithm.HS512) // SignatureAlgorithm.HS512 사용
-            .setExpiration(new Date(System.currentTimeMillis() + 864000000))  // 토큰 만료 시간 10일로 설정
+            .setExpiration(new Date(System.currentTimeMillis() + 3600000))  // 토큰 만료 시간 1시간으로 설정
             .claim("uid", username)  // 클레임 설정: 사용자 아이디
             .claim("rol", roles)     // 클레임 설정: 역할 정보
             .compact();  // 최종적으로 토큰 생성

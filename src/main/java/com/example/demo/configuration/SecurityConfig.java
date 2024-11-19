@@ -3,10 +3,17 @@ package com.example.demo.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import com.example.demo.jwt.filter.JwtAuthenticationFilter;
+
+import java.util.Arrays;
 
 @Configuration
 public class SecurityConfig {
@@ -22,20 +29,29 @@ public class SecurityConfig {
         // CSRF(Cross-Site Request Forgery) 공격 방어 기능 비활성화
         http.csrf(csrf -> csrf.disable());
 
-        // 필터 생성 (필터가 필요하면 추가)
-        // http.addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        //필터 생성
+        http.addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
+        /*
         // 인가 설정
         http.authorizeHttpRequests(authorizeHttpRequests -> 
             authorizeHttpRequests
-                .requestMatchers("/", "/api/login").permitAll()  // "/"와 "/login"은 모두 허용
-                .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")  // "/user/**"는 USER, ADMIN만 접근 가능
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")  // "/admin/**"는 ADMIN만 접근 가능
+                .requestMatchers("/", "/api/login").permitAll()  // "/"와 "/login"은 모두 허용함
+                .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")  // "/user/**"는 USER, ADMIN만 접근 가능함
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")  // "/admin/**"는 ADMIN만 접근 가능함
 				.anyRequest().authenticated()
+        );   이렇게 일일이 나누는 것보다 아래처럼   */
+
+        http.authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/api/auth/**").permitAll() // 회원가입 및 로그인은 인증 없이 접근 가능
+                .requestMatchers("/api/user/**").authenticated() // 나머지는 인증 필요
         );
 
-		//인증방식 설정해주기
-        return http.userDetailsService(null);   
+		// UserDetailsService 추가 설정 (null로 설정할 경우 생략 가능)
+        http.userDetailsService(null);
+
+        // SecurityFilterChain 반환
+        return http.build();
     }
         
     @Bean

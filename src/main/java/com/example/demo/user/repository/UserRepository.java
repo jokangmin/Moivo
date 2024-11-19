@@ -10,6 +10,6 @@ import com.example.demo.user.entity.UserEntity;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
-    
+    Optional<UserEntity> findById(String id);
 
 }
