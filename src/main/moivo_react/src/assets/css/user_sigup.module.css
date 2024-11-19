@@ -3,7 +3,6 @@
 .signupContainer {
   height: calc(100vh);
   background-color: #F6F2EE;
-  padding: 20px;
   font-family: "Italiana", sans-serif;
   font-style: normal;
 }
@@ -13,9 +12,9 @@
   justify-content: center;  /* 가로 방향 중앙 정렬 */
   align-items: center;      /* 세로 방향 중앙 정렬 */
   font-size: 36px;          /* 글씨 크기 크게 설정 */
-  font-weight: bold;        /* 글씨를 볼드 처리 */
-  color: #333;              /* 글씨 색상 설정 */
-  margin-top: 100px;                /* 부모 요소의 기본 여백 제거 */
+  font-weight: bold;
+  color: #333;
+  margin-top: 100px;
   height: 10%;
 }
 
@@ -28,6 +27,7 @@
   margin: 20px;
   border: 1px solid #988C73;
   padding: 10px;
+  margin-bottom: 100px;
 }
 
 .formRow {
@@ -55,7 +55,7 @@
 
 .addressContainer {
   display: flex;
-  flex-direction: column; /* 세로로 배치 */
+  flex-direction: column;
   gap: 10px;
   width: 80%;
 }
@@ -88,38 +88,64 @@
   background-color: #B4A59B;
 }
 
-/* 수정된 부분: input과 에러 메시지를 같은 줄에 표시 */
 .addressContainer .formRow {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* 입력과 에러 메시지 사이에 공간을 설정 */
+  justify-content: space-between;
 }
 
 .addressContainer .formRow input {
-    width: 62%; /* 다른 입력 필드와 동일한 너비 */
+    width: 62%;
     padding: 10px;
     border: 1px solid #988C73;
     font-size: 14px;
     outline: none;
     background-color: transparent;
-}
+  }
+
+  .radioContainer {
+    display: flex;
+    gap: 20px;  /* 라디오 버튼 간 간격 조정 */
+    align-items: center;  /* 라디오 버튼과 텍스트 세로 정렬 */
+    height: 40px;
+  }
+  
+  .radioContainer input[type="radio"] {
+    margin-right: 5px;  /* 라디오 버튼과 텍스트 사이에 간격 추가 */
+  }
+
+  .formRow .emaildetail{
+    width: 910px;
+    padding: 10px;
+    border: 1px solid #988C73;
+    font-size: 14px;
+    outline: none;
+    background-color: transparent;
+    border-radius: 0;
+  }
 
 .exception {
   color: red;
   font-size: 12px;
   margin-left: 50px;
-  flex: 1; /* 에러 메시지가 입력 필드 옆에 배치되도록 flex 적용 */
+  flex: 1;
 }
 
 .phoneRow {
   display: flex;
-  width: 51%;
+  width: 895px;
+  height: 40px; 
 }
 
 .phoneRow p {
-  margin-left: 20px;
+  font-size: 40px;
+  margin-top: 10px;
   width: 30px;
   font-weight: bold;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
 }
 
 .phoneRow input {
@@ -128,7 +154,7 @@
   border: 1px solid #988C73;
   font-size: 14px;
   text-align: center;
-  height: 20px;
+  height: 40px;
 }
 
 .signupbtn {
