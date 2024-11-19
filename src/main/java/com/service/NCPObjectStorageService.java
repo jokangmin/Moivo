@@ -44,5 +44,6 @@ public class NCPObjectStorageService {
         } catch (IOException e) {
             throw new RuntimeException("File upload failed", e);
         }
+        //콛,ㅡ에서 올리기
     }
 }
