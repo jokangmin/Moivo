@@ -9,57 +9,49 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    /*
-     * SecurityFilterChain 클래스
-     * 모든 요청 URL에 이 클래스가 필터로 적용되어 URL별로 특별한 설정을 할 수 있다.
-     * 스프링 시큐리티의 세부 설정은 @Bean ㅇ어노테이션을 통해 SecurityFilterChain 빈을 생성하여 설정할 수 있다.
-     */
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        // 해당 부분은 인증되지 않은 모든 페이지의 요청을 허락한다는 의미
-        // 로그인 하지 않더라도 모든 페이지에 접근 가능
-        http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
-                .csrf((csrf) -> csrf.ignoringRequestMatchers(new AntPathRequestMatcher("/**")))
-                .headers((headers) -> headers.addHeaderWriter(
-                        new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)));
-
-        return http.build();
-    }
-    
-    // PasswordEncoder 빈 정의
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Bcrypt 알고리즘을 사용하는 PasswordEncoder
-    }
-
-    /*
-    
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http
+            .csrf().disable() // CSRF 비활성화
+            .cors() // CORS 활성화
+            .and()
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll() // 로그인/회원가입은 인증 불필요
-                .anyRequest().authenticated() // 그 외 요청은 인증 필요
+                .requestMatchers("/api/**").permitAll() // /api/** 경로는 인증 없이 접근 허용
+                .requestMatchers(new AntPathRequestMatcher("/**")).permitAll() // 모든 경로 허용
+                .anyRequest().authenticated() // 그 외의 요청은 인증 필요
             )
-            .sessionManagement(session -> session.sessionCreationPolicy(org.springframework.security.config.http.SessionCreationPolicy.STATELESS)); // 세션 비활성화
+            .headers(headers -> headers
+                .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)) // 동일 출처 요청만 허용
+            );
 
         return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173")); // 허용할 출처
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // 허용할 HTTP 메서드
+        configuration.setAllowedHeaders(Arrays.asList("*")); // 허용할 헤더
+        configuration.setAllowCredentials(true); // 인증 정보 포함 허용
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(); // 비밀번호 암호화를 위한 BCrypt
     }
-
-     */
-
-
-
 }

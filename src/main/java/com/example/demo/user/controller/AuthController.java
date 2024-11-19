@@ -1,12 +1,16 @@
 package com.example.demo.user.controller;
 
-import com.example.demo.user.entity.UserEntity;
-import com.example.demo.user.repository.UserRepository;
-import com.example.demo.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.user.entity.UserEntity;
+import com.example.demo.user.repository.UserRepository;
+import com.example.demo.util.JwtUtil;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -34,21 +38,23 @@ public class AuthController {
     }
 
     // 로그인
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserEntity user) {
-        UserEntity existingUser = userRepository.findById(user.getId()).orElse(null);
-        if (existingUser != null && passwordEncoder.matches(user.getPwd(), existingUser.getPwd())) {
-            String token = jwtUtil.generateToken(user.getId()); // JWT 생성
-            return ResponseEntity.ok(token); // 클라이언트에 JWT 반환
-        } else {
-            return ResponseEntity.status(401).body("로그인 실패: 잘못된 아이디 또는 비밀번호");
-        }
-    }
+    // @PostMapping("/login")
+    // public ResponseEntity<String> login(@RequestBody UserEntity user) {
+    //     UserEntity existingUser = userRepository.findById(user.getId()).orElse(null);
+    //     if (existingUser != null && passwordEncoder.matches(user.getPwd(), existingUser.getPwd())) {
+    //         String token = jwtUtil.generateToken(user.getId()); // JWT 생성
+    //         return ResponseEntity.ok(token); // 클라이언트에 JWT 반환
+    //     } else {
+    //         return ResponseEntity.status(401).body("로그인 실패: 잘못된 아이디 또는 비밀번호");
+    //     }
+    // }
 
-    // 로그인 상태 확인
-    @GetMapping("/check")
-    public ResponseEntity<Boolean> checkLoginStatus(@RequestHeader("Authorization") String token) {
-        String userId = jwtUtil.validateToken(token.replace("Bearer ", ""));
-        return ResponseEntity.ok(userId != null);
-    }
+    // // 로그인 상태 확인
+    // @GetMapping("/check")
+    // public ResponseEntity<Boolean> checkLoginStatus(@RequestHeader("Authorization") String token) {
+    //     String userId = jwtUtil.validateToken(token.replace("Bearer ", ""));
+    //     return ResponseEntity.ok(userId != null);
+    // }
+
+
 }
