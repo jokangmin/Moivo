@@ -7,7 +7,10 @@ import ProductBoard from './containers/product/product_board';
 import ProductList from './containers/product/product_list';
 import ProductSearch from './containers/product/product_search';
 import ProductDetail from './containers/product/product_detail';
+import Qna_faqboard from './containers/qna/qna_faqboard';
+import Qna_board from './containers/qna/qna_board';
 import MainProvider from './contexts/MainContext';
+
 
 
 const App = () => {
@@ -22,6 +25,8 @@ const App = () => {
           <Route path="/product-list" element={<ProductList />} />
           <Route path="/product-search" element={<ProductSearch />} />
           <Route path="/product-detail/:id" element={<ProductDetail />} />
+          <Route path="/qna_faqboard" element={<Qna_faqboard/>} />
+          <Route path="/qna_board" element={<Qna_board/>} />
         </Routes>
       </Router>
     </MainProvider>
