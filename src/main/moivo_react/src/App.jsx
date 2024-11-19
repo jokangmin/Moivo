@@ -27,8 +27,10 @@ const routeConfig = [
   { path: "/mypage/orderDetails", element: <MypageOrderDetails /> },
 ];
 
+
 const App = () => {
   return (
+
     <MainProvider>
       <Router>
         <Routes>
@@ -40,5 +42,6 @@ const App = () => {
     </MainProvider>
   );
 };
+
 
 export default App;
