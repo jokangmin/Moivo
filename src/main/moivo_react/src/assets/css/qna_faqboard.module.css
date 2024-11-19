@@ -1,0 +1,181 @@
+/* 전체 QnA 화면의 기본 스타일 */
+.QnAmainDiv {
+  height: calc(100vh);
+  background-color: #fff;
+}
+
+/* 헤더 영역 */
+.QnAheader {
+  height: 130px;
+}
+
+/* QnA 설명 영역 */
+.QnAcoment {
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  font-weight: bold;
+  position: relative;
+}
+
+/* '자주 묻는 질문' 텍스트 아래 밑줄 */
+.QnAcoment::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1300px;
+  height: 2px;
+  background-color: #000; 
+  margin-bottom: 15px;
+}
+
+/* 고객센터 버튼 스타일 */
+.servicecenter {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  height: 70px;
+}
+.boardbtn {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 12px 20px; 
+  font-size: 16px;
+  font-family: 'Arial', sans-serif;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+/* 마우스를 올렸을 때의 스타일 */
+.boardbtn:hover {
+  background-color: black;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* 버튼 클릭 시 스타일 */
+.boardbtn:active {
+  transform: translateY(1px); 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* FAQ 전체 컨테이너 */
+.faq {
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 4px;
+  position: relative;
+  border: 1px solid #E1E1E1;
+}
+
+/* FAQ 영역 */
+.faqDiv {
+  margin-bottom: 100px;
+}
+
+/* 각 FAQ 항목 컨테이너 */
+.faqItem {
+  padding: 10px 0;
+}
+
+/* FAQ 헤딩 스타일 */
+.faqHeading {
+  font-family: Lato, sans-serif;
+  font-weight: 400;
+  font-size: 19px;
+  text-indent: 20px;
+  color: #333;
+  transition: text-indent 0.2s;
+}
+
+/* FAQ 텍스트 스타일 */
+.faqText {
+  font-family: Open Sans, sans-serif;
+  font-weight: 400;
+  color: #919191;
+  width: 100%;
+  padding-left: 20px;
+  margin-bottom: 30px;
+  transition: max-height 0.8s ease-in-out;
+  overflow: hidden;
+  max-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* 텍스트 하단 정렬 */
+}
+
+/* 열렸을 때 FAQ 텍스트 보이도록 */
+.faqItem input[type='checkbox']:checked + label + .faqText {
+  max-height: 500px; /* 충분히 큰 값 */
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* 화살표 스타일 */
+.faqArrow {
+  width: 5px;
+  height: 5px;
+  border-top: 2px solid rgba(0, 0, 0, 0.33);
+  border-right: 2px solid rgba(0, 0, 0, 0.33);
+  position: absolute;
+  bottom: 10px; /* 화살표를 label의 아래쪽에 위치시킴 */
+  right: 10px;  /* 오른쪽에 배치 */
+  transform: rotate(45deg);
+  transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* 화살표가 회전하면서 열리고 닫히는 애니메이션 */
+.faqItem input[type='checkbox']:checked + label > .faqArrow {
+  transform: rotate(135deg);
+}
+
+/* FAQ 항목 레이블 기본 스타일 */
+.faqItem label {
+  display: flex;
+  flex-direction: column; /* 세로로 정렬 */
+  justify-content: flex-end; /* 내용 아래로 정렬 */
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  height: 56px;
+  background-color: #FAFAFA;
+  border-bottom: 1px solid #E1E1E1;
+  transition: height 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  padding: 0 10px; /* 여백 추가 (필요시 조정) */
+}
+
+/* 체크박스를 숨깁니다 */
+.faqItem input[type="checkbox"] {
+  display: none;
+}
+
+/* FAQ 항목이 열리면 높이 변경 */
+.faqItem input[type='checkbox']:checked + label {
+  background-color: #ffffff;
+  color: #4f7351;
+  height: auto;
+  transition: height 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* 체크박스가 선택되지 않았을 때 높이 설정 */
+.faqItem input[type='checkbox']:not(:checked) + label {
+  height: 56px;
+}
+
+/* 스크롤바 숨김 (세로 스크롤이 생기지 않도록) */
+::-webkit-scrollbar {
+  display: none;
+}

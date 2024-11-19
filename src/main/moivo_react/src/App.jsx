@@ -7,6 +7,8 @@ import ProductBoard from './containers/product/product_board';
 import ProductList from './containers/product/product_list';
 import ProductSearch from './containers/product/product_search';
 import ProductDetail from './containers/product/product_detail';
+import Qna_faqboard from './containers/qna/qna_faqboard';
+import Qna_board from './containers/qna/qna_board';
 import MainProvider from './contexts/MainContext';
 import Upload from './containers/test/upload';
 import MypageMain from './containers/mypage/mypage_main';
@@ -27,9 +29,10 @@ const routeConfig = [
   { path: "/mypage/profile", element: <MypageProfile /> },
   { path: "/mypage/order", element: <MypageOrder /> },
   { path: "/mypage/orderDetails", element: <MypageOrderDetails /> },
+  { path: "/qna_faqboard", element: <Qna_faqboard /> },
+  { path: "/qna_board", element: <Qna_board /> }
 
 ];
-
 
 const App = () => {
   return (
@@ -37,9 +40,11 @@ const App = () => {
     <MainProvider>
       <Router>
         <Routes>
+
           {routeConfig.map(({ path, element }, index) => (
             <Route key={index} path={path} element={element} />
           ))}
+
         </Routes>
       </Router>
     </MainProvider>
