@@ -31,6 +31,6 @@ public class NCPStorageConfig {
                 .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endpoint, region))
                 .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)))
                 .build();
-                //테스트입니다.
+
     }
 }

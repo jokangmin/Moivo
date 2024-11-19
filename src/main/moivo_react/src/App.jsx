@@ -8,6 +8,7 @@ import ProductList from './containers/product/product_list';
 import ProductSearch from './containers/product/product_search';
 import ProductDetail from './containers/product/product_detail';
 import MainProvider from './contexts/MainContext';
+import Upload from './containers/test/upload';
 import MypageMain from './containers/mypage/mypage_main';
 import MypageOrder from './containers/mypage/mypage_order';
 import MypageOrderDetails from './containers/mypage/mypage_orderDetails';
@@ -21,10 +22,12 @@ const routeConfig = [
   { path: "/product-list", element: <ProductList /> },
   { path: "/product-search", element: <ProductSearch /> },
   { path: "/product-detail/:id", element: <ProductDetail /> },
+  { path: "/upload", element: <Upload /> },
   { path: "/mypage", element: <MypageMain /> },
   { path: "/mypage/profile", element: <MypageProfile /> },
   { path: "/mypage/order", element: <MypageOrder /> },
   { path: "/mypage/orderDetails", element: <MypageOrderDetails /> },
+
 ];
 
 

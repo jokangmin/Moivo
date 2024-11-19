@@ -1,5 +1,10 @@
 package com.example.demo.ncp.service;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -36,8 +41,7 @@ public class NCPObjectStorageService {
                     bucketName,
                     directoryPath + fileName,
                     fileInputStream,
-                    objectMetadata
-            ).withCannedAcl(CannedAccessControlList.PublicRead);
+                    objectMetadata).withCannedAcl(CannedAccessControlList.PublicRead);
 
             amazonS3.putObject(putObjectRequest);
             return fileName;
@@ -45,6 +49,6 @@ public class NCPObjectStorageService {
         } catch (IOException e) {
             throw new RuntimeException("File upload failed", e);
         }
-        //콛,ㅡ에서 올리기
+
     }
 }
