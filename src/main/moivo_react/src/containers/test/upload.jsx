@@ -159,7 +159,7 @@ const Upload = () => {
             </div>
           ))}
         </div>
-
+        
         {/* 업로드 진행률 */}
         {progress > 0 && (
           <div className={styles.progressContainer}>
@@ -167,12 +167,13 @@ const Upload = () => {
             <span>{progress}%</span>
           </div>
         )}
-
+       
         {/* 업로드 버튼 */}
         <button className={styles.uploadButton} onClick={handleUpload}>
           업로드
         </button>
-      </div>
+        
+      </div>  
     </div>
   );
 };
