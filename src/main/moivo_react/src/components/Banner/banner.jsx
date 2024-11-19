@@ -9,6 +9,29 @@ const Banner = () => {
   const [wishListActive, setWishListActive] = useState(false);
   const [openMenuIndex, setOpenMenuIndex] = useState(null); // 현재 열린 서브메뉴 인덱스
 
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setIsLoggedIn(false);
+        return;
+      }
+  
+      try {
+        const response = await axios.get("http://localhost:8080/api/auth/check", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setIsLoggedIn(response.data);
+      } catch (error) {
+        console.error("로그인 상태 확인 실패:", error);
+        setIsLoggedIn(false);
+      }
+    };
+  
+    checkLoginStatus();
+  }, []);
+  
+
   // 로그인 상태 확인 (Spring Boot와 연결 시 활성화)
   /*
   useEffect(() => {
@@ -28,7 +51,7 @@ const Banner = () => {
   // 로그아웃 처리
   const handleLogout = async () => {
     try {
-      await axios.post("/api/auth/logout", {}, { withCredentials: true }); // 로그아웃 API
+      localStorage.removeItem("token"); // JWT 삭제
       alert("로그아웃되었습니다.");
       navigate("/");
     } catch (error) {
@@ -36,6 +59,7 @@ const Banner = () => {
       alert("로그아웃에 실패했습니다.");
     }
   };
+  
 
   const navLinks = [
     {

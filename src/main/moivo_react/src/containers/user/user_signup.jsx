@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import styles from '../../assets/css/user_sigup.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Footer from './../../components/Footer/Footer';
+import axios from "axios";
 
 function user_signup() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     id: "",
     password: "",
@@ -87,10 +90,20 @@ function user_signup() {
     return isValid;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
+    try {
+      await axios.post("http://localhost:8080/api/auth/signup", {
+        id: formData.id,
+        pwd: formData.password,
+        name: formData.name,
+        email: formData.email,
+      });
       alert("회원가입 성공!");
+      navigate("/user");
+    } catch (error) {
+      console.error("회원가입 실패:", error);
+      alert("회원가입에 실패했습니다.");
     }
   };
 
