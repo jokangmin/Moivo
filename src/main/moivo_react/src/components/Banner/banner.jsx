@@ -10,38 +10,56 @@ const Banner = () => {
   const [openMenuIndex, setOpenMenuIndex] = useState(null); // 현재 열린 서브메뉴 인덱스
 
   useEffect(() => {
-    // JWT 토큰 확인 및 로그인 상태 설정
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token); // 토큰이 있으면 로그인 상태로 설정
+    const checkLoginStatus = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setIsLoggedIn(false);
+        return;
+      }
+  
+      try {
+        const response = await axios.get("http://localhost:8080/api/auth/check", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setIsLoggedIn(response.data);
+      } catch (error) {
+        console.error("로그인 상태 확인 실패:", error);
+        setIsLoggedIn(false);
+      }
+    };
+  
+    checkLoginStatus();
   }, []);
+  
 
+  // 로그인 상태 확인 (Spring Boot와 연결 시 활성화)
+  /*
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const response = await axios.get("/api/auth/check", { withCredentials: true }); // 로그인 상태 확인 API
+        setIsLoggedIn(response.data.isLoggedIn); // 서버로부터 로그인 상태 확인
+      } catch (error) {
+        console.error("로그인 상태 확인 실패:", error);
+        setIsLoggedIn(false);
+      }
+    };
+    checkLoginStatus();
+  }, []);
+  */
+
+  // 로그아웃 처리
   const handleLogout = async () => {
     try {
-      // Spring Boot 서버로 로그아웃 요청
-      const token = localStorage.getItem("token");
-      if (token) {
-        await axios.post(
-          "/api/logout", // 로그아웃 API 엔드포인트
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`, // JWT 토큰 추가
-            },
-          }
-        );
-        // 토큰 제거 및 상태 업데이트
-        localStorage.removeItem("token");
-        setIsLoggedIn(false);
-        alert("로그아웃되었습니다.");
-        navigate("/");
-      } else {
-        alert("이미 로그아웃 상태입니다.");
-      }
+      localStorage.removeItem("token"); // JWT 삭제
+      alert("로그아웃되었습니다.");
+      navigate("/");
     } catch (error) {
       console.error("로그아웃 실패:", error);
       alert("로그아웃에 실패했습니다.");
     }
   };
+  
 
   const navLinks = [
     {
@@ -61,22 +79,54 @@ const Banner = () => {
     },
   ];
 
+  // 유틸리티 링크 정의
   const utilityLinks = [
+    // 로그인 상태에 따른 조건부 렌더링 주석 추가
+    /*
+    ...(isLoggedIn
+      ? [
+          {
+            label: "MyPage",
+            href: "/mypage",
+            onClick: () => navigate("/mypage"),
+          },
+          {
+            label: "Logout",
+            href: "#",
+            onClick: handleLogout,
+          },
+        ]
+      : [
+          {
+            label: "Login",
+            href: "/user",
+            onClick: () => navigate("/user"),
+          },
+        ]),
+    */
     {
       label: "Search",
       href: "/product-search",
       onClick: () => navigate("/product-search"),
     },
-    ...(isLoggedIn
-      ? [
-          { label: "MyPage", href: "/mypage", onClick: () => navigate("/mypage") },
-          { label: "Logout", href: "#", onClick: handleLogout },
-        ]
-      : [{ label: "Login", href: "/login", onClick: () => navigate("/login") }]),
+    {
+      label: "Login", // 기본으로 보이도록 설정
+      href: "/user",
+      onClick: () => navigate("/user"),
+    },
+    {
+      label: "Logout", // 기본으로 보이도록 설정
+      href: "#",
+      onClick: handleLogout,
+    },
+    {
+      label: "MyPage",
+      href: "/mypage",
+      onClick: () => navigate("/mypage"),
+    },
     {
       label: "WishList",
       href: "#",
-      visible: isLoggedIn,
       onClick: () => setWishListActive(!wishListActive),
     },
     {

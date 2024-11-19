@@ -1,13 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '../../assets/css/user_login.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const user_login = () => {
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({ id: "", password: "" });
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+          const response = await axios.post("http://localhost:8080/api/auth/login", formData);
+          localStorage.setItem("token", response.data); // JWT 저장
+          alert("로그인 성공!");
+          navigate("/mypage");
+        } catch (error) {
+          console.error("로그인 실패:", error);
+          alert("로그인에 실패했습니다.");
+        }
+      };
+
     return (
         <div className={styles.loginMain}>
             <div className={styles.container} id="container">
                 <div className={`${styles['form-container']} ${styles['sign-in-container']}`}>
-                    <form action="#">
+                    <form action="#" onSubmit={handleSubmit}>
                         <Link to="/">
                         <h1>Moivo</h1>
                         </Link>
