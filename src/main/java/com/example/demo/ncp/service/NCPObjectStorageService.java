@@ -1,4 +1,4 @@
-package com.service;
+package com.example.demo.ncp.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
@@ -44,6 +44,6 @@ public class NCPObjectStorageService {
         } catch (IOException e) {
             throw new RuntimeException("File upload failed", e);
         }
-        //콛,ㅡ에서 올리기
+        
     }
 }
