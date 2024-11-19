@@ -26,6 +26,11 @@ spring:
       hibernate.format_sql: true
       hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
 
+  servlet:
+    multipart:
+      max-file-size: -1 # 파일당 최대 크기 (-1은 무제한)
+      max-request-size: -1 # 요청 전체 최대 크기 (-1은 무제한)
+
 ncp:
   storage:
     access-key: 6A890BBDD2150DF9BDC5
