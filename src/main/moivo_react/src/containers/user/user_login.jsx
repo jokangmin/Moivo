@@ -8,14 +8,16 @@ const user_login = () => {
             <div className={styles.container} id="container">
                 <div className={`${styles['form-container']} ${styles['sign-in-container']}`}>
                     <form action="#">
-                        <h1>Sign In</h1>
+                        <Link to="/">
+                        <h1>Moivo</h1>
+                        </Link>
                             <div className={styles['social-container']}>
                                 <a href="#" className={styles.social}><i className="fab fa-facebook-f"></i></a>
                                 <a href="#" className={styles.social}><i className="fab fa-google-plus-g"></i></a>
                                 <a href="#" className={styles.social}><i className="fab fa-linkedin-in"></i></a>
                             </div>
                             <span>If you don't want to sign up,<br/>or use your account instead.</span>
-                            <input type="email" placeholder="ID" />
+                            <input type="ID" placeholder="ID" />
                             <input type="password" placeholder="Password" />
                             <a href="#">For got your password?</a>
                             <button>Sign In</button>
