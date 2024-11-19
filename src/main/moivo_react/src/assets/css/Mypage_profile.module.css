@@ -1,0 +1,213 @@
+.membershipBox,
+.profileForm {
+    width: 98%; /* 동일한 너비 설정 */
+    margin: 20px auto; /* 가운데 정렬 */
+}
+
+/* 멤버십 박스 */
+.membershipBox {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 98%;
+    margin: 20px auto;
+    padding: 20px;
+    background: #F6F2EE;
+    border: 1px solid #988C73;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+.membershipImage {
+    width: 50px;
+    height: 50px;
+    background: #F6F2EE;
+    margin-right: 50px;
+    margin-left: 20px;
+}
+
+.membershipImage img{
+    width: 50px;
+    height: 40px;
+    background: #F6F2EE;
+    margin-right: 50px;
+}
+
+.membershipInfo {
+    font-family: 'Italiana', serif;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: left;
+    color: #2f2e2c;
+    margin-bottom: 5px;
+}
+
+.pointCoupon {
+    font-family: 'Italiana', serif;
+    font-size: 16px;
+    text-align: left;
+    color: #2f2e2c;
+}
+.profileContainer {
+    width: 100%;
+    margin: 0 auto;
+    background-color: #f6f2ee;
+    padding: 20px;
+    font-family: "Italiana", sans-serif;
+  }
+  
+  .pageName {
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .memberStatus {
+    background-color: #f6f2ee;
+    border: 1px solid #988C73;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  
+  .vipAmount {
+    color: #333;
+  }
+  
+  .profileForm {
+    background-color: #f6f2ee;
+    padding: 20px;
+    border: 1px solid #988C73;
+  }
+  
+  .formRow {
+    display: flex;
+    align-items: center; /* 수직 중앙 정렬 */
+    margin-bottom: 15px;
+}
+
+.formRow label {
+    font-weight: bold;
+    color: #333;
+    width: 150px; /* 레이블의 너비 고정 */
+    margin-bottom: 0; /* 하단 마진 제거 */
+    padding-right: 20px; /* 입력창과의 간격 조정 */
+}
+
+.formRow input {
+    padding: 10px;
+    border: 1px solid #988C73;
+    font-size: 14px;
+    background-color: transparent;
+    width: 70%; /* 입력창 너비를 70%로 설정 */
+}
+/* 주소 입력란을 세로로 배치하면서, 상하 정렬을 맞추는 방법 */
+.addressContainer {
+    display: flex;
+    flex-direction: column; /* 세로로 배치 */
+    gap: 10px;
+    width: 100%; /* 전체 너비 사용 */
+    align-items: stretch; /* 모든 입력창의 너비를 동일하게 맞추기 */
+}
+.addressContainer input {
+    padding: 8px;
+    border: 1px solid #988C73;
+    font-size: 14px;
+    background-color: transparent;
+    margin-left: 10px;
+}
+
+
+/* 기본 주소와 상세 주소가 화면 너비에 맞게 차지하도록 설정 */
+.addressContainer input[name="address"],
+.addressContainer input[name="detailedAddress"] {
+    flex-grow: 1; /* 입력창들이 여유 공간을 차지하도록 설정 */
+    width: 78%; /* 100% 너비 차지 */
+}
+
+/* 우편번호 입력란은 좁게 설정 */
+.addressContainer input[name="postalCode"] {
+    width: 80px; /* 우편번호 입력란의 너비 좁게 설정 */
+}
+
+.phoneRow {
+    display: flex;
+    gap: 5px;
+}
+
+.phoneRow input {
+    text-align: center;
+}
+
+.buttonRow {
+    display: flex;
+    justify-content: center; /* 버튼 중앙 정렬 */
+    gap: 10px; /* 버튼 간격 설정 */
+    margin-top: 20px;
+}
+
+.submitButton,
+.cancelButton {
+    padding: 10px 20px;
+    background-color: #988c7328;
+    color: #2F2E2C;
+    border: none;
+    cursor: pointer;
+}
+
+.submitButton:hover,
+.cancelButton:hover {
+    background-color: #B4A59B;
+}
+
+
+/* 미디어 쿼리: 화면 크기가 768px 이하일 때 적용 */
+@media (max-width: 768px) {
+    .membershipBox {
+        flex-direction: column; /* 세로로 배치하여 공간을 더 효율적으로 사용 */
+        align-items: center; /* 멤버십 박스 중앙 정렬 */
+    }
+
+    .membershipImage {
+        margin: 0 auto 20px auto; /* 이미지 가운데 정렬 */
+    }
+
+    .formRow {
+        flex-direction: column; /* 수직으로 배치 */
+        align-items: flex-start; /* 왼쪽 정렬 */
+    }
+
+    .formRow input {
+        width: 100%; /* 입력창 너비를 100%로 설정하여 화면에 맞게 */
+        padding: 12px; /* 입력창 여백 늘리기 */
+    }
+
+    .addressContainer {
+        flex-direction: column; /* 주소 항목 세로로 정렬 */
+    }
+
+    .buttonRow {
+        flex-direction: column; /* 버튼들을 세로로 배치 */
+        gap: 15px; /* 버튼 간격 늘리기 */
+    }
+
+    .submitButton,
+    .cancelButton {
+        width: 100%; /* 버튼 너비를 100%로 설정 */
+        padding: 12px; /* 버튼 여백 늘리기 */
+    }
+}
+
+/* 미디어 쿼리: 화면 크기가 480px 이하일 때 추가 조정 */
+@media (max-width: 480px) {
+    .pageName {
+        font-size: 28px; /* 제목 크기 축소 */
+    }
+
+    .membershipInfo,
+    .pointCoupon {
+        font-size: 14px; /* 멤버십 정보 폰트 크기 축소 */
+    }
+}
