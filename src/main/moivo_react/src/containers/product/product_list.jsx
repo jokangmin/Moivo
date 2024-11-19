@@ -92,48 +92,51 @@ const ProductList = () => {
   };
 
   return (
-    <div className={styles.cntr}>
-      <Banner />
-      <br />
-      <br />
-      <br />
-      <div id="crt" className={styles.cart} data-totalitems={cart}>
-        <i className="fas fa-shopping-cart"></i>
-      </div>
-      <div id="wsh" className={styles.wish} data-totalitems={wish}>
-        <i className="fas fa-heart"></i>
-      </div>
-      <h2 className={styles.ttl}>Product List</h2>
-      <div className={styles.grid}>
-        {products.map((prod) => (
-          <div key={prod.id} className={styles.card}>
-            {prod.badge && <div className={styles.badge}>{prod.badge}</div>}
-            <div className={styles.imgWrap}>
-              <img src={prod.image} alt={prod.title} className={styles.img} />
-              <div className={styles.ovr}>
-                <h3
-                  className={styles.ovrTtl}
-                  onClick={() => goToDetail(prod)}
-                >
-                  {prod.title}
-                </h3>
-                <p className={styles.ovrCat}>{prod.category}</p>
+    <div>
+      <div className={styles.cntr}>
+        <Banner />
+        <br />
+        <br />
+        <br />
+        <div id="crt" className={styles.cart} data-totalitems={cart}>
+          <i className="fas fa-shopping-cart"></i>
+        </div>
+        <div id="wsh" className={styles.wish} data-totalitems={wish}>
+          <i className="fas fa-heart"></i>
+        </div>
+        <h2 className={styles.ttl}>Product List</h2>
+        <div className={styles.grid}>
+          {products.map((prod) => (
+            <div key={prod.id} className={styles.card}>
+              {prod.badge && <div className={styles.badge}>{prod.badge}</div>}
+              <div className={styles.imgWrap}>
+                <img src={prod.image} alt={prod.title} className={styles.img} />
+                <div className={styles.ovr}>
+                  <h3
+                    className={styles.ovrTtl}
+                    onClick={() => goToDetail(prod)}
+                  >
+                    {prod.title}
+                  </h3>
+                  <p className={styles.ovrCat}>{prod.category}</p>
+                </div>
+              </div>
+              <div className={styles.ovrLnk}>
+                <button className={styles.actBtn} onClick={() => addToWish(prod)}>
+                  <i className="fa fa-heart"></i>
+                </button>
+                <button className={styles.actBtn} onClick={() => addToCart(prod)}>
+                  <i className="fa fa-shopping-cart"></i>
+                </button>
               </div>
             </div>
-            <div className={styles.ovrLnk}>
-              <button className={styles.actBtn} onClick={() => addToWish(prod)}>
-                <i className="fa fa-heart"></i>
-              </button>
-              <button className={styles.actBtn} onClick={() => addToCart(prod)}>
-                <i className="fa fa-shopping-cart"></i>
-              </button>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        <div>
+
+        </div>  
       </div>
-      <div>
       <Footer />
-      </div>  
     </div>
   );
 };
