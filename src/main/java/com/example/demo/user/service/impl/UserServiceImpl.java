@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
+        System.out.println("login: " + userEntity);
         // 비밀번호 검증
         if (!passwordEncoder.matches(pwd, userEntity.getPwd())) {
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");

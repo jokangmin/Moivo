@@ -5,27 +5,31 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
+@PropertySource("classpath:external-config.properties") // yml에서 불러오는게 아니라 처음 실행할 때 프로퍼티스를 읽어오는거임
 public class NCPStorageConfig {
 
-    @Value("${ncp.storage.access-key}")
+    @Value("${NCP_STORAGE_ACCESS_KEY}")
     private String accessKey;
 
-    @Value("${ncp.storage.secret-key}")
+    @Value("${NCP_STORAGE_SECRET_KEY}")
     private String secretKey;
 
-    @Value("${ncp.storage.region}")
+    @Value("${NCP_STORAGE_REGION}")
     private String region;
 
-    @Value("${ncp.storage.endpoint}")
+    @Value("${NCP_STORAGE_ENDPOINT}")
     private String endpoint;
 
     @Bean
     public AmazonS3 amazonS3() {
+
         return AmazonS3ClientBuilder
                 .standard()
                 .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endpoint, region))

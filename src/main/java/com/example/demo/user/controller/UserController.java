@@ -26,6 +26,8 @@ public class UserController {
     //로그인 API
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserDTO userDTO) {
+
+        System.out.println("userDTO = " + userDTO);
         try {
             String jwt = userService.login(userDTO.getId(), userDTO.getPwd());
             return ResponseEntity.ok(jwt); // JWT 반환

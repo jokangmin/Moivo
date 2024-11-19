@@ -1,12 +1,15 @@
 spring:
+  config:
+    import: "classpath:external-config.properties"
+
   datasource:
-    # Oracle 설정 (주석 처리됨)
+    # Oracle 설정
     # url: jdbc:oracle:thin:@localhost:1521:XE
     # username: c##java
     # password: 1234
     # driver-class-name: oracle.jdbc.driver.OracleDriver
 
-    # MySQL 설정 (로컬 개발용)
+    # MySQL 설정
     # url: jdbc:mysql://localhost:3306/moivo?useSSL=false&serverTimezone=Asia/Seoul
     # username: root
     # password: 1234
@@ -23,18 +26,6 @@ spring:
       ddl-auto: update
     show-sql: true
     properties:
-      hibernate.format_sql: true
-      hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
-
-  ncp:
-    storage:
-      access-key: 6A890BBDD2150DF9BDC5
-      secret-key: E59E91B8E8475F97570C5CC1B44F87162DCDBF24
-      region: kr-standard
-      endpoint: http://kr.object.ncloudstorage.com
-
-  com:
-    joeun:
-      jwt:
-        secret-key: "|+<T%0h;[G97|I$5Lr?h]}`8rUX.7;0gw@bF<R/|\"-U0n:_6j={'.T'GHs~<AxU9"
-
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
