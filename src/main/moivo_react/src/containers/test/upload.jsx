@@ -86,6 +86,7 @@ const Upload = () => {
   return (
     <div className={styles.uploadContainer}>
       <Banner />
+      <br/><br/><br/><br/>
       <div className={styles.uploadContent}>
         <h1 className={styles.title}>상품 업로드</h1>
 
