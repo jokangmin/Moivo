@@ -1,11 +1,14 @@
 /* product_detail.module.css */
 
+
+@import url("https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css");
+
 /* 전체 컨테이너 */
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 120px 20px 50px; /* 상단 여백 추가 */
-  font-family: "Roboto", sans-serif;
+  padding: 120px 20px 50px;
+  font-family: "GmarketSans", sans-serif;
 }
 
 /* 컨텐츠 레이아웃 */
@@ -13,7 +16,7 @@
   display: flex;
   gap: 30px;
   margin-top: 30px;
-  margin-bottom: 50px; /* 하단 마진 추가 */
+  margin-bottom: 50px;
 }
 
 /* 갤러리 섹션 */
@@ -24,13 +27,35 @@
 .mainImgWrap {
   height: 600px;
   overflow: hidden;
+  border-radius: 10px;
 }
 
 .mainImg {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 10px;
+}
+
+/* 썸네일 */
+.thumbs {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.thumb {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s, border 0.2s;
+  border: 1px solid #ddd;
+}
+
+.thumb:hover {
+  transform: scale(1.1);
+  border: 2px solid #333;
 }
 
 /* 구매 정보 섹션 */
@@ -40,8 +65,8 @@
   top: 120px;
   background: #fff;
   padding: 30px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .title {
@@ -70,6 +95,7 @@
   color: #888;
 }
 
+/* 옵션 섹션 */
 .options label {
   display: block;
   font-size: 1.2rem;
@@ -83,6 +109,7 @@
   width: 100%;
 }
 
+/* 선택된 옵션 표시 */
 .selectedOptions {
   margin-top: 20px;
   font-size: 1.2rem;
@@ -90,25 +117,82 @@
   font-weight: bold;
 }
 
-/* 썸네일 */
-.thumbs {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.thumb {
-  width: 90px;
-  height: 90px;
-  object-fit: cover;
-  border-radius: 5px;
+/* 버튼 스타일 */
+.cartBtn,
+.buyBtn {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  font-size: 1.2rem;
+  border-radius: 8px;
   cursor: pointer;
-  transition: transform 0.2s;
-  border: 1px solid #ddd;
+  margin-top: 10px;
+  text-align: center;
+  transition: background-color 0.3s ease;
 }
 
-.thumb:hover {
-  transform: scale(1.1);
+.cartBtn {
+  background-color: #555;
+  color: white;
+  border: none;
+}
+
+.cartBtn:hover {
+  background-color: #333;
+}
+
+.buyBtn {
+  background-color: #8b7355;
+  color: white;
+  border: none;
+}
+
+.buyBtn:hover {
+  background-color: #5a4237;
+}
+
+/* 상품 상세 정보 */
+.details {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease-in-out;
+}
+
+.details summary {
+  font-size: 1.4rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.details[open] {
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.details summary::marker {
+  display: none;
+}
+
+.details summary:after {
+  content: "▼";
+  float: right;
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.details[open] summary:after {
+  transform: rotate(180deg);
+}
+
+.detailsContent {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: #555;
 }
 
 /* 설명 섹션 */
@@ -132,39 +216,19 @@
   color: #666;
 }
 
-/* 버튼 */
-.cartBtn {
-  display: block;
-  background: #333;
-  color: white;
-  padding: 15px 20px;
-  border: none;
-  border-radius: 5px;
-  margin-top: 20px;
-  cursor: pointer;
-  font-size: 1.2rem;
-  transition: background 0.3s;
+/* 리뷰 섹션 */
+.reviewSection {
+  margin-top: 50px;
+  padding: 30px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.cartBtn:hover {
-  background: #555;
-}
-
-.buyBtn {
-  display: block;
-  background: #8b7355;
-  color: white;
-  padding: 15px 20px;
-  border: none;
-  border-radius: 5px;
-  margin-top: 10px;
-  cursor: pointer;
-  font-size: 1.2rem;
-  transition: background 0.3s;
-}
-
-.buyBtn:hover {
-  background: #5a4237;
+.reviewSection h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #333;
 }
 
 /* 상단 이동 버튼 */
@@ -175,7 +239,7 @@
   background: #333;
   color: white;
   border: none;
-  padding: 10px 15px;
+  padding: 12px 18px;
   border-radius: 50%;
   cursor: pointer;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);

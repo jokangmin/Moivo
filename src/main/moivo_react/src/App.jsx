@@ -10,27 +10,46 @@ import ProductDetail from './containers/product/product_detail';
 import Qna_faqboard from './containers/qna/qna_faqboard';
 import Qna_board from './containers/qna/qna_board';
 import MainProvider from './contexts/MainContext';
+import Upload from './containers/test/upload';
+import MypageMain from './containers/mypage/mypage_main';
+import MypageOrder from './containers/mypage/mypage_order';
+import MypageOrderDetails from './containers/mypage/mypage_orderDetails';
+import MypageProfile from './containers/mypage/mypage_profile';
 
+const routeConfig = [
+  { path: "/", element: <Main_index /> },
+  { path: "/user", element: <User_login /> },
+  { path: "/user_signup", element: <User_signup /> },
+  { path: "/product", element: <ProductBoard /> },
+  { path: "/product-list", element: <ProductList /> },
+  { path: "/product-search", element: <ProductSearch /> },
+  { path: "/product-detail/:id", element: <ProductDetail /> },
+  { path: "/upload", element: <Upload /> },
+  { path: "/mypage", element: <MypageMain /> },
+  { path: "/mypage/profile", element: <MypageProfile /> },
+  { path: "/mypage/order", element: <MypageOrder /> },
+  { path: "/mypage/orderDetails", element: <MypageOrderDetails /> },
+  { path: "/qna_faqboard", element: <Qna_faqboard /> },
+  { path: "/qna_board", element: <Qna_board /> }
 
+];
 
 const App = () => {
   return (
+
     <MainProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<Main_index />} />
-          <Route path="/user" element={<User_login/>} />
-          <Route path="/user_signup" element={<User_signup/>} />
-          <Route path="/product" element={<ProductBoard />} />
-          <Route path="/product-list" element={<ProductList />} />
-          <Route path="/product-search" element={<ProductSearch />} />
-          <Route path="/product-detail/:id" element={<ProductDetail />} />
-          <Route path="/qna_faqboard" element={<Qna_faqboard/>} />
-          <Route path="/qna_board" element={<Qna_board/>} />
+
+          {routeConfig.map(({ path, element }, index) => (
+            <Route key={index} path={path} element={element} />
+          ))}
+
         </Routes>
       </Router>
     </MainProvider>
   );
 };
+
 
 export default App;

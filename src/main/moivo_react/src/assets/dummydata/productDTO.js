@@ -1,10 +1,10 @@
 import img1 from '../image/1_outer.jpg';
 import img2 from '../image/2_outer.jpg';
-import img4 from '../image/1_pa.jpg';
-import img5 from '../image/5_ja.jpg';
-import img6 from '../image/4_outer.jpg';
-import img7 from '../image/7_outer.jpg';
-import img8 from '../image/6_outer.jpg';
+import img3 from '../image/1_pa.jpg';
+import img4 from '../image/5_ja.jpg';
+import img5 from '../image/4_outer.jpg';
+import img6 from '../image/7_outer.jpg';
+import img7 from '../image/6_outer.jpg';
 
 const products = [
   {
@@ -30,10 +30,10 @@ const products = [
     description: 'A warm and lightweight puffer jacket for chilly weather.',
   },
   {
-    id: 4,
+    id: 3,
     title: 'Classic Pants',
     category: 'Pants',
-    image: img4,
+    image: img3,
     badge: 'Trending',
     price: 80000,
     stock: 25,
@@ -41,10 +41,10 @@ const products = [
     description: 'Elegant and comfortable pants for every occasion.',
   },
   {
-    id: 5,
+    id: 4,
     title: 'Denim Jeans',
     category: 'Jeans',
-    image: img5,
+    image: img4,
     badge: 'Hot',
     price: 90000,
     stock: 30,
@@ -52,10 +52,10 @@ const products = [
     description: 'Classic denim jeans with a modern fit.',
   },
   {
-    id: 6,
+    id: 5,
     title: 'Leather Jacket',
     category: 'Outerwear',
-    image: img6,
+    image: img5,
     badge: 'Limited',
     price: 200000,
     stock: 5,
@@ -63,10 +63,10 @@ const products = [
     description: 'A premium leather jacket for stylish individuals.',
   },
   {
-    id: 7,
+    id: 6,
     title: 'Bomber Jacket',
     category: 'Outerwear',
-    image: img7,
+    image: img6,
     badge: 'New',
     price: 170000,
     stock: 12,
@@ -74,10 +74,10 @@ const products = [
     description: 'A trendy bomber jacket with a versatile design.',
   },
   {
-    id: 8,
+    id: 7,
     title: 'Blazer',
     category: 'Outerwear',
-    image: img8,
+    image: img7,
     badge: 'Classic',
     price: 110000,
     stock: 8,
