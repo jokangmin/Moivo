@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import styles from '../../assets/css/user_sigup.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Footer from './../../components/Footer/Footer';
+import axios from "axios";
 
 function user_signup() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     id: "",
     password: "",
@@ -86,10 +90,20 @@ function user_signup() {
     return isValid;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
+    try {
+      await axios.post("http://localhost:8080/api/auth/signup", {
+        id: formData.id,
+        pwd: formData.password,
+        name: formData.name,
+        email: formData.email,
+      });
       alert("회원가입 성공!");
+      navigate("/user");
+    } catch (error) {
+      console.error("회원가입 실패:", error);
+      alert("회원가입에 실패했습니다.");
     }
   };
 
@@ -131,6 +145,16 @@ function user_signup() {
           <hr className={styles.signupline} />
 
           <div className={styles.formRow}>
+            <span>GENDER</span>
+              <div className={styles.radioContainer}>
+                <input type="radio" name="gender" value="male" checked={formData.gender === "male"} onChange={handleChange}/> Male
+                <input type="radio" name="gender" value="female" checked={formData.gender === "female"} onChange={handleChange}/> Female
+              </div>
+                <div className={styles.exception}>{errors.gender}</div>
+          </div>
+          <hr className={styles.signupline} />
+
+          <div className={styles.formRow}>
             <span>ADDRESS</span>
             <div className={styles.addressContainer}>
               <div className={styles.postalRow}>
@@ -164,7 +188,7 @@ function user_signup() {
 
           <div className={styles.formRow}>
             <span>EMAIL</span>
-            <input type="email" name="email" value={formData.email} onChange={handleChange} />
+            <input className={styles.emaildetail}type="email" name="email" value={formData.email} onChange={handleChange} />
             <div className={styles.exception}>{errors.email}</div>
           </div>
           <hr className={styles.signupline} />
@@ -177,6 +201,7 @@ function user_signup() {
           </div>
         </form>
       </div>
+      <Footer />
     </div>
   );
 }
