@@ -13,7 +13,7 @@ const user_login = () => {
 
     //사용자 데이터 요청하는 함수임
     const fetchUserData = async () => {
-        const token = localStorage.getItem("token"); // JWT를 가져옴
+        const token = sessionStorage.getItem("token"); // JWT를 가져옴
         try {
             const response = await axios.get("http://localhost:8080/api/user/info", {    //  /api/user -> LoginController로 이동
                 headers: {
@@ -31,7 +31,7 @@ const user_login = () => {
         try {
             console.log(formData);
             const response = await axios.post("http://localhost:8080/api/auth/login", formData);
-            localStorage.setItem("token", response.data);
+            sessionStorage.setItem("token", response.data);
             login();
             alert("로그인 성공!");
             navigate("/mypage");
