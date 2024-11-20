@@ -122,6 +122,7 @@ const qna_faqboard = () => {
                 </div>
             </div>
             <Footer/>
+
         </div>
         );
 };

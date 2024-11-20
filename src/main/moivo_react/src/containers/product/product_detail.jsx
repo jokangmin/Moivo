@@ -15,16 +15,6 @@ const ProductDetail = () => {
   const [mainImg, setMainImg] = useState(product?.image);
   const [showTopButton, setShowTopButton] = useState(false);
 
-  // axios 테스트
-  const onTest = async () => {
-    try {
-      const response = await axios.get("http://localhost:8080/api/store/review/test");
-      alert(`연결 성공: ${response.data.message}`);
-    } catch (error) {
-      console.error("API 테스트 실패:", error);
-      alert(`연결 실패: ${error.response?.data?.message || "서버 오류"}`);
-    }
-  };
 
 
   if (!product) {
@@ -140,7 +130,7 @@ const ProductDetail = () => {
             <p> Ah aaaaa </p>
             <p> Ah aaaaa </p>
             <p> Ah aaaaa </p>
-            <button onClick={ onTest }>API 테스트</button>
+            
       </div>      
 
       {/* 상단 이동 버튼 */}

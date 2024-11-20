@@ -3,337 +3,196 @@
 
 @import url("https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css");
 
-/* 기본 폰트 설정 */
 .container {
   font-family: "GmarketSans", sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 20px 50px;
 }
 
-/* 폰트 크기 조정 */
+.content {
+  display: flex;
+  gap: 50px;
+}
+
+.imageArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mainImage {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  object-fit: cover;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.thumbnails {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.thumbnail:hover {
+  transform: scale(1.05);
+}
+
+.infoArea {
+  flex: 1;
+}
+
 .title {
   font-size: clamp(2.8rem, 4vw, 3.5rem);
+  margin-bottom: 10px;
 }
 
 .category {
   font-size: clamp(1.5rem, 2vw, 2rem);
+  color: #888;
+  margin-bottom: 20px;
 }
 
 .price {
   font-size: clamp(2rem, 3vw, 2.5rem);
-}
-
-/* 전체 컨테이너 */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 120px 20px 50px;
-  font-family: "GmarketSans", sans-serif;
-}
-
-/* 컨텐츠 레이아웃 */
-.content {
-  display: flex;
-  gap: 30px;
-  margin-top: 30px;
-  margin-bottom: 50px;
-}
-
-/* 갤러리 섹션 */
-.gallery {
-  flex: 1.5;
-}
-
-.mainImgWrap {
-  height: 600px;
-  overflow: hidden;
-  border-radius: 10px;
-}
-
-.mainImg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* 썸네일 */
-.thumbs {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.thumb {
-  width: 90px;
-  height: 90px;
-  object-fit: cover;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: transform 0.2s, border 0.2s;
-  border: 1px solid #ddd;
-}
-
-.thumb:hover {
-  transform: scale(1.1);
-  border: 2px solid #333;
-}
-
-/* 구매 정보 섹션 */
-.infoArea {
-  flex: 1;
-  position: sticky;
-  top: 120px;
-  background: #fff;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.title {
-  font-size: 2.8rem;
   font-weight: bold;
-  margin-bottom: 20px;
-  color: #333;
-}
-
-.category {
-  font-size: 1.5rem;
   margin-bottom: 10px;
-  color: #666;
-}
-
-.price {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 15px;
-  color: #8b7355;
 }
 
 .stock {
-  font-size: 1.2rem;
+  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
   margin-bottom: 20px;
-  color: #888;
 }
 
-/* 옵션 섹션 */
+.options {
+  margin-bottom: 20px;
+}
+
 .options label {
-  display: block;
-  font-size: 1.2rem;
-  margin-bottom: 8px;
+  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+  margin-right: 10px;
 }
 
-.options select {
-  padding: 12px;
-  border: 1px solid #ddd;
+.select {
+  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+  padding: 5px 10px;
+  border: 1px solid #ccc;
   border-radius: 5px;
-  width: 100%;
 }
 
-/* 선택된 옵션 표시 */
 .selectedOptions {
-  margin-top: 20px;
-  font-size: 1.2rem;
-  color: #333;
-  font-weight: bold;
+  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+  margin-bottom: 20px;
 }
 
-/* 버튼 스타일 */
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
 .cartBtn,
 .buyBtn {
-  display: block;
-  width: 100%;
-  padding: 15px;
-  font-size: 1.2rem;
-  border-radius: 8px;
+  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  margin-top: 10px;
-  text-align: center;
   transition: background-color 0.3s ease;
 }
 
 .cartBtn {
-  background-color: #555;
-  color: white;
-  border: none;
+  background-color: #f0c040;
+  color: #fff;
 }
 
 .cartBtn:hover {
-  background-color: #333;
+  background-color: #e0b030;
 }
 
 .buyBtn {
-  background-color: #8b7355;
-  color: white;
-  border: none;
+  background-color: #4caf50;
+  color: #fff;
 }
 
 .buyBtn:hover {
-  background-color: #5a4237;
+  background-color: #45a049;
 }
 
-/* 상품 상세 정보 */
 .details {
-  margin-top: 20px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  transition: all 0.3s ease-in-out;
+  margin-top: 50px;
 }
 
 .details summary {
-  font-size: 1.4rem;
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
   font-weight: bold;
   cursor: pointer;
-  padding: 10px;
-}
-
-.details[open] {
-  background-color: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.details summary::marker {
-  display: none;
-}
-
-.details summary:after {
-  content: "▼";
-  float: right;
-  font-size: 1rem;
-  transition: transform 0.3s ease;
-}
-
-.details[open] summary:after {
-  transform: rotate(180deg);
+  margin-bottom: 10px;
 }
 
 .detailsContent {
-  margin-top: 10px;
-  font-size: 1.2rem;
-  line-height: 1.5;
-  color: #555;
+  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+  line-height: 1.6;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 5px;
 }
 
-/* 설명 섹션 */
 .description {
   margin-top: 50px;
-  padding: 30px;
-  background: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .description h2 {
   font-size: clamp(2rem, 3vw, 2.8rem);
-  margin-bottom: 15px;
-  color: #333;
+  margin-bottom: 20px;
 }
 
 .description p {
   font-size: clamp(1.2rem, 1.8vw, 1.6rem);
   line-height: 1.6;
-  color: #666;
 }
 
-/* 리뷰 섹션 */
 .reviewSection {
   margin-top: 50px;
-  padding: 30px;
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .reviewSection h2 {
   font-size: clamp(2rem, 3vw, 2.8rem);
-  margin-bottom: 15px;
-  color: #333;
+  margin-bottom: 20px;
 }
 
-/* 상단 이동 버튼 */
 .topButton {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: #333;
-  color: white;
+  background-color: #333;
+  color: #fff;
   border: none;
-  padding: 12px 18px;
   border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  width: 50px;
+  height: 50px;
   font-size: 1.5rem;
-  transition: background 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.topButton:hover {
-  background: #555;
-}
-
-/* 폰트 패밀리 추가가 필요한 요소들 */
-.container,
-.title,
-.category,
-.price,
-.stock,
-.options label,
-.options select,
-.selectedOptions,
-.cartBtn,
-.buyBtn,
-.details summary,
-.detailsContent,
-.description h2,
-.description p,
-.reviewSection h2 {
-  font-family: "GmarketSans", sans-serif;
-}
-
-.title {
-  font-size: clamp(2.8rem, 4vw, 3.5rem);
-}
-
-.category {
-  font-size: clamp(1.5rem, 2vw, 2rem);
-}
-
-.price {
-  font-size: clamp(2rem, 3vw, 2.5rem);
-}
-
-.stock {
-  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
-}
-
-.options label,
-.options select {
-  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
-}
-
-.selectedOptions {
-  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
-}
-
-.cartBtn,
-.buyBtn {
-  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
-}
-
-.details summary {
-  font-size: clamp(1.4rem, 2vw, 1.8rem);
-}
-
-.detailsContent {
-  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
-}
-
-.description h2 {
-  font-size: clamp(2rem, 3vw, 2.8rem);
-}
-
-.description p {
-  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
-}
-
-.reviewSection h2 {
-  font-size: clamp(2rem, 3vw, 2.8rem);
+.topButton.show {
+  opacity: 1;
 }
