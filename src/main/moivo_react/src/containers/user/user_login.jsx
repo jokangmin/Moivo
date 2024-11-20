@@ -4,10 +4,42 @@ import { AuthContext } from '../../contexts/AuthContext';
 import styles from '../../assets/css/user_login.module.css';
 
 const user_login = () => {
+
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
   const [formData, setFormData] = useState({ id: '', password: '' });
   const [error, setError] = useState('');
+
+    //사용자 데이터 요청하는 함수임
+    const fetchUserData = async () => {
+        const token = localStorage.getItem("token"); // JWT를 가져옴
+        try {
+            const response = await axios.get("http://localhost:8080/api/user/info", {    //  /api/user -> LoginController로 이동
+                headers: {
+                    Authorization: `Bearer ${token}`, // 헤더에 JWT 추가
+                },
+            });
+            console.log("사용자 정보:", response.data);
+        } catch (error) {
+            console.error("데이터 요청 실패:", error);
+        }
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            console.log(formData);
+            const response = await axios.post("http://localhost:8080/api/auth/login", formData);    // /api/auth ->  UserController 로 이동
+          //const response = await axios.post("http://localhost:8080/api/auth/login", {"id" : 1, "pwd" : 1});    // /api/auth ->  UserController 로 이동
+          localStorage.setItem("token", response.data); // JWT 저장
+          alert("로그인 성공!");
+          navigate("/mypage");
+        } catch (error) {
+          console.error("로그인 실패:", error);
+          alert("로그인에 실패했습니다.");
+        }
+      };
+
 
   const handleChange = (e) => {
     setFormData({
@@ -16,21 +48,21 @@ const user_login = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     setError('');
     
-    try {
-      const success = await login(formData);
-      if (success) {
-        navigate('/');
-      } else {
-        setError('로그인에 실패했습니다.');
-      }
-    } catch (error) {
-      setError('서버와의 통신 중 오류가 발생했습니다.');
-    }
-  };
+//     try {
+//       const success = await login(formData);
+//       if (success) {
+//         navigate('/');
+//       } else {
+//         setError('로그인에 실패했습니다.');
+//       }
+//     } catch (error) {
+//       setError('서버와의 통신 중 오류가 발생했습니다.');
+//     }
+//   };
 
   return (
     <div className={styles.loginMain}>
