@@ -9,6 +9,7 @@ const MypageProfile = () => {
         password: "bitcamp123!@#",
         confirmPassword: "bitcamp123!@#",
         name: "전수민",
+        gender: "male", // 성별 추가 (기본값: 남성)
         postalCode: "06134",
         address: "서울시 강남구 강남대로94길 20",
         detailedAddress: "6층 602호",
@@ -41,6 +42,7 @@ const MypageProfile = () => {
             password: "bitcamp123!@#",
             confirmPassword: "bitcamp123!@#",
             name: "전수민",
+            gender: "male",
             postalCode: "06134",
             address: "서울시 강남구 강남대로94길 20",
             detailedAddress: "6층 602호",
@@ -69,7 +71,6 @@ const MypageProfile = () => {
                 <button className={styles.deleteButton} onClick={handleDeleteAccount}>
                     회원 탈퇴
                 </button>
-                {/* 멤버십 박스 */}
                 <div className={styles.membershipBox}>
                     <div className={styles.membershipImage}>
                         <img src="../image/level5.png" alt="Profile" />
@@ -104,6 +105,32 @@ const MypageProfile = () => {
                     <div className={styles.formRow}>
                         <label>NAME</label>
                         <input type="text" name="name" value={formData.name} onChange={handleChange} />
+                    </div>
+                    {/* 성별 입력 필드 추가 */}
+                    <div className={styles.formRow}>
+                        <label>GENDER</label>
+                        <div className={styles.genderContainer}>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="gender"
+                                    value="male"
+                                    checked={formData.gender === "male"}
+                                    onChange={handleChange}
+                                />
+                                남성
+                            </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="gender"
+                                    value="female"
+                                    checked={formData.gender === "female"}
+                                    onChange={handleChange}
+                                />
+                                여성
+                            </label>
+                        </div>
                     </div>
                     <div className={styles.formRow}>
                         <label>ADDRESS</label>
@@ -170,7 +197,13 @@ const MypageProfile = () => {
                     </div>
                     <div className={styles.formRow}>
                         <label>EMAIL</label>
-                        <input type="email" name="email" value={formData.email} onChange={handleChange} style={{color: "#2f2e2c"}}/>
+                        <input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            style={{ color: "#2f2e2c" }}
+                        />
                     </div>
                     <div className={styles.buttonRow}>
                         <button type="submit" className={styles.submitButton}>

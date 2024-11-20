@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import styles from "../../assets/css/product_detail.module.css";
 import Banner from "../../components/Banner/banner";
 import Footer from "../../components/Footer/Footer";
-import axios  from "axios";
+import axios from "axios";
 
 const ProductDetail = () => {
   const { state } = useLocation();
@@ -11,149 +11,183 @@ const ProductDetail = () => {
   const navigate = useNavigate();
 
   const [selectedSize, setSize] = useState("");
-  const [cartCount, setCartCount] = useState(0);
-  const [mainImg, setMainImg] = useState(product?.image);
-  const [showTopButton, setShowTopButton] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [mainImg, setMainImg] = useState(product?.images[0]);
+  const [showDescription, setShowDescription] = useState(true);
+  const [showReviews, setShowReviews] = useState(false);
+  const [showGuide, setShowGuide] = useState(false);
 
-  // axios 테스트
-  const onTest = async () => {
-    try {
-      const response = await axios.get("http://localhost:8080/api/store/review/test");
-      alert(`연결 성공: ${response.data.message}`);
-    } catch (error) {
-      console.error("API 테스트 실패:", error);
-      alert(`연결 실패: ${error.response?.data?.message || "서버 오류"}`);
+  useEffect(() => {
+    if (!product) {
+      navigate("/");
+    } else {
+      setMainImg(product.images[0]);
     }
-  };
-
-
-  if (!product) {
-    return (
-      <div className={styles.error}>
-        <h2>상품 정보를 불러올 수 없습니다.</h2>
-        <button onClick={() => navigate("/")}>홈으로 이동</button>
-      </div>
-    );
-  }
+  }, [product, navigate]);
 
   const addToCart = () => {
     if (!selectedSize) {
-      alert("옵션을 선택해주세요.");
+      alert("사이즈를 선택해주세요.");
       return;
     }
-    setCartCount(cartCount + 1);
-    alert(`장바구니에 추가됨! ${product.title}, 사이즈: ${selectedSize}`);
+    // 장바구니에 추가하는 로직 구현
+    alert(`장바구니에 추가됨! ${product.title}, 사이즈: ${selectedSize}, 수량: ${quantity}`);
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  const buyNow = () => {
+    if (!selectedSize) {
+      alert("사이즈를 선택해주세요.");
+      return;
+    }
+    // 바로 구매하는 로직 구현
+    alert(`바로 구매! ${product.title}, 사이즈: ${selectedSize}, 수량: ${quantity}`);
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowTopButton(window.scrollY > 200);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const onAPI = () => {
-    axios.get('http://localhost:8080/api/auth/onAPI')
-          .then(res => setAPI(res.data))
-
-  }; 
+  if (!product) {
+    return null;
+  }
 
   return (
     <div>
-    <div className={styles.container}>
       <Banner />
-      <div className={styles.content}>
-        {/* 구매 정보 섹션 */}
-        <div className={styles.infoArea}>
-          <h1 className={styles.title}>{product.title}</h1>
-          <p className={styles.category}>카테고리: {product.category}</p>
-          <p className={styles.price}>₩{product.price.toLocaleString()}</p>
-          <p className={styles.stock}>재고: {product.stock} 개</p>
-          <div className={styles.options}>
-            <label>사이즈:</label>
-            <select
-              value={selectedSize}
-              onChange={(e) => setSize(e.target.value)}
-              className={styles.select}
-            >
-              <option value="">사이즈 선택</option>
-              {product.size.map((s) => (
-                <option key={s} value={s}>
-                  {s}
-                </option>
+      <div className={styles.container}>
+        <div className={styles.productInfo}>
+          <div className={styles.imageArea}>
+            <img src={mainImg} alt={product?.title} className={styles.mainImage} />
+            <div className={styles.thumbnails}>
+              {product?.images.map((img, idx) => (
+                <img
+                  key={idx}
+                  src={img}
+                  alt={`Thumbnail ${idx}`}
+                  className={styles.thumbnail}
+                  onClick={() => setMainImg(img)}
+                />
               ))}
-            </select>
+            </div>
           </div>
-          {selectedSize && (
-            <div className={styles.selectedOptions}>
-              <p>선택한 옵션: 사이즈 - {selectedSize}</p>
+          <div className={styles.infoArea}>
+            <h1 className={styles.title}>{product?.title}</h1>
+            <p className={styles.price}>₩{product?.price.toLocaleString()}</p>
+            <div className={styles.options}>
+              <label>사이즈:</label>
+              <select
+                value={selectedSize}
+                onChange={(e) => setSize(e.target.value)}
+                className={styles.select}
+              >
+                <option value="">사이즈 선택</option>
+                {product?.sizes.map((size) => (
+                  <option key={size} value={size}>
+                    {size}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className={styles.quantity}>
+              <label>수량:</label>
+              <input
+                type="number"
+                min="1"
+                value={quantity}
+                onChange={(e) => setQuantity(parseInt(e.target.value))}
+                className={styles.quantityInput}
+              />
+            </div>
+            <div className={styles.buttons}>
+              <button className={styles.cartBtn} onClick={addToCart}>
+                장바구니
+              </button>
+              <button className={styles.buyBtn} onClick={buyNow}>
+                바로 구매
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className={styles.detailInfo}>
+          <div className={styles.tabs}>
+            <button
+              className={`${styles.tab} ${showDescription ? styles.active : ""}`}
+              onClick={() => {
+                setShowDescription(true);
+                setShowReviews(false);
+                setShowGuide(false);
+              }}
+            >
+              상품 설명
+            </button>
+            <button
+              className={`${styles.tab} ${showReviews ? styles.active : ""}`}
+              onClick={() => {
+                setShowDescription(false);
+                setShowReviews(true);
+                setShowGuide(false);
+              }}
+            >
+              리뷰
+            </button>
+            <button
+              className={`${styles.tab} ${showGuide ? styles.active : ""}`}
+              onClick={() => {
+                setShowDescription(false);
+                setShowReviews(false);
+                setShowGuide(true);
+              }}
+            >
+              사이즈 가이드
+            </button>
+          </div>
+          {showDescription && (
+            <div className={styles.description}>
+              <h2>상품 설명</h2>
+              <p>{product.description}</p>
             </div>
           )}
-          <button className={styles.cartBtn} onClick={addToCart}>
-            장바구니에 추가
-          </button>
-          <button className={styles.buyBtn} onClick={() => alert("구매 페이지로 이동")}>
-            바로 구매하기
-          </button>
-
-          {/* 썸네일 섹션 */}
-          <div className={styles.thumbs}>
-            {[...Array(4)].map((_, idx) => (
-              <img
-                key={idx}
-                src={product.image}
-                alt={`Thumb ${idx}`}
-                className={styles.thumb}
-                onClick={() => setMainImg(product.image)}
-              />
-            ))}
-          </div>
+          {showReviews && product?.reviews && (
+            <div className={styles.reviews}>
+              <h2>리뷰</h2>
+              <ul className={styles.reviewList}>
+                {product.reviews.map((review, idx) => (
+                  <li key={idx} className={styles.reviewItem}>
+                    <p className={styles.reviewText}>{review.text}</p>
+                    <p className={styles.reviewAuthor}>{review.author}</p>
+                    <p className={styles.reviewDate}>{review.date}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {showGuide && product?.sizeGuide && (
+            <div className={styles.sizeGuide}>
+              <h2>사이즈 가이드</h2>
+              <table className={styles.sizeTable}>
+                <thead>
+                  <tr>
+                    <th>사이즈..
+                    </th>
+                    <th>어깨 너비</th>
+                    <th>가슴 둘레</th>
+                    <th>소매 길이</th>
+                    <th>총장</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {product.sizeGuide.map((row, idx) => (
+                    <tr key={idx}>
+                      <td>{row.size}</td>
+                      <td>{row.shoulder}</td>
+                      <td>{row.chest}</td>
+                      <td>{row.sleeve}</td>
+                      <td>{row.length}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
-
-        {/* 메인 이미지 섹션 */}
-        <div className={styles.gallery}>
-          <div className={styles.mainImgWrap}>
-            <img src={mainImg} alt={product.title} className={styles.mainImg} />
-          </div>
-        </div>
       </div>
-
-      {/* 설명문 추가 */}
-      <div className={styles.description}>
-        <h2>상품 설명</h2>
-        <p>{product.description || "해당 상품에 대한 설명이 없습니다."}</p>
-      </div>
-
-      {/* 리뷰 섹션 */}
-      <div className="review-section">
-            <h2> 리뷰 섹션 </h2>
-            <p> Ah aaaaa </p>
-            <p> Ah aaaaa </p>
-            <p> Ah aaaaa </p>
-            <p> Ah aaaaa </p>
-            <p> Ah aaaaa </p>
-            <button onClick={ onTest }>API 테스트</button>
-      </div>      
-
-      {/* 상단 이동 버튼 */}
-      {showTopButton && (
-        <button className={styles.topButton} onClick={scrollToTop}>
-          ⬆️
-        </button>
-      )}
-      <div>
-      
-      </div>
-    </div>
-    <Footer />
+      <Footer />
     </div>
   );
 };

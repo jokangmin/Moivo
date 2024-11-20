@@ -12,11 +12,47 @@ const products = [
     title: 'Denim Jacket',
     category: 'Outerwear',
     image: img1,
+    images: [img1, img2, img3],
     badge: 'Hot',
     price: 120000,
     stock: 20,
-    size: ['S', 'M', 'L'],
+    sizes: ['S', 'M', 'L'],
     description: 'A stylish and durable denim jacket perfect for casual wear.',
+    reviews: [
+      {
+        text: '정말 멋진 데님 자켓이에요!',
+        author: '김철수',
+        date: '2023-05-01',
+      },
+      {
+        text: '품질이 좋고 디자인도 마음에 듭니다.',
+        author: '이영희',
+        date: '2023-04-28',
+      },
+    ],
+    sizeGuide: [
+      {
+        size: 'S',
+        shoulder: '43cm',
+        chest: '47cm',
+        sleeve: '61cm',
+        length: '62cm',
+      },
+      {
+        size: 'M',
+        shoulder: '45cm',
+        chest: '49cm',
+        sleeve: '62cm',
+        length: '64cm',
+      },
+      {
+        size: 'L',
+        shoulder: '47cm',
+        chest: '51cm',
+        sleeve: '63cm',
+        length: '66cm',
+      },
+    ],
   },
   {
     id: 2,
