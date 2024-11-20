@@ -7,35 +7,30 @@
   font-family: "GmarketSans", sans-serif;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 120px 20px 50px;
+  padding: 40px 20px;
 }
 
-.content {
+.productInfo {
   display: flex;
   gap: 50px;
+  margin-bottom: 50px;
 }
 
 .imageArea {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .mainImage {
   width: 100%;
-  max-width: 500px;
   height: auto;
   object-fit: cover;
   margin-bottom: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .thumbnails {
   display: flex;
   gap: 10px;
-  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .thumbnail {
@@ -43,13 +38,6 @@
   height: 80px;
   object-fit: cover;
   cursor: pointer;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-}
-
-.thumbnail:hover {
-  transform: scale(1.05);
 }
 
 .infoArea {
@@ -57,24 +45,13 @@
 }
 
 .title {
-  font-size: clamp(2.8rem, 4vw, 3.5rem);
+  font-size: 2rem;
   margin-bottom: 10px;
-}
-
-.category {
-  font-size: clamp(1.5rem, 2vw, 2rem);
-  color: #888;
-  margin-bottom: 20px;
 }
 
 .price {
-  font-size: clamp(2rem, 3vw, 2.5rem);
+  font-size: 1.8rem;
   font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.stock {
-  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
   margin-bottom: 20px;
 }
 
@@ -82,21 +59,20 @@
   margin-bottom: 20px;
 }
 
-.options label {
-  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
-  margin-right: 10px;
-}
-
 .select {
-  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
 }
 
-.selectedOptions {
-  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+.quantity {
   margin-bottom: 20px;
+}
+
+.quantityInput {
+  width: 60px;
+  padding: 5px;
+  font-size: 1rem;
 }
 
 .buttons {
@@ -106,93 +82,91 @@
 
 .cartBtn,
 .buyBtn {
-  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
-  padding: 10px 20px;
+  flex: 1;
+  padding: 15px;
+  font-size: 1.2rem;
+  color: white;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 .cartBtn {
-  background-color: #f0c040;
-  color: #fff;
-}
-
-.cartBtn:hover {
-  background-color: #e0b030;
+  background-color: #333;
 }
 
 .buyBtn {
-  background-color: #4caf50;
-  color: #fff;
+  background-color: #f44336;
 }
 
-.buyBtn:hover {
-  background-color: #45a049;
+.detailInfo {
+  margin-bottom: 50px;
 }
 
-.details {
-  margin-top: 50px;
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-.details summary {
-  font-size: clamp(1.4rem, 2vw, 1.8rem);
-  font-weight: bold;
+.tab {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  background-color: #f1f1f1;
+  border: none;
   cursor: pointer;
+}
+
+.tab.active {
+  background-color: #333;
+  color: white;
+}
+
+.description h2,
+.reviews h2,
+.sizeGuide h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.reviewList {
+  list-style: none;
+  padding: 0;
+}
+
+.reviewItem {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #f8f8f8;
+}
+
+.reviewText {
+  font-size: 1.2rem;
   margin-bottom: 10px;
 }
 
-.detailsContent {
-  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
-  line-height: 1.6;
-  padding: 20px;
-  background-color: #f8f8f8;
-  border-radius: 5px;
+.reviewAuthor {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
-.description {
-  margin-top: 50px;
+.reviewDate {
+  font-size: 0.9rem;
+  color: #888;
 }
 
-.description h2 {
-  font-size: clamp(2rem, 3vw, 2.8rem);
-  margin-bottom: 20px;
+.sizeTable {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.description p {
-  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
-  line-height: 1.6;
+.sizeTable th,
+.sizeTable td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ccc;
 }
 
-.reviewSection {
-  margin-top: 50px;
-}
-
-.reviewSection h2 {
-  font-size: clamp(2rem, 3vw, 2.8rem);
-  margin-bottom: 20px;
-}
-
-.topButton {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 1.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.topButton.show {
-  opacity: 1;
+.sizeTable th {
+  background-color: #f1f1f1;
 }
