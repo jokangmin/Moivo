@@ -2,6 +2,7 @@ package com.example.demo.store.entity;
 
 import java.util.List;
 
+import com.example.demo.store.dto.ProductDTO;
 import com.example.demo.user.entity.CartEntity;
 
 import jakarta.persistence.CascadeType;
@@ -30,8 +31,8 @@ public class ProductEntity { // 상품
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false, length = 200)
-    private String img; // 첫 번째 상품 이미지 경로
+    // @Column(nullable = false, length = 200)
+    // private String img; // 첫 번째 상품 이미지
 
     @Column(length = 2000)
     private String content; // 상품 설명
@@ -60,4 +61,31 @@ public class ProductEntity { // 상품
     // 상품 1개 : 리뷰 n개
     @OneToMany(mappedBy = "productEntity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ReviewEntity> reviewList;
+
+    // dto => entity
+
+    // 상품 등록
+    public static ProductEntity toSaveProductEntity(ProductDTO dto) {
+        // 상품 등록이기 때문에 seq 존재하지 않음.
+        ProductEntity entity = new ProductEntity();
+        entity.setName(dto.getName());
+        // entity.setImg(dto.getImg());
+        entity.setContent(dto.getContent());
+        entity.setPrice(dto.getPrice());
+
+        return entity;
+    }
+
+    // 상품 출력
+    public static ProductEntity toGetProductEntity(ProductDTO dto) {
+        ProductEntity entity = new ProductEntity();
+        // 상품 등록이기 때문에 seq 존재하지 않음.
+        entity.setProductSeq(dto.getProductSeq());
+        entity.setName(dto.getName());
+        // entity.setImg(dto.getImg());
+        entity.setContent(dto.getContent());
+        entity.setPrice(dto.getPrice());
+
+        return entity;
+    }
 }
