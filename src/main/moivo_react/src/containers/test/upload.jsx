@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../../assets/css/upload.module.css";
 import axios from "axios";
 import Banner from "../../components/Banner/banner";
@@ -7,8 +7,8 @@ const Upload = () => {
   const [product, setProduct] = useState({
     name: "",
     price: "",
-    category: "",
     content: "",
+    stock: "",
   });
   const [files, setFiles] = useState({ layer1: [], layer2: [], layer3: [] });
   const [progress, setProgress] = useState(0);
@@ -40,7 +40,7 @@ const Upload = () => {
 
   // 업로드 핸들러
   const handleUpload = async () => {
-    if (!product.name || !product.price || !product.category || !product.content) {
+    if (!product.name || !product.price || !product.content || !product.stock) {
       alert("모든 상품 정보를 입력해주세요.");
       return;
     }
@@ -52,33 +52,44 @@ const Upload = () => {
     const formData = new FormData();
     formData.append("name", product.name);
     formData.append("price", product.price);
-    formData.append("category", product.category);
     formData.append("content", product.content);
+    formData.append("stock", product.stock);
 
-    // 각 레이어 파일 추가
+    // 레이어별 파일 추가
     files.layer1.forEach((file) => formData.append("layer1", file));
     files.layer2.forEach((file) => formData.append("layer2", file));
     files.layer3.forEach((file) => formData.append("layer3", file));
 
+    // 로그 추가: FormData 확인
+    console.log("FormData entries:");
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ": " + pair[1]);
+    }
+
     try {
-      await axios.post("http://localhost:8080/api/upload", formData, {
+      const response = await axios.post("http://localhost:8080/api/store/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
           setProgress(percentCompleted);
+          console.log("Upload progress: " + percentCompleted + "%");
         },
       });
+
+      // 로그 추가: 업로드 성공
+      console.log("Upload successful:", response.data);
       alert("상품 업로드가 완료되었습니다.");
       resetForm();
     } catch (error) {
-      console.error("업로드 실패:", error);
+      // 로그 추가: 업로드 실패
+      console.error("업로드 실패:", error.response || error);
       alert("업로드에 실패했습니다.");
     }
   };
 
   // 폼 초기화 함수
   const resetForm = () => {
-    setProduct({ name: "", price: "", category: "", content: "" });
+    setProduct({ name: "", price: "", content: "", stock: "" });
     setFiles({ layer1: [], layer2: [], layer3: [] });
     setProgress(0);
   };
@@ -113,16 +124,6 @@ const Upload = () => {
             />
           </label>
           <label>
-            카테고리:
-            <input
-              type="text"
-              name="category"
-              value={product.category}
-              placeholder="카테고리를 입력하세요"
-              onChange={handleInputChange}
-            />
-          </label>
-          <label>
             설명:
             <textarea
               name="content"
@@ -130,6 +131,16 @@ const Upload = () => {
               placeholder="상품 설명을 입력하세요"
               onChange={handleInputChange}
             ></textarea>
+          </label>
+          <label>
+            재고:
+            <input
+              type="number"
+              name="stock"
+              value={product.stock}
+              placeholder="상품 재고를 입력하세요"
+              onChange={handleInputChange}
+            />
           </label>
         </div>
 
@@ -160,7 +171,7 @@ const Upload = () => {
             </div>
           ))}
         </div>
-
+        
         {/* 업로드 진행률 */}
         {progress > 0 && (
           <div className={styles.progressContainer}>
@@ -168,12 +179,13 @@ const Upload = () => {
             <span>{progress}%</span>
           </div>
         )}
-
+       
         {/* 업로드 버튼 */}
         <button className={styles.uploadButton} onClick={handleUpload}>
           업로드
         </button>
-      </div>
+        
+      </div>  
     </div>
   );
 };

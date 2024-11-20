@@ -29,11 +29,15 @@ public class ProductImgEntity {
 
     @Column(name = "originalfilename", length = 100, nullable = false)
     private String originalFileName; // 원본 이미지 파일 이름
-
+    
     @Column(nullable = false)
     private int layer; // 이미지 계층
     // 1: 메인
     // 2: 상세 1
     // 3: 상세 2
     // 4: 주문 이미지
+    
+    @Column(name = "fileurl", length = 255, nullable = false)
+    private String fileUrl; // 업로드된 파일의 URL
+    
 }
