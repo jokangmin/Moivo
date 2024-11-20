@@ -6,12 +6,18 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
+  const [tokenExpiration, setTokenExpiration] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       setIsLoggedIn(true);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+      // 토큰 만료 시간 계산
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));
+      const expirationTime = new Date(decodedToken.exp * 1000);
+      setTokenExpiration(expirationTime);
     }
   }, []);
 
@@ -40,6 +46,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider value={{
       isLoggedIn,
       user,
+      tokenExpiration,
       login,
       logout
     }}>

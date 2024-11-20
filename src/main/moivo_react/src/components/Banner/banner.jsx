@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const Banner = () => {
   const navigate = useNavigate();
-  const { isLoggedIn, logout } = useContext(AuthContext);
+  const { isLoggedIn, logout, tokenExpiration } = useContext(AuthContext);
   const [openMenuIndex, setOpenMenuIndex] = useState(null);
 
   const navLinks = [
@@ -37,6 +37,11 @@ const Banner = () => {
     logout();
     alert('로그아웃되었습니다.');
     navigate('/');
+  };
+
+  const formatExpiration = (expiration) => {
+    if (!expiration) return '';
+    return expiration.toLocaleString();
   };
 
   return (
@@ -84,9 +89,24 @@ const Banner = () => {
               <a href="/user_signup" className={styles.utilityLink}>Sign Up</a>
             </>
           )}
+          <a href='/upload' className={styles.utilityLink}>임시 파일 업로드</a>
           <a href='/product-search' className={styles.utilityLink}>Search</a>
-          {isLoggedIn && <a href='/upload' className={styles.utilityLink}>Upload</a>}
-          {isLoggedIn && <a href='/mypage' className={styles.utilityLink}>Mypage</a>}
+          <a href='/cart' className={styles.utilityLink}>Cart</a>
+          <a href='/wish' className={styles.utilityLink}>Wishlist</a>
+          <a href='/order' className={styles.utilityLink}>Order</a>
+
+
+          {isLoggedIn && (
+            <div className={styles.loginStatus}>
+              <span>
+                <span className={`${styles.status} ${isLoggedIn ? styles.on : styles.off}`}></span>
+                {isLoggedIn ? 'ON' : 'OFF'}
+              </span>
+              <span className={styles.expirationLabel}>로그인 만료</span>
+              <span className={styles.expiration}>{formatExpiration(tokenExpiration)}</span>
+            </div>
+          )}
+
         </div>
       </div>
     </header>
