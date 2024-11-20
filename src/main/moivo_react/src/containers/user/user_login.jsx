@@ -2,12 +2,13 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import styles from '../../assets/css/user_login.module.css';
+import axios from 'axios';
 
 const user_login = () => {
 
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
-  const [formData, setFormData] = useState({ id: '', password: '' });
+  const [formData, setFormData] = useState({ id: '', pwd: '' });
   const [error, setError] = useState('');
 
     //사용자 데이터 요청하는 함수임
@@ -89,8 +90,8 @@ const user_login = () => {
             />
             <input
               type="password"
-              name="password"
-              value={formData.password}
+              name="pwd"
+              value={formData.pwd}
               onChange={handleChange}
               placeholder="Password"
               required

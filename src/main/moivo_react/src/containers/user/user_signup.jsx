@@ -9,8 +9,8 @@ function user_signup() {
 
   const [formData, setFormData] = useState({
     id: "",
-    password: "",
-    confirmPassword: "",
+    pwd: "",
+    confirmPwd: "",
     name: "",
     postalCode: "",
     address: "",
@@ -23,8 +23,8 @@ function user_signup() {
 
   const [errors, setErrors] = useState({
     id: "",
-    password: "",
-    confirmPassword: "",
+    pwd: "",
+    confirmPwd: "",
     name: "",
     postalCode: "",
     address: "",
@@ -51,14 +51,14 @@ function user_signup() {
     }
 
     // Password validation
-    if (!formData.password) {
-      newErrors.password = "비밀번호를 입력해주세요.";
+    if (!formData.pwd) {
+      newErrors.pwd = "비밀번호를 입력해주세요.";
       isValid = false;
     }
 
     // Confirm Password validation
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "비밀번호가 일치하지 않습니다.";
+    if (formData.pwd !== formData.confirmPwd) {
+      newErrors.confirmPwd = "비밀번호가 일치하지 않습니다.";
       isValid = false;
     }
 
@@ -95,7 +95,7 @@ function user_signup() {
     try {
       await axios.post("http://localhost:8080/api/auth/signup", {
         id: formData.id,
-        pwd: formData.password,
+        pwd: formData.pwd,
         name: formData.name,
         email: formData.email,
       });
@@ -125,15 +125,15 @@ function user_signup() {
 
           <div className={styles.formRow}>
             <span>PASSWORD</span>
-            <input type="password" name="password" value={formData.password} onChange={handleChange} />
-            <div className={styles.exception}>{errors.password}</div>
+            <input type="password" name="pwd" value={formData.pwd} onChange={handleChange} />
+            <div className={styles.exception}>{errors.pwd}</div>
           </div>
           <hr className={styles.signupline} />
 
           <div className={styles.formRow}>
             <span>CONFIRM PASSWORD</span>
-            <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
-            <div className={styles.exception}>{errors.confirmPassword}</div>
+            <input type="password" name="confirmPwd" value={formData.confirmPwd} onChange={handleChange} />
+            <div className={styles.exception}>{errors.confirmPwd}</div>
           </div>
           <hr className={styles.signupline} />
 

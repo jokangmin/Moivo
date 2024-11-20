@@ -43,12 +43,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String login(String id, String pwd) {
-        // ID로 사용자 조회
         UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
 
-        System.out.println("login: " + userEntity);
-        // 비밀번호 검증
+        System.out.println("=== 로그인 디버깅 ===");
+        System.out.println("입력된 비밀번호: " + pwd);
+        System.out.println("저장된 암호화 비밀번호: " + userEntity.getPwd());
+        System.out.println("비밀번호 매칭 결과: " + passwordEncoder.matches(pwd, userEntity.getPwd()));
+        
         if (!passwordEncoder.matches(pwd, userEntity.getPwd())) {
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
         }

@@ -1,5 +1,7 @@
 /* product_board.module.css */
 
+@import url("https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css");
+
 /* =========================================
    1. 기본 레이아웃 & 공통 스타일
 ========================================= */
@@ -8,7 +10,7 @@
   max-width: 100vw;
   margin: 0 auto;
   padding: 20px;
-  font-family: Arial, sans-serif;
+  font-family: "GmarketSans", sans-serif;
   box-sizing: border-box;
 }
 
@@ -17,27 +19,29 @@
   overflow: hidden;
   background: linear-gradient(to bottom, #ffffff, #f8f9fa);
   min-height: 100vh;
+  font-family: "GmarketSans", sans-serif;
 }
 
 .contentWrapper {
   max-width: 1400px;
   margin: 0 auto;
   padding: 2rem;
+  font-family: "GmarketSans", sans-serif;
 }
 
 .sectionTitle {
-  font-size: 2.5rem;
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
   font-weight: 600;
   color: #2d3748;
   margin-bottom: 2rem;
   position: relative;
   display: inline-block;
+  font-family: "GmarketSans", sans-serif;
 }
 
 /* =========================================
    2. 네비게이션 & 사이드바
 ========================================= */
-/* 2.1 카테고리 네비게이션 */
 .categoryNav {
   display: flex;
   justify-content: center;
@@ -47,13 +51,14 @@
 
 .categoryBtn {
   padding: 1rem 2rem;
-  font-size: 1.1rem;
+  font-size: clamp(1.1rem, 1.5vw, 1.4rem);
   border: none;
   background: transparent;
   color: #4a5568;
   position: relative;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-family: "GmarketSans", sans-serif;
 }
 
 .categoryBtn::after {
@@ -225,9 +230,8 @@
 }
 
 .seasonContent h4 {
-  font-size: 1.2rem;
-  color: #2d3748;
-  margin-bottom: 1rem;
+  font-size: clamp(1.2rem, 2vw, 1.8rem);
+  font-family: "GmarketSans", sans-serif;
 }
 
 .seasonItems {
@@ -239,7 +243,8 @@
 .seasonItems li {
   padding: 0.5rem 0;
   color: #4a5568;
-  font-size: 0.95rem;
+  font-size: clamp(0.95rem, 1.5vw, 1.4rem);
+  font-family: "GmarketSans", sans-serif;
 }
 
 .seasonBtn {
@@ -292,9 +297,8 @@
 }
 
 .styleContent h3 {
-  font-size: 1.5rem;
-  color: #2d3748;
-  margin-bottom: 1rem;
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+  font-family: "GmarketSans", sans-serif;
 }
 
 .styleTips {
@@ -343,13 +347,14 @@
 }
 
 .faqSection h3 {
-  font-size: 2rem;
+  font-size: clamp(2rem, 3vw, 2.8rem);
   font-weight: 700;
   color: #5c4328; 
   margin-bottom: 20px;
   border-bottom: 3px solid #d97706; /* 하단 강조 라인 */
   display: inline-block;
   padding-bottom: 10px;
+  font-family: "GmarketSans", sans-serif;
 }
 
 .faqSection details {
@@ -358,10 +363,11 @@
 
 .faqSection summary {
   font-weight: bold;
-  font-size: 1.4rem;
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
   cursor: pointer;
   color: #7a563c;
   transition: color 0.3s ease;
+  font-family: "GmarketSans", sans-serif;
 }
 
 .faqSection summary:hover {
@@ -370,9 +376,10 @@
 
 .faqSection p {
   margin-left: 25px;
-  font-size: 1.2rem;
+  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
   line-height: 1.8;
   color: #666; /* 부드러운 회색 */
+  font-family: "GmarketSans", sans-serif;
 }
 
 /* 4.2 브랜드 소개 섹션 */
