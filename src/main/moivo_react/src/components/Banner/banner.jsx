@@ -22,8 +22,9 @@ const Banner = () => {
     {
       title: 'COMMUNITY',
       submenu: [
-        { name: 'NOTICE', navigateTo: '/' },
-        { name: 'Q&A', navigateTo: '/qna' },
+        { name: '파일업로드(임시)', navigateTo: '/upload' },
+        { name: 'Q&A', navigateTo: '/qna_faqboard' },
+        { name: '게시판', navigateTo: '/qna_board' },
         { name: 'REVIEW', navigateTo: '/qna/review' }
       ]
     }
@@ -90,23 +91,21 @@ const Banner = () => {
               <a href="/user_signup" className={styles.utilityLink}>Sign Up</a>
             </>
           )}
-          <a href='/upload' className={styles.utilityLink}>임시 파일 업로드</a>
+
           <a href='/product-search' className={styles.utilityLink}>Search</a>
-          <a href='/cart' className={styles.utilityLink}>Cart</a>
-          <a href='/wish' className={styles.utilityLink}>Wishlist</a>
-          <a href='/order' className={styles.utilityLink}>Order</a>
 
-
-          {isLoggedIn && (
-            <div className={styles.loginStatus}>
-              <span>
-                <span className={`${styles.status} ${isLoggedIn ? styles.on : styles.off}`}></span>
-                {isLoggedIn ? 'ON' : 'OFF'}
-              </span>
-              <span className={styles.expirationLabel}>로그인 만료</span>
-              <span className={styles.expiration}>{formatExpiration(tokenExpiration)}</span>
-            </div>
-          )}
+          <div className={styles.loginStatus}>
+            <span>
+              <span className={`${styles.status} ${isLoggedIn ? styles.on : styles.off}`}></span>
+              {isLoggedIn ? 'ON' : 'OFF'}
+            </span>
+            {isLoggedIn && (
+              <>
+                <span className={styles.expirationLabel}>로그인 만료</span>
+                <span className={styles.expiration}>{formatExpiration(tokenExpiration)}</span>
+              </>
+            )}
+          </div>
 
         </div>
       </div>
