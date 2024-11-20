@@ -18,7 +18,7 @@ const mypage_wish = () => {
     { image: "../image/wish2.png", name: "Isabella fur coat", price: "KRW 283,000" },
     { image: "../image/wish3.jpg", name: "Shawl Collar Down Vest_Black", price: "KRW 345,000" },
     { image: "../image/wish4.jpg", name: "Mohair Round Neck Cardigan_Red", price: "KRW 138,000" },
-  ];
+  ]; 
 
   return (
     <div className={styles.wishlistPage}>
