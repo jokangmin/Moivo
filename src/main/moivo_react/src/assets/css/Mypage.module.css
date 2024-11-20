@@ -92,7 +92,53 @@
     z-index: 1000;
     white-space: nowrap;
 }
+.couponSection {
+    display: flex; /* 가로로 배치 */
+    align-items: center; /* 수직 정렬 */
+    gap: 20px; /* POINT와 COUPON 간 간격 */
+    font-family: 'Italiana', serif;
+    font-size: 16px;
+}
+  
+  .pointCouponSection {
+    display: flex;
+    align-items: center; /* 수직 가운데 정렬 */
+    gap: 20px; /* POINT와 COUPON 간 간격 */
+  }
+  
+  .point {
+    font-size: 16px;
+    font-weight: bold;
+}
 
+.coupon {
+    font-size: 16px;
+    font-weight: bold;
+    position: relative; /* 툴팁 위치를 조정하기 위한 기준 */
+}
+  
+  .couponTooltip {
+    position: absolute;
+    top: 100%; /* COUPON 아래에 표시 */
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    z-index: 10;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 13px;
+    width: 300px;
+  }
+  
+  .couponItem {
+    margin-bottom: 5px;
+  }
+  
+  .couponItem:last-child {
+    margin-bottom: 0; /* 마지막 항목 간격 제거 */
+  }
+  
 
 
 /* 좌우 배치 영역 */
@@ -354,3 +400,38 @@
         right: 20px; /* 화면 크기에 맞게 우측 위치 더 이동 */
     }
 }
+
+@media screen and (max-width: 480px) {
+    .title {
+      font-size: 28px; /* 제목 크기 축소 */
+    }
+  
+    .membershipBox {
+      flex-direction: column; /* 세로 배치 */
+      text-align: center;
+    }
+  
+    .tooltip {
+      left: 10px; /* 툴팁 위치 조정 */
+      top: auto; /* 상단에서 이동 */
+      bottom: -50px; /* 툴팁이 아래쪽으로 */
+    }
+  
+    .productImage {
+      width: 100px; /* 이미지 크기 감소 */
+      height: 150px;
+    }
+  
+    .menuItem {
+      width: 80px; /* 메뉴 아이템 크기 축소 */
+      height: 80px;
+      font-size: 12px; /* 텍스트 크기 감소 */
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .couponSection {
+      flex-direction: column; /* 세로 배치 */
+      align-items: flex-start; /* 왼쪽 정렬 */
+    }
+  }
+  
