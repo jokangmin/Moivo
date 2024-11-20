@@ -1,0 +1,172 @@
+/* product_detail.module.css */
+
+
+@import url("https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css");
+
+.container {
+  font-family: "GmarketSans", sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.productInfo {
+  display: flex;
+  gap: 50px;
+  margin-bottom: 50px;
+}
+
+.imageArea {
+  flex: 1;
+}
+
+.mainImage {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+.thumbnails {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.infoArea {
+  flex: 1;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.options {
+  margin-bottom: 20px;
+}
+
+.select {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+.quantity {
+  margin-bottom: 20px;
+}
+
+.quantityInput {
+  width: 60px;
+  padding: 5px;
+  font-size: 1rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.cartBtn,
+.buyBtn {
+  flex: 1;
+  padding: 15px;
+  font-size: 1.2rem;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.cartBtn {
+  background-color: #333;
+}
+
+.buyBtn {
+  background-color: #f44336;
+}
+
+.detailInfo {
+  margin-bottom: 50px;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  background-color: #f1f1f1;
+  border: none;
+  cursor: pointer;
+}
+
+.tab.active {
+  background-color: #333;
+  color: white;
+}
+
+.description h2,
+.reviews h2,
+.sizeGuide h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.reviewList {
+  list-style: none;
+  padding: 0;
+}
+
+.reviewItem {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #f8f8f8;
+}
+
+.reviewText {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.reviewAuthor {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.reviewDate {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.sizeTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sizeTable th,
+.sizeTable td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
+.sizeTable th {
+  background-color: #f1f1f1;
+}
