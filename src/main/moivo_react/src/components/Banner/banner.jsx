@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import styles from '../../assets/css/banner.module.css';
@@ -92,10 +92,9 @@ const Banner = () => {
               <a href="/user_signup" className={styles.utilityLink}>Sign Up</a>
             </>
           )}
-            <a href='/product-search' className={styles.utilityLink}>Search</a>
-            <a href='/upload' className={styles.utilityLink}>Upload</a> 
-            {/* 임시 파일 업로드 링크 */}
-            <a href='/mypage' className={styles.utilityLink}>Mypage</a>
+          <a href='/product-search' className={styles.utilityLink}>Search</a>
+          {isLoggedIn && <a href='/upload' className={styles.utilityLink}>Upload</a>}
+          {isLoggedIn && <a href='/mypage' className={styles.utilityLink}>Mypage</a>}
         </div>
       </div>
     </header>
