@@ -26,8 +26,8 @@ const user_login = () => {
         e.preventDefault();
         try {
             console.log(formData);
-        //   const response = await axios.post("http://localhost:8080/api/auth/login", formData);    // /api/auth ->  UserController 로 이동
-          const response = await axios.post("http://localhost:8080/api/auth/login", {"id" : 1, "pwd" : 1});    // /api/auth ->  UserController 로 이동
+            const response = await axios.post("http://localhost:8080/api/auth/login", formData);    // /api/auth ->  UserController 로 이동
+          //const response = await axios.post("http://localhost:8080/api/auth/login", {"id" : 1, "pwd" : 1});    // /api/auth ->  UserController 로 이동
           localStorage.setItem("token", response.data); // JWT 저장
           alert("로그인 성공!");
           navigate("/mypage");
