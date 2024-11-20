@@ -25,14 +25,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) // CSRF 비활성화
-            .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/api/auth/**").permitAll() // 인증 필요 없는 엔드포인트
-                .anyRequest().authenticated()) // 나머지 요청은 인증 필요
-            .userDetailsService(customUserDetailsService) // 사용자 인증 서비스
-            .exceptionHandling(exception -> exception
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)) // 인증 실패 처리
-            .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class); // JWT 필터 추가
+                .csrf(csrf -> csrf.disable()) // CSRF 비활성화
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/api/auth/**").permitAll() // 인증 필요 없는 엔드포인트
+                        // .requestMatchers("/api/**").permitAll() // 인증 필요 없는 엔드포인트
+                        .anyRequest().authenticated()) // 나머지 요청은 인증 필요
+                .userDetailsService(customUserDetailsService) // 사용자 인증 서비스
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)) // 인증 실패 처리
+                .addFilterBefore(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class); // JWT 필터
+                                                                                                             // 추가
 
         return http.build();
     }
