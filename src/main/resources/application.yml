@@ -1,12 +1,15 @@
 spring:
+  config:
+    import: "classpath:external-config.properties"
+
   datasource:
-    # Oracle 설정 (주석 처리됨)
+    # Oracle 설정
     # url: jdbc:oracle:thin:@localhost:1521:XE
     # username: c##java
     # password: 1234
     # driver-class-name: oracle.jdbc.driver.OracleDriver
 
-    # MySQL 설정 (로컬 개발용)
+    # MySQL 설정
     # url: jdbc:mysql://localhost:3306/moivo?useSSL=false&serverTimezone=Asia/Seoul
     # username: root
     # password: 1234

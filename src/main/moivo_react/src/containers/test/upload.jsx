@@ -8,6 +8,7 @@ const Upload = () => {
     name: "",
     price: "",
     content: "",
+    stock: "",
   });
   const [files, setFiles] = useState({ layer1: [], layer2: [], layer3: [] });
   const [progress, setProgress] = useState(0);
@@ -39,7 +40,7 @@ const Upload = () => {
 
   // 업로드 핸들러
   const handleUpload = async () => {
-    if (!product.name || !product.price || !product.content) {
+    if (!product.name || !product.price || !product.content || !product.stock) {
       alert("모든 상품 정보를 입력해주세요.");
       return;
     }
@@ -52,6 +53,7 @@ const Upload = () => {
     formData.append("name", product.name);
     formData.append("price", product.price);
     formData.append("content", product.content);
+    formData.append("stock", product.stock);
 
     // 레이어별 파일 추가
     files.layer1.forEach((file) => formData.append("layer1", file));
@@ -87,7 +89,7 @@ const Upload = () => {
 
   // 폼 초기화 함수
   const resetForm = () => {
-    setProduct({ name: "", price: "", content: "" });
+    setProduct({ name: "", price: "", content: "", stock: "" });
     setFiles({ layer1: [], layer2: [], layer3: [] });
     setProgress(0);
   };
@@ -129,6 +131,16 @@ const Upload = () => {
               placeholder="상품 설명을 입력하세요"
               onChange={handleInputChange}
             ></textarea>
+          </label>
+          <label>
+            재고:
+            <input
+              type="number"
+              name="stock"
+              value={product.stock}
+              placeholder="상품 재고를 입력하세요"
+              onChange={handleInputChange}
+            />
           </label>
         </div>
 

@@ -45,6 +45,9 @@ dependencies {
    implementation 'org.springframework.boot:spring-boot-starter-websocket'
    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+   //-------------
+   implementation 'org.springframework.boot:spring-boot-configuration-processor'
+   //-----------
    compileOnly 'org.projectlombok:lombok'
    developmentOnly 'org.springframework.boot:spring-boot-devtools'
    runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
@@ -56,14 +59,12 @@ dependencies {
    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
    //AWS S3 추가한거임
    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.565'
-   //JWT
+
+   //JWT 관련
    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
-	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5' // JSON parsing을 위한 모듈
-	//thymeleaf Spring Security
-	//implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
-	
-   
+   implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+   implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
 }
 
 dependencyManagement {
