@@ -17,5 +17,9 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
     //Containing = 부분검색, IgnoreCase = 대소문자 무시
     Page<ProductEntity> findByNameContainingIgnoreCase(String keyword, Pageable pageable);
 
+    //카테고리 검색
+    Page<ProductEntity> findByCategoryContainingIgnoreCase(String category, Pageable pageable);
     Object countByNameContainingIgnoreCase(String keyword);
+
+
 }
