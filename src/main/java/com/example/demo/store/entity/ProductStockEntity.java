@@ -1,5 +1,7 @@
 package com.example.demo.store.entity;
 
+import com.example.demo.store.dto.ProductStockDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -49,4 +51,25 @@ public class ProductStockEntity {
 
     @Column(nullable = false)
     private int count; // 재고 수량
+
+    public static ProductStockEntity toSaveStockEntity(ProductStockDTO stockDTO, ProductEntity productEntity) {
+        ProductStockEntity entity = new ProductStockEntity();
+        entity.setProductEntity(productEntity);
+        entity.setCount(stockDTO.getCount());
+
+        switch (stockDTO.getSize()) {
+            case 1:
+                entity.setSize(Size.SIZE_1);
+                break;
+            case 2:
+                entity.setSize(Size.SIZE_2);
+                break;
+            case 3:
+                entity.setSize(Size.SIZE_3);
+                break;
+            default:
+                break;
+        }
+        return entity;
+    }
 }
