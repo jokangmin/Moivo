@@ -18,12 +18,16 @@ export const AuthProvider = ({ children }) => {
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
       const expirationTime = new Date(decodedToken.exp * 1000);
       setTokenExpiration(expirationTime);
+    } else {
+      setIsLoggedIn(false);
+      setUser(null);
+
     }
   }, []);
 
-  const login = async (credentials) => {
+  const login = async (formData) => {
     try {
-      const response = await axios.post('http://localhost:8080/api/auth/login', credentials);
+      const response = await axios.post('/api/auth/login', formData);
       const token = response.data;
       localStorage.setItem('token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;

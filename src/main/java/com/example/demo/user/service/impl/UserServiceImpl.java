@@ -64,4 +64,13 @@ public class UserServiceImpl implements UserService {
                 .setExpiration(new Date(System.currentTimeMillis() + 3600000)) // 1시간 유효
                 .compact();
     }
+
+    @Override
+    public void logout(String token) {
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7); // "Bearer " 접두사 제거
+        }        
+        System.out.println("로그아웃 처리됨. 토큰: " + token);
+    }
+    
 }

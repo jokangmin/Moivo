@@ -40,6 +40,15 @@ public class UserController {
         }
     }
 
+    //로그아웃
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(@RequestHeader("Authorization") String token) {
+        userService.logout(token); // 로그아웃 로직 서비스 호출
+        return ResponseEntity.ok("로그아웃 성공");
+    }
+
+
+
     //소셜 로그인
 
 
