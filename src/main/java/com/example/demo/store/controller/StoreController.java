@@ -20,25 +20,30 @@ import java.util.Map;
 public class StoreController {
     @Autowired
     private ProductService productService;
-    // 상품 페이징 처리
-    // 상품 상세 화면 (리뷰 포함)
-
-
-    // 상품 검색
-    @GetMapping("/search")
-    @ResponseBody
-    public Map<String, Object> productSearch(@RequestParam("keyword") String keyword,
-                                             @RequestParam(value = "page", required = false, defaultValue = "0") String page,
-                                             @PageableDefault(page=0, size=10, sort="seq", direction = Sort.Direction.DESC) Pageable pageable, Model model){
-
-        return productService.getProductSearch(keyword, pageable);
-    }
 
     //상품 데이터 가져오기
     @GetMapping("")
     @ResponseBody
     public Map<String, Object> storeList() {
-
-        return productService.getStoreList();
+        return productService.storeList();
     }
+
+    // 상품 검색, 검색한 상품 페이징 처리
+    @GetMapping("/search")
+    @ResponseBody
+    public Map<String, Object> productSearch(@RequestParam("keyword") String keyword,
+                                             @PageableDefault(page = 0, size = 9, sort = "seq", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        return productService.productSearch(keyword, pageable);
+    }
+
+    @GetMapping("/list")
+    @ResponseBody
+    public Map<String, Object> productList(@PageableDefault(page = 0, size = 9, sort = "seq", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        return productService.productList(pageable);
+    }
+
+    // 상품 상세 화면 (리뷰 포함)
+
 }

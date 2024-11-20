@@ -25,17 +25,17 @@ public class ProductPaging {
         if (endPage > totalP) endPage = totalP;
 
         if (startPage != 1)
-            pagingHTML.append("<span id='paging' onclick='memberPaging(" + (startPage - 1) + ")'>이전</span>");
+            pagingHTML.append("<span id='paging' onclick='Paging(" + (startPage - 1) + ")'>이전</span>");
 
         for (int i = startPage; i <= endPage; i++) {
             if (i == currentPage)
-                pagingHTML.append("<span id='currentPaging' onclick='memberPaging(" + i + ")'>" + i + "</span>");
+                pagingHTML.append("<span id='currentPaging' onclick='Paging(" + i + ")'>" + i + "</span>");
             else
-                pagingHTML.append("<span id='paging' onclick='memberPaging(" + i + ")'>" + i + "</span>");
+                pagingHTML.append("<span id='paging' onclick='Paging(" + i + ")'>" + i + "</span>");
         }
 
         if (endPage < totalP)
-            pagingHTML.append("<span id='paging' onclick='memberPaging(" + (endPage + 1) + ")'>다음</span>");
+            pagingHTML.append("<span id='paging' onclick='Paging(" + (endPage + 1) + ")'>다음</span>");
     }
 }
 
