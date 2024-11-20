@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext'; // AuthProvider 추가
 import Main_index from './components/main_index';
 import User_login from './containers/user/user_login';
 import User_signup from './containers/user/user_signup';
@@ -36,18 +37,17 @@ const routeConfig = [
 
 const App = () => {
   return (
-
+    <AuthProvider>
     <MainProvider>
       <Router>
         <Routes>
-
           {routeConfig.map(({ path, element }, index) => (
             <Route key={index} path={path} element={element} />
           ))}
-
         </Routes>
       </Router>
     </MainProvider>
+    </AuthProvider>
   );
 };
 
