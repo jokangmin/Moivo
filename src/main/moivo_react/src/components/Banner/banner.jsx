@@ -15,7 +15,8 @@ const Banner = () => {
       submenu: [
         { name: 'NEW', navigateTo: '/product-list' },
         { name: 'BEST', navigateTo: '/product-list' },
-        { name: 'ALL', navigateTo: '/product-list' }
+        { name: 'ALL', navigateTo: '/product-list' },
+        { name: 'BOARD', navigateTo: '/product' }
       ]
     },
     {
@@ -91,9 +92,10 @@ const Banner = () => {
               <a href="/user_signup" className={styles.utilityLink}>Sign Up</a>
             </>
           )}
+            <a href='/product-search' className={styles.utilityLink}>Search</a>
             <a href='/upload' className={styles.utilityLink}>Upload</a> 
             {/* 임시 파일 업로드 링크 */}
-          
+            <a href='/mypage' className={styles.utilityLink}>Mypage</a>
         </div>
       </div>
     </header>
