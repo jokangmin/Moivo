@@ -30,17 +30,16 @@ const user_login = () => {
         e.preventDefault();
         try {
             console.log(formData);
-            const response = await axios.post("http://localhost:8080/api/auth/login", formData);    // /api/auth ->  UserController 로 이동
-          //const response = await axios.post("http://localhost:8080/api/auth/login", {"id" : 1, "pwd" : 1});    // /api/auth ->  UserController 로 이동
-          localStorage.setItem("token", response.data); // JWT 저장
-          alert("로그인 성공!");
-          navigate("/mypage");
+            const response = await axios.post("http://localhost:8080/api/auth/login", formData);
+            localStorage.setItem("token", response.data);
+            login();
+            alert("로그인 성공!");
+            navigate("/mypage");
         } catch (error) {
-          console.error("로그인 실패:", error);
-          alert("로그인에 실패했습니다.");
+            console.error("로그인 실패:", error);
+            alert("로그인에 실패했습니다.");
         }
-      };
-
+    };
 
   const handleChange = (e) => {
     setFormData({
