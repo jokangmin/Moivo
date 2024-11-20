@@ -5,16 +5,33 @@ import Banner from "../../components/Banner/banner";
 import Footer from "../../components/Footer/Footer";
 
 const MypageMain = () => {
+  
   const [startIndex, setStartIndex] = useState(0);
 
   const [showTooltip, setShowTooltip] = useState(false);
 
+  const [showCouponTooltip, setShowCouponTooltip] = useState(false);
+  
   const handleMouseEnter = () => {
     setShowTooltip(true);
   };
 
   const handleMouseLeave = () => {
     setShowTooltip(false);
+  };
+
+  const coupons = [
+    { name: "10% 할인쿠폰", description: "최대 10만원 할인" },
+    { name: "무료 배송 쿠폰", description: "주문 금액 상관없이" },
+    { name: "5천원 할인쿠폰", description: "최소 5만원 이상 구매 시" },
+  ];
+
+  const handleCouponMouseEnter = () => {
+    setShowCouponTooltip(true);
+  };
+
+  const handleCouponMouseLeave = () => {
+    setShowCouponTooltip(false);
   };
 
   const productList = [
@@ -64,7 +81,25 @@ const MypageMain = () => {
               전수민님의 멤버십 등급은 [GOLD]입니다.<br />
               VIP까지 남은 구매금액은 KRW 100,000원입니다.
             </div>
-            <div className={styles.pointCoupon}>POINT : 5,000 | COUPON : 10</div>
+            <div className={styles.couponSection}>
+            <div className={styles.point}>POINT: 5000</div>
+              <div
+                className={styles.coupon} 
+                onMouseEnter={handleCouponMouseEnter}
+                onMouseLeave={handleCouponMouseLeave}
+              >
+              COUPON: {coupons.length}
+              {showCouponTooltip && (
+                <div className={styles.couponTooltip}>
+                  {coupons.map((coupon, index) => (
+                    <div key={index} className={styles.couponItem}>
+                      <strong>{coupon.name}</strong>: {coupon.description}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
           </div>
             {/* 아이콘 영역 (우측 상단에 배치) */}
             <div 
