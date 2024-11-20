@@ -163,7 +163,8 @@ const ProductDetail = () => {
               <table className={styles.sizeTable}>
                 <thead>
                   <tr>
-                    <th>사이즈</th>
+                    <th>사이즈..
+                    </th>
                     <th>어깨 너비</th>
                     <th>가슴 둘레</th>
                     <th>소매 길이</th>
