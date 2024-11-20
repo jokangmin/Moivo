@@ -1,12 +1,15 @@
 spring:
+  config:
+    import: "classpath:external-config.properties"
+
   datasource:
-    # Oracle 설정 (주석 처리됨)
+    # Oracle 설정
     # url: jdbc:oracle:thin:@localhost:1521:XE
     # username: c##java
     # password: 1234
     # driver-class-name: oracle.jdbc.driver.OracleDriver
 
-    # MySQL 설정 (로컬 개발용)
+    # MySQL 설정
     # url: jdbc:mysql://localhost:3306/moivo?useSSL=false&serverTimezone=Asia/Seoul
     # username: root
     # password: 1234
@@ -25,6 +28,11 @@ spring:
     properties:
       hibernate.format_sql: true
       hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
+
+  servlet:
+    multipart:
+      max-file-size: -1 # 파일당 최대 크기 (-1은 무제한)
+      max-request-size: -1 # 요청 전체 최대 크기 (-1은 무제한)
 
 ncp:
   storage:

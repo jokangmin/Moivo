@@ -1,14 +1,11 @@
 package com.example.demo.store.service;
 
-import org.springframework.data.domain.Pageable;
-
 import java.util.Map;
 
 public interface ProductService {
 
-    Map<String, Object> storeList();
+    public Map<String, Object> getProduct(int productSeq);
 
-    Map<String, Object> productSearch(String keyword, Pageable pageable);
+    public void saveProduct(Map<String, Object> map);
 
-    Map<String, Object> productList(Pageable pageable);
 }
