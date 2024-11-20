@@ -34,6 +34,7 @@ const Banner = () => {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('token');
     logout();
     alert('로그아웃되었습니다.');
     navigate('/');

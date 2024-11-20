@@ -12,12 +12,15 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       setIsLoggedIn(true);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    } else {
+      setIsLoggedIn(false);
+      setUser(null);
     }
   }, []);
 
-  const login = async (credentials) => {
+  const login = async (formData) => {
     try {
-      const response = await axios.post('http://localhost:8080/api/auth/login', credentials);
+      const response = await axios.post('/api/auth/login', formData);
       const token = response.data;
       localStorage.setItem('token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
