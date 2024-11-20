@@ -13,6 +13,8 @@ import Qna_board from './containers/qna/qna_board';
 import MainProvider from './contexts/MainContext';
 import Upload from './containers/test/upload';
 import MypageMain from './containers/mypage/mypage_main';
+import MypageWish from './containers/mypage/mypage_wish';
+import MypageBoard from './containers/mypage/mypage_board';
 import MypageOrder from './containers/mypage/mypage_order';
 import MypageOrderDetails from './containers/mypage/mypage_orderDetails';
 import MypageProfile from './containers/mypage/mypage_profile';
@@ -28,6 +30,8 @@ const routeConfig = [
   { path: "/upload", element: <Upload /> },
   { path: "/mypage", element: <MypageMain /> },
   { path: "/mypage/profile", element: <MypageProfile /> },
+  { path: "/mypage/wish", element: <MypageWish /> },
+  { path: "/mypage/board", element: <MypageBoard /> },
   { path: "/mypage/order", element: <MypageOrder /> },
   { path: "/mypage/orderDetails", element: <MypageOrderDetails /> },
   { path: "/qna_faqboard", element: <Qna_faqboard /> },
