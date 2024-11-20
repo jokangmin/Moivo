@@ -6,10 +6,28 @@ import axios from 'axios';
 const user_login = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({ id: "", password: "" });
+
+    //사용자 데이터 요청하는 함수임
+    const fetchUserData = async () => {
+        const token = localStorage.getItem("token"); // JWT를 가져옴
+        try {
+            const response = await axios.get("http://localhost:8080/api/user/info", {    //  /api/user -> LoginController로 이동
+                headers: {
+                    Authorization: `Bearer ${token}`, // 헤더에 JWT 추가
+                },
+            });
+            console.log("사용자 정보:", response.data);
+        } catch (error) {
+            console.error("데이터 요청 실패:", error);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const response = await axios.post("http://localhost:8080/api/auth/login", formData);
+            console.log(formData);
+            const response = await axios.post("http://localhost:8080/api/auth/login", formData);    // /api/auth ->  UserController 로 이동
+          //const response = await axios.post("http://localhost:8080/api/auth/login", {"id" : 1, "pwd" : 1});    // /api/auth ->  UserController 로 이동
           localStorage.setItem("token", response.data); // JWT 저장
           alert("로그인 성공!");
           navigate("/mypage");
