@@ -1,126 +1,73 @@
 package com.example.demo.store.controller;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.example.demo.store.dto.ProductDTO;
+import com.example.demo.store.service.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.example.demo.ncp.service.NCPObjectStorageService;
-import com.example.demo.store.entity.ProductCategoryEntity;
-import com.example.demo.store.entity.ProductEntity;
-import com.example.demo.store.entity.ProductImgEntity;
-import com.example.demo.store.repository.ProductCategoryRepository;
-import com.example.demo.store.repository.ProductImgRepository;
-import com.example.demo.store.repository.ProductRepository;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/api/store")
+
 public class StoreController {
 
-   @Autowired
-    private ProductRepository productRepository;
+    @Autowired
+    private ProductService productService;
 
-    @Autowired
-    private ProductImgRepository productImgRepository;
-    
-    @Autowired
-    private NCPObjectStorageService ncpObjectStorageService;
+    // 상품 등록
+    @PostMapping("/admin/product")
+    public ResponseEntity<String> saveProduct(
+            // 1. 카테고리 관련 매개변수 필요 >> int형
+            // 2. 재고 관련 매개 변수 필요 >>
+            @RequestBody ProductDTO productDTO,
+            @RequestParam("layer1") List<MultipartFile> layer1Files,
+            @RequestParam("layer2") List<MultipartFile> layer2Files,
+            @RequestParam("layer3") List<MultipartFile> layer3Files,
+            @RequestParam("CategorySeq") int categorySeq) {
 
-    @Autowired
-    private ProductCategoryRepository productCategoryRepository;
+        // 받을 값
+        // 1. ProductDTO 객체 (Category 설정)
+        // 2. imgDTO 객체
+        // 3. stock 객체
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("ProductDTO", productDTO);
+        map.put("layer1", layer1Files);
+        map.put("layer2", layer2Files);
+        map.put("layer3", layer3Files);
+        map.put("CategorySeq", categorySeq);
+
+        productService.saveProduct(map);
+        return ResponseEntity.ok(null);
+    }
+
     // 상품 페이징 처리
     // 상품 검색
     // 상품 상세 화면 (리뷰 포함)
+    @GetMapping("/{productSeq}")
+    public ResponseEntity<?> getProductDetail(@PathVariable int productSeq) {
+        System.out.println(productSeq);
+        Map<String, Object> map = productService.getProduct(productSeq);
+        // 값 존재 X
+        if (map == null)
+            return ResponseEntity.status(HttpStatus.SC_NOT_FOUND).body(null);
 
-    // 상품 이미지 조회 API
-    @GetMapping("/product/{productSeq}/images")
-    public ResponseEntity<List<ProductImgEntity>> getProductImages(@PathVariable int productSeq) {
-        List<ProductImgEntity> images = productImgRepository.findByProductEntity_ProductSeq(productSeq);
-        return ResponseEntity.ok(images);
+        // 값 존재 O
+        return ResponseEntity.ok(map);
     }
-
-    // 상품 업로드 API
-    @PostMapping("/upload")
-    public ResponseEntity<String> uploadProduct(
-            @RequestPart("layer1") List<MultipartFile> layer1Files,
-            @RequestPart("layer2") List<MultipartFile> layer2Files,
-            @RequestPart("layer3") List<MultipartFile> layer3Files,
-            @RequestParam("name") String name,
-            @RequestParam("price") int price,
-            @RequestParam("content") String content) {
-        // 상품 엔티티 생성
-        ProductEntity product = new ProductEntity();
-        product.setName(name);
-        product.setPrice(price);
-        product.setContent(content);
-
-        // 카테고리 자동 증가 처리
-        Integer maxCategorySeq = productCategoryRepository.findMaxCategorySeq();
-        int newCategorySeq = (maxCategorySeq != null ? maxCategorySeq : 0) + 1;
-
-        ProductCategoryEntity category = new ProductCategoryEntity();
-        category.setCategoryseq(newCategorySeq);
-        category.setName("자동 생성 카테고리 " + newCategorySeq);
-
-        ProductCategoryEntity savedCategory = productCategoryRepository.save(category);
-
-        product.setCategoryEntity(savedCategory);
-
-        // 대표 이미지 설정 (Layer 1의 첫 번째 이미지 사용)
-        if (!layer1Files.isEmpty()) {
-            MultipartFile representativeFile = layer1Files.get(0);
-            String representativeFileName = UUID.randomUUID().toString() + "_" + representativeFile.getOriginalFilename();
-            String representativeFileUrl = ncpObjectStorageService.uploadFile("moivo", "products/" + representativeFileName, representativeFile);
-            product.setImg(representativeFileUrl); // 대표 이미지 설정
-        }
-
-        // 상품 저장
-        ProductEntity savedProduct = productRepository.save(product);
-
-        // 레이어별 파일 저장
-        saveFiles(layer1Files, savedProduct, 1); // layer1 저장
-        saveFiles(layer2Files, savedProduct, 2); // layer2 저장
-        saveFiles(layer3Files, savedProduct, 3); // layer3 저장
-
-        return ResponseEntity.ok("상품 업로드 완료");
-    }
-
-    private void saveFiles(List<MultipartFile> files, ProductEntity product, int layer) {
-        for (MultipartFile file : files) {
-            try {
-                // 파일 이름 생성 및 저장
-                String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-
-                // NCP Object Storage 업로드
-                String fileUrl = ncpObjectStorageService.uploadFile("moivo", "products/" + fileName, file);
-
-                // 데이터베이스에 저장할 ProductImgEntity 생성
-                ProductImgEntity img = new ProductImgEntity();
-                img.setProductEntity(product);
-                img.setFileName(fileName);
-                img.setOriginalFileName(file.getOriginalFilename());
-                img.setLayer(layer); // 레이어 값 설정
-                img.setFileUrl(fileUrl); // 업로드된 파일 URL 설정
-
-                // ProductImgRepository에 저장
-                productImgRepository.save(img);
-
-                // 로그 출력
-                System.out.println("Saved image for layer " + layer + ": " + fileUrl);
-            } catch (Exception e) {
-                System.err.println("File upload failed for layer " + layer + ": " + e.getMessage());
-            }
-        }
-    }
-
 
 }
