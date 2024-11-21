@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [tokenExpiration, setTokenExpiration] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     if (token) {
       setIsLoggedIn(true);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       if (token) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         setIsLoggedIn(true);
@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     delete axios.defaults.headers.common['Authorization'];
     setIsLoggedIn(false);
     setUser(null);
