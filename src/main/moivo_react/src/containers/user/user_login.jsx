@@ -31,10 +31,14 @@ const user_login = () => {
         try {
             console.log(formData);
             const response = await axios.post("http://localhost:8080/api/auth/login", formData);
-            sessionStorage.setItem("token", response.data);
+
+            const {jwt, userseq} = response.data;
+
+            sessionStorage.setItem("token", jwt);
+            sessionStorage.setItem("userseq", userseq);
             login();
             alert("로그인 성공!");
-            navigate("/mypage");
+            navigate("/");
         } catch (error) {
             console.error("로그인 실패:", error);
             alert("로그인에 실패했습니다.");

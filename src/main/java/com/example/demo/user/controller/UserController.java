@@ -11,7 +11,7 @@ import com.example.demo.user.dto.UserDTO;
 import com.example.demo.user.service.UserService;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/user")
 public class UserController {
 
     @Autowired
@@ -19,7 +19,7 @@ public class UserController {
 
     
     //회원가입
-    @PostMapping("/signup")
+    @PostMapping("/join")
     public ResponseEntity<String> signup(@RequestBody UserDTO userDTO) {
         int userSeq = userService.insert(userDTO);
         return new ResponseEntity<>("회원가입 성공: " + userSeq, HttpStatus.CREATED);
