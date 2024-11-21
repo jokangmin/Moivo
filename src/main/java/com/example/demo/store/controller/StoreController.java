@@ -77,14 +77,14 @@ public class StoreController {
     }
 
     @GetMapping("")
-    public Map<String, Object> getProductAll(){
+    public ResponseEntity<Map<String, Object>> getProductAll(){
         Map<String, Object> map = new HashMap<>();
         if(map == null){
             map.put("ProductDTO", new ProductDTO());
         } else{
             map.put("ProductDTO", map);
         }
-        return productService.getProductList();
+        return ResponseEntity.ok(productService.getProductList());
     }
 
 }

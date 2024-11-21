@@ -156,22 +156,22 @@ public class ProductServiceImpl implements ProductService {
         List<ProductImgDTO> imgList = new ArrayList<>();
 
         for (ProductEntity productEntity : list) {
-            ProductDTO productDTO = ProductDTO.toProductDTO(productEntity);
+            ProductDTO productDTO = ProductDTO.toGetProductDTO(productEntity);
             dtoList.add(productDTO);
 
             //전체 상품에서 layer1 이미지 추출
-            for (ProductImgEntity imgEntity : productEntity.getImgList()) {
-                if (imgEntity.getLayer() == 1) {
-                    ProductImgDTO imgDTO = ProductImgDTO.toGetProductImgDTO(imgEntity);
-                    imgList.add(imgDTO);
-                }
-            }
+//            for (ProductImgEntity imgEntity : productEntity.getImgList()) {
+//                if (imgEntity.getLayer() == 1) {
+//                    ProductImgDTO imgDTO = ProductImgDTO.toGetProductImgDTO(imgEntity);
+//                    imgList.add(imgDTO);
+//                }
+//            }
         }
         //결과를 map에 저장
         map.put("productList", dtoList);
-        map.put("imgList", imgList);
+       // map.put("imgList", imgList);
         System.out.println("getProductList: " + dtoList);
-        System.out.println("getProductList: " + imgList);
+        //System.out.println("getProductList: " + imgList);
         return map;
     }
 
