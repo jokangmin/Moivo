@@ -1,4 +1,4 @@
-/* product_lsit.module.css */
+/* 상품 리스트 스타일 */
 
 @import url("https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css");
 
@@ -60,23 +60,31 @@
   font-size: clamp(1rem, 1.5vw, 1.4rem);
   cursor: pointer;
   position: relative;
-  transition: all 0.3s ease;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.categoryBtn::after {
+.categoryBtn::before {
   content: '';
   position: absolute;
-  bottom: -2px;
+  bottom: 0;
   left: 0;
-  width: 0;
+  width: 100%;
   height: 2px;
   background: #2d3748;
-  transition: width 0.3s ease;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
 }
 
-.categoryBtn.active::after,
-.categoryBtn:hover::after {
-  width: 100%;
+.categoryBtn.active,
+.categoryBtn:hover {
+  color: #2d3748;
+  transform: translateY(-3px);
+}
+
+.categoryBtn.active::before,
+.categoryBtn:hover::before {
+  transform: scaleX(1);
 }
 
 .sortSelect {
@@ -86,6 +94,13 @@
   background: white;
   color: #4a5568;
   cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sortSelect:hover {
+  background: #2d3748;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* =========================================
@@ -99,35 +114,25 @@
 }
 
 .card {
+  position: relative;
   background: white;
-  border-radius: 15px;
+  border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  position: relative;
+  transition: transform 0.3s ease;
 }
 
-.badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: #4a5568;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  z-index: 1;
+.card:hover {
+  transform: translateY(-5px);
 }
 
-.hot { background: #e53e3e; }
-.new { background: #38a169; }
-.trending { background: #805ad5; }
-.limited { background: #d69e2e; }
-
+/* 이미지 컨테이너 */
 .imgWrap {
   position: relative;
-  padding-top: 120%;
+  width: 100%;
+  padding-top: 75%; /* 4:3 비율 */
+  overflow: hidden;
+  background: #f0f0f0; /* 비어 있는 이미지 공간을 위한 배경색 */
 }
 
 .img {
@@ -136,9 +141,10 @@
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* 비율 유지하며 영역 채우기 */
 }
 
+/* 오버레이 스타일 */
 .overlay {
   position: absolute;
   top: 0;
@@ -147,10 +153,10 @@
   height: 100%;
   background: rgba(0, 0, 0, 0.3);
   opacity: 0;
-  transition: opacity 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: opacity 0.3s ease;
 }
 
 .card:hover .overlay {
@@ -171,6 +177,9 @@
   color: #2d3748;
   cursor: pointer;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .actionBtn:hover {
@@ -194,42 +203,29 @@
   color: white;
 }
 
+/* 상품 정보 */
 .info {
-  padding: 1.5rem;
+  padding: 1rem;
+  text-align: center;
 }
 
 .productTitle {
-  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
   color: #2d3748;
-  margin-bottom: 0.5rem;
-}
-
-.category {
-  font-size: clamp(1rem, 1.5vw, 1.4rem);
-  color: #718096;
-  margin-bottom: 0.5rem;
 }
 
 .price {
-  font-size: clamp(1.25rem, 2vw, 1.8rem);
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: bold;
   color: #2d3748;
-  margin-bottom: 0.5rem;
 }
 
 .stock {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.stockLabel {
+  font-size: 0.9rem;
   color: #718096;
-}
-
-.stockAmount {
-  color: #2d3748;
-  font-weight: 600;
+  margin-top: 0.5rem;
 }
 
 /* =========================================
@@ -279,7 +275,6 @@
   animation: shakeCart 0.4s ease-in-out;
 }
 
-
 /* =========================================
    6. 애니메이션
 ========================================= */
@@ -310,7 +305,7 @@
 }
 
 /* =========================================
-   8. 모달
+   8. 모달 스타일
 ========================================= */
 .modal {
   position: fixed;
@@ -361,4 +356,3 @@
   font-size: 1.5rem;
   cursor: pointer;
 }
-

@@ -1,180 +1,339 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import styles from "../../assets/css/product_detail.module.css";
 import Banner from "../../components/Banner/banner";
 import Footer from "../../components/Footer/Footer";
+import { FaStar, FaHeart, FaShoppingCart } from "react-icons/fa";
+import { motion } from "framer-motion";
 import products from "../../assets/dummydata/productDTO";
+import axios from "axios";
 
 const ProductDetail = () => {
-  const { state } = useLocation();
-  const product = state?.product;
-
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [product, setProduct] = useState(null);
   const [selectedSize, setSize] = useState("");
   const [quantity, setQuantity] = useState(1);
-  const [mainImg, setMainImg] = useState(product?.images.main);
+  const [mainImg, setMainImg] = useState("");
   const [showDescription, setShowDescription] = useState(true);
   const [showReviews, setShowReviews] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
+  const [reviewContent, setReviewContent] = useState("");
+  const [replyContent, setReplyContent] = useState("");
+  const [reviews, setReviews] = useState([]);
+  const [relatedProducts, setRelatedProducts] = useState([]);
+  const [reviewRating, setReviewRating] = useState(0);
 
-  const addToCart = () => {
+  useEffect(() => {
+    const selectedProduct = products.find((product) => product.productseq === parseInt(id));
+    setProduct(selectedProduct);
+    if (selectedProduct) {
+      setMainImg(selectedProduct.productimg?.[0]?.fileurl || "/placeholder.jpg");
+      setReviews(selectedProduct.review || []);
+      setRelatedProducts(
+        products.filter(
+          (product) =>
+            product.categoryseq === selectedProduct.categoryseq && product.productseq !== selectedProduct.productseq
+        )
+      );
+    }
+  }, [id, products]);
+
+  const addToWishlist = async () => {
+    try {
+      const response = await axios.post("/api/wishlist", {
+        productseq: product.productseq,
+        userseq: 1, // 실제 로그인한 사용자의 userseq를 동적으로 받아와야 합니다.
+      });
+      if (response.data.success) {
+        alert("위시리스트에 추가되었습니다.");
+      } else {
+        alert("위시리스트 추가에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("위시리스트 추가 실패:", error);
+      alert("위시리스트 추가에 실패했습니다.");
+    }
+  };
+
+  const addToCart = async () => {
     if (!selectedSize) {
       alert("사이즈를 선택해주세요.");
       return;
     }
-    // 장바구니에 추가하는 로직 구현
-    alert(`장바구니에 추가됨! ${product.name}, 사이즈: ${selectedSize}, 수량: ${quantity}`);
-  };
-
-  const buyNow = () => {
-    if (!selectedSize) {
-      alert("사이즈를 선택해주세요.");
+    if (quantity < 1) {
+      alert("수량은 1개 이상이어야 합니다.");
       return;
     }
-    // 바로 구매하는 로직 구현
-    alert(`바로 구매! ${product.name}, 사이즈: ${selectedSize}, 수량: ${quantity}`);
+    try {
+      const response = await axios.post("/api/cart", {
+        productseq: product.productseq,
+        userseq: 1, // 실제 로그인한 사용자의 userseq를 동적으로 받아와야 합니다.
+        size: selectedSize,
+        quantity: quantity,
+      });
+      if (response.data.success) {
+        alert("장바구니에 추가되었습니다.");
+      } else {
+        alert("장바구니 추가에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("장바구니 추가 실패:", error);
+      alert("장바구니 추가에 실패했습니다.");
+    }
   };
 
-  if (!product) {
-    return null;
-  }
+  const handleSubmitReview = async () => {
+    if (reviewContent.trim() === "") {
+      alert("리뷰 내용을 입력해주세요.");
+      return;
+    }
+    try {
+      const response = await axios.post("/api/review", {
+        productseq: product.productseq,
+        userseq: 1, // 실제 로그인한 사용자의 userseq를 동적으로 받아와야 합니다.
+        content: reviewContent,
+        rating: reviewRating, // 별점 값 추가
+      });
+      if (response.data.success) {
+        const newReview = { content: reviewContent, userseq: 1, reviewdate: new Date().toISOString() };
+        setReviews([newReview, ...reviews]);
+        alert("리뷰가 작성되었습니다.");
+        setReviewContent("");
+      } else {
+        alert("리뷰 작성에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("리뷰 작성 실패:", error);
+      alert("리뷰 작성에 실패했습니다.");
+    }
+  };
 
   return (
-    <div>
+    <div className={styles.container}>
       <Banner />
-      <div className={styles.container}>
-        <div className={styles.productInfo}>
-          <div className={styles.imageArea}>
-            <img src={mainImg} alt={product?.name} className={styles.mainImage} />
-            <div className={styles.thumbnails}>
-              {product?.images.thumbnails.map((img, idx) => (
-                <img
-                  key={idx}
-                  src={img}
-                  alt={`Thumbnail ${idx}`}
-                  className={styles.thumbnail}
-                  onClick={() => setMainImg(img)}
-                />
-              ))}
-            </div>
-          </div>
-          <div className={styles.infoArea}>
-            <h1 className={styles.title}>{product?.name}</h1>
-            <p className={styles.price}>₩{product?.price.toLocaleString()}</p>
-            <div className={styles.options}>
-              <label>사이즈:</label>
-              <select
-                value={selectedSize}
-                onChange={(e) => setSize(e.target.value)}
-                className={styles.select}
-              >
-                <option value="">사이즈 선택</option>
-                {product?.productstock.map((stock) => (
-                  <option key={stock.stockseq} value={stock.size}>
-                    {stock.size}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className={styles.quantity}>
-              <label>수량:</label>
-              <input
-                type="number"
-                min="1"
-                value={quantity}
-                onChange={(e) => setQuantity(parseInt(e.target.value))}
-                className={styles.quantityInput}
-              />
-            </div>
-            <div className={styles.buttons}>
-              <button className={styles.cartBtn} onClick={addToCart}>
-                장바구니
-              </button>
-              <button className={styles.buyBtn} onClick={buyNow}>
-                바로 구매
-              </button>
-            </div>
-            {/* 상품 설명, 리뷰, 사이즈 가이드 들어갈 공간 */}
-          </div>
-        </div>
-        <div className={styles.detailInfo}>
-          <div className={styles.tabs}>
-            <button
-              className={`${styles.tab} ${showDescription ? styles.active : ""}`}
-              onClick={() => {
-                setShowDescription(true);
-                setShowReviews(false);
-                setShowGuide(false);
-              }}
-            >
-              상품 설명
-            </button>
-            <button
-              className={`${styles.tab} ${showReviews ? styles.active : ""}`}
-              onClick={() => {
-                setShowDescription(false);
-                setShowReviews(true);
-                setShowGuide(false);
-              }}
-            >
-              리뷰
-            </button>
-            <button
-              className={`${styles.tab} ${showGuide ? styles.active : ""}`}
-              onClick={() => {
-                setShowDescription(false);
-                setShowReviews(false);
-                setShowGuide(true);
-              }}
-            >
-              사이즈 가이드
-            </button>
-          </div>
-          {showDescription && (
-            <div className={styles.description}>
-              <h2>상품 설명</h2>
-              <p>{product?.content}</p>
-              <div className={styles.detailImages}>
-                {product?.images.details.map((img, idx) => (
-                  <img key={idx} src={img} alt={`Detail ${idx}`} className={styles.detailImage} />
+      
+      <motion.div
+        className={styles.detailContainer}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        {product && (
+          <>
+            <div className={styles.productImages}>
+              <div className={styles.thumbnails}>
+                {product.productimg.map((img) => (
+                  <img 
+                    key={img.productimgseq}
+                    src={img.fileurl} 
+                    alt={product.name} 
+                    onClick={() => setMainImg(img.fileurl)}
+                  />
                 ))}
               </div>
+              <div className={styles.mainImage}>
+                <img
+                  src={mainImg || (product.productimg?.length > 0 ? product.productimg[0].fileurl : "/placeholder.jpg")}
+                  alt={product.name || "이미지 없음"}
+                />
+              </div>
             </div>
-          )}
-          {showReviews && product?.reviews && (
-            <div className={styles.reviews}>
-              <h2>리뷰</h2>
-              <ul className={styles.reviewList}>
-                {product.reviews.map((review) => (
-                  <li key={review.reviewseq} className={styles.reviewItem}>
-                    <p className={styles.reviewText}>{review.content}</p>
-                    <p className={styles.reviewAuthor}>작성자: {review.userseq}</p>
-                    <p className={styles.reviewDate}>{review.reviewdate}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {showGuide && (
-            <div className={styles.sizeGuide}>
-              <h2>사이즈 가이드</h2>
-              <table className={styles.sizeTable}>
-                <thead>
-                  <tr>
-                    <th>사이즈</th>
-                    <th>재고</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {product?.productstock.map((stock) => (
-                    <tr key={stock.stockseq}>
-                      <td>{stock.size}</td>
-                      <td>{stock.stock}</td>
-                    </tr>
+            <div className={styles.infoSection}>
+              <h1 className={styles.productName}>{product.name}</h1>
+              <p className={styles.productPrice}>{product.price?.toLocaleString()}원</p>
+              <div className={styles.sizeSelector}>
+                <label htmlFor="size">사이즈:</label>
+                <select
+                  id="size"
+                  value={selectedSize}
+                  onChange={(e) => setSize(e.target.value)}
+                >
+                  <option value="">-- 사이즈 선택 --</option>
+                  {product.productstock.map((stock) => (
+                    <option key={stock.stockseq} value={stock.size}>
+                      {stock.size} ({stock.count}개 남음)
+                    </option>
                   ))}
-                </tbody>
-              </table>
+                </select>
+              </div>
+              <div className={styles.quantity}>
+                <label>수량:</label>
+                <input
+                  type="number"
+                  min="1"
+                  value={quantity}
+                  onChange={(e) => setQuantity(parseInt(e.target.value))}
+                  className={styles.quantityInput}
+                />
+              </div>
+              <div className={styles.actions}>
+                <motion.button 
+                  onClick={addToWishlist}
+                  className={styles.actionButton}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <FaHeart /> 위시리스트
+                </motion.button>
+                <motion.button 
+                  onClick={addToCart}
+                  className={styles.actionButton}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <FaShoppingCart /> 장바구니
+                </motion.button>
+              </div>
             </div>
-          )}
+          </>
+        )}
+      </motion.div>
+
+      <motion.div className={styles.detailMenu}>
+        <motion.div
+          className={`${styles.menuItem} ${showDescription ? styles.active : ''}`}
+          onClick={() => {
+            setShowDescription(true);
+            setShowReviews(false);
+            setShowGuide(false);
+          }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          상품설명
+        </motion.div>
+        <motion.div
+          className={`${styles.menuItem} ${showReviews ? styles.active : ''}`}
+          onClick={() => {
+            setShowDescription(false);
+            setShowReviews(true);
+            setShowGuide(false);
+          }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          리뷰
+        </motion.div>
+        <motion.div
+          className={`${styles.menuItem} ${showGuide ? styles.active : ''}`}
+          onClick={() => {
+            setShowDescription(false);
+            setShowReviews(false);
+            setShowGuide(true);
+          }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          사이즈 가이드
+        </motion.div>
+      </motion.div>
+      <motion.div className={styles.detailContent}>
+        {showDescription && (
+          <div className={styles.description}>
+            <p>{product.content}</p>
+          </div>
+        )}
+        {showReviews && (
+          <div className={styles.reviews}>
+            {reviews.map((review, index) => (
+              <div key={index} className={styles.review}>
+                <div className={styles.reviewHeader}>
+                  <span>{review.username || "익명 사용자"}</span>
+                  <span>{review.createdAt || "날짜 없음"}</span>
+                  <div className={styles.reviewRating}>
+                    {[...Array(5)].map((_, i) => (
+                      <FaStar 
+                        key={i} 
+                        color={i < review.rating ? "#ffc107" : "#e4e5e9"} 
+                      />
+                    ))}
+                  </div>
+                </div>
+                <p>{review.content}</p>
+                {review.reply && <p className={styles.reply}><strong>판매자 답변:</strong> {review.reply}</p>}
+              </div>
+            ))}
+            <div className={styles.writeReview}>
+              <h4>리뷰 작성</h4>
+              <div className={styles.ratingInput}>
+                {[...Array(5)].map((_, i) => (
+                  <FaStar
+                    key={i}
+                    color={i < reviewRating ? "#ffc107" : "#e4e5e9"}
+                    onClick={() => setReviewRating(i + 1)}
+                  />
+                ))}
+              </div>
+              <textarea
+                value={reviewContent}
+                onChange={(e) => setReviewContent(e.target.value)}
+              />
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={handleSubmitReview}
+              >
+                리뷰 등록
+              </motion.button>
+            </div>
+          </div>
+        )}
+        {showGuide && (
+          <div className={styles.guide}>
+            <h4>사이즈 가이드</h4>
+            <table>
+              <thead>
+                <tr>
+                  <th>사이즈</th>
+                  <th>어깨너비</th>
+                  <th>가슴둘레</th>
+                  <th>소매길이</th>
+                  <th>총기장</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>S</td>
+                  <td>43</td>
+                  <td>47</td>
+                  <td>59</td>
+                  <td>68</td>
+                </tr>
+                <tr>
+                  <td>M</td>
+                  <td>45</td>
+                  <td>49</td>
+                  <td>60</td>
+                  <td>69</td>
+                </tr>
+                <tr>
+                  <td>L</td>
+                  <td>47</td>
+                  <td>51</td>
+                  <td>61</td>
+                  <td>70</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        )}
+      </motion.div>
+      <div className={styles.relatedProducts}>
+        <h3>관련 상품</h3>
+        <div className={styles.productList}>
+          {relatedProducts.map((related) => (
+            <motion.div 
+              key={related.productseq} 
+              className={styles.product}
+              whileHover={{ scale: 1.05 }}
+              onClick={() => navigate(`/product/${related.productseq}`)}
+            >
+              <img src={related.productimg[0]?.fileurl} alt={related.name} />
+              <h4>{related.name}</h4>
+              <p>{related.price.toLocaleString()}원</p>
+            </motion.div>
+          ))}
         </div>
       </div>
       <Footer />
