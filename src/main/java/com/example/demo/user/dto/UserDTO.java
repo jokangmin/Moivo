@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO { // 사용자 & 관리자
-    private int userSeq;
-    private String id;
+    private Integer id;
+    private String userId;
     private String name;
     private String pwd;
     private String email;
@@ -27,29 +27,59 @@ public class UserDTO { // 사용자 & 관리자
     private String gender;
     private LoginType loginType = LoginType.MOIVO;
     private boolean admin = false; // 기본값 설정
-    private Grade grade = Grade.FAMILY;
+    private Grade grade = Grade.LV1;
     private double height;
     private double weight;
 
-    public UserEntity toEntity() {
-        UserEntity entity = new UserEntity();
-        entity.setUserSeq(userSeq);
-        entity.setId(id);
-        entity.setName(name);
-        entity.setPwd(pwd);
-        entity.setEmail(email);
-        entity.setTel(tel);
-        entity.setBirth(birth);
-        entity.setAddr1(addr1);
-        entity.setAddr2(addr2);
-        entity.setZipcode(zipcode);
-        entity.setGender(gender);
-        entity.setLoginType(loginType);
-        entity.setAdmin(admin);
-        entity.setGrade(grade);
-        entity.setHeight(height);
-        entity.setWeight(weight);
+    // Entity -> DTO
 
-        return entity;
+    // 사용자 데이터 출력
+    public static UserDTO toGetUserDTO(UserEntity entity) {
+        UserDTO dto = new UserDTO();
+        dto.setId(entity.getId());
+        dto.setUserId(entity.getUserId());
+        dto.setName(entity.getName());
+        dto.setPwd(entity.getPwd());
+        dto.setEmail(entity.getEmail());
+        dto.setTel(entity.getTel());
+        dto.setBirth(entity.getBirth());
+        dto.setAddr1(entity.getAddr1());
+        dto.setAddr2(entity.getAddr2());
+        dto.setZipcode(entity.getZipcode());
+        dto.setGender(entity.getGender());
+        dto.setLoginType(entity.getLoginType());
+        dto.setAdmin(entity.isAdmin());
+        dto.setGrade(entity.getGrade());
+        dto.setHeight(entity.getHeight());
+        dto.setWeight(entity.getWeight());
+
+        return dto;
+    }
+
+    // 사용자 데이터 저장
+    public static UserDTO toSaveUserDTO(UserEntity entity) {
+        UserDTO dto = new UserDTO();
+        dto.setUserId(entity.getUserId());
+        dto.setName(entity.getName());
+        dto.setPwd(entity.getPwd());
+        dto.setEmail(entity.getEmail());
+        dto.setTel(entity.getTel());
+        dto.setBirth(entity.getBirth());
+        dto.setAddr1(entity.getAddr1());
+        dto.setAddr2(entity.getAddr2());
+        dto.setZipcode(entity.getZipcode());
+        dto.setGender(entity.getGender());
+        dto.setLoginType(entity.getLoginType());
+
+        return dto;
+    }
+
+    // Social 사용자 데이터 저장
+    public static UserDTO toSaveSocialUserDTO(UserEntity entity) {
+        UserDTO dto = new UserDTO();
+        dto.setUserId(entity.getUserId());
+        dto.setLoginType(entity.getLoginType());
+
+        return dto;
     }
 }
