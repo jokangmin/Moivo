@@ -1,3 +1,5 @@
+@import url("https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css");
+
 /* 전체 컨테이너 */
 .memberFrame {
     width: 100%;
@@ -8,7 +10,7 @@
 
 /* 타이틀 */
 .title {
-    font-family: 'Italiana', serif;
+    font-family: 'Italiana', sans-serif;
     font-size: 36px;
     text-align: center;
     color: #2f2e2c;
@@ -27,9 +29,8 @@
     background: #F6F2EE;
     border: 1px solid #988C73;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    position: relative; /* 부모 컨테이너에 상대적 위치를 설정 */
+    position: relative;
 }
-
 
 .membershipImage {
     width: 50px;
@@ -39,7 +40,7 @@
     margin-left: 20px;
 }
 
-.membershipImage img{
+.membershipImage img {
     width: 50px;
     height: 40px;
     background: #F6F2EE;
@@ -47,16 +48,15 @@
 }
 
 .membershipInfo {
-    font-family: 'Italiana', serif;
-    font-size: 15px;
-    font-weight: bold;
+    font-family: 'GmarketSans', sans-serif;
+    font-size: 14px;
     text-align: left;
     color: #2f2e2c;
     margin-bottom: 5px;
 }
 
 .pointCoupon {
-    font-family: 'Italiana', serif;
+    font-family: 'GmarketSans', sans-serif;
     font-size: 16px;
     text-align: left;
     color: #2f2e2c;
@@ -65,25 +65,25 @@
 /* 아이콘 영역 (우측 상단으로 위치) */
 .tooltipIcon {
     position: absolute;
-    top: 2px; 
-    right: 2px; /* 우측 상단에 배치 */
-    width: 50px; /* 아이콘 크기 조정 */
+    top: 2px;
+    right: 2px;
+    width: 50px;
     height: 50px;
     cursor: pointer;
 }
 
 .tooltipIcon img {
-    width: 100%; 
-    height: 100%; 
+    width: 100%;
+    height: 100%;
     object-fit: contain;
 }
 
-/* 툴팁 박스를 좌측으로 표시 */
+/* 툴팁 박스 */
 .tooltip {
-    font-family: 'Italiana', serif;
+    font-family: 'GmarketSans', sans-serif;
     position: absolute;
-    top: 90%; /* 중앙에 맞추기 */
-    left: -270px; /* 왼쪽으로 이동 */
+    top: 90%;
+    left: -270px;
     transform: translateY(-50%);
     background-color: #988c7358;
     border: 1px solid #ccc;
@@ -92,12 +92,14 @@
     z-index: 1000;
     white-space: nowrap;
 }
+
+
 .couponSection {
     display: flex; /* 가로로 배치 */
     align-items: center; /* 수직 정렬 */
     gap: 20px; /* POINT와 COUPON 간 간격 */
     font-family: 'Italiana', serif;
-    font-size: 16px;
+    font-size: 14px;
 }
   
   .pointCouponSection {
@@ -107,13 +109,13 @@
   }
   
   .point {
-    font-size: 16px;
-    font-weight: bold;
+    font-family: 'GmarketSans', sans-serif;
+    font-size: 14px;
 }
 
 .coupon {
-    font-size: 16px;
-    font-weight: bold;
+    font-family: 'GmarketSans', sans-serif;
+    font-size: 14px;
     position: relative; /* 툴팁 위치를 조정하기 위한 기준 */
 }
   
@@ -211,6 +213,13 @@
     font-size: 14px;
     color: #2f2e2c;
 }
+
+.productText .price {
+    font-family: 'GmarketSans', serif;
+    font-size: 12px;
+    font-weight: 500;
+}
+
 
 /* 통합 메뉴 */
 .menuWrapper {

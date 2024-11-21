@@ -1,3 +1,5 @@
+@import url("https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css");
+
 .membershipBox,
 .profileForm {
     width: 98%; /* 동일한 너비 설정 */
@@ -66,17 +68,16 @@
 }
 
 .membershipInfo {
-    font-family: 'Italiana', serif;
-    font-size: 15px;
-    font-weight: bold;
+    font-family: 'GmarketSans', serif;
+    font-size: 14px;
     text-align: left;
     color: #2f2e2c;
     margin-bottom: 5px;
 }
 
 .pointCoupon {
-    font-family: 'Italiana', serif;
-    font-size: 16px;
+    font-family: 'GmarketSans', serif;
+    font-size: 14px;
     text-align: left;
     color: #2f2e2c;
 }
@@ -130,6 +131,36 @@
     margin-bottom: 0; /* 하단 마진 제거 */
     padding-right: 20px; /* 입력창과의 간격 조정 */
 }
+
+/* 공통 input 스타일 */
+input {
+    font-family: 'GmarketSans', sans-serif; /* GmarketSans 폰트 적용 */
+    color: #2f2e2c; /* 텍스트 색상 */
+    background-color: transparent; /* 배경 투명 */
+    padding: 10px;
+    border: 1px solid #988C73;
+    font-size: 14px;
+    width: 100%; /* 입력칸 기본 너비 */
+}
+
+/* 폼의 개별 입력 필드 */
+.profileForm input[type="text"],
+.profileForm input[type="email"],
+.profileForm input[type="password"] {
+    font-family: 'GmarketSans', sans-serif; /* GmarketSans 폰트 */
+}
+
+/* 전화번호, 우편번호 같은 입력칸 */
+.phoneRow input,
+.addressContainer input {
+    font-family: 'GmarketSans', sans-serif; /* GmarketSans 폰트 */
+}
+
+/* 버튼 및 기타 텍스트에 영향 주지 않도록 제한 */
+button, label {
+    font-family: inherit; /* 기본 상속 */
+}
+
 
 .formRow input {
     padding: 10px;

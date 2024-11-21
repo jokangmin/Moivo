@@ -56,6 +56,11 @@
   .itemInfo {
     font-family: 'Italiana', serif;
   }
+
+  .itemInfo .itemPrice{
+    font-family: 'GmarketSans', serif;
+    font-weight: bold;
+  }
   
   .itemName {
     font-size: 16px;
