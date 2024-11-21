@@ -7,8 +7,13 @@ const Upload = () => {
   const [product, setProduct] = useState({
     name: "",
     price: "",
-    content: "",
-    stock: "",
+    content: ""
+  });
+
+  const [stock, setStock] = useState({
+    S : 0,
+    M : 0,
+    L : 0
   });
   const [files, setFiles] = useState({ layer1: [], layer2: [], layer3: [] });
   const [progress, setProgress] = useState(0);
@@ -16,7 +21,14 @@ const Upload = () => {
   // 상품 정보 입력 핸들러
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setProduct((prev) => ({ ...prev, [name]: value }));
+    console.log(name);
+    
+    if(name == "S" || name == "M" || name == "L") {
+      setStock((prev) => ({ ...prev, [name]: value }));
+    } else {
+      setProduct((prev) => ({ ...prev, [name]: value }));
+    }
+    
   };
 
   // 파일 추가 핸들러 (파일 선택 및 드래그 앤 드롭 모두 처리)
@@ -40,7 +52,7 @@ const Upload = () => {
 
   // 업로드 핸들러
   const handleUpload = async () => {
-    if (!product.name || !product.price || !product.content || !product.stock) {
+    if (!product.name || !product.price || !product.content || !stock.S || !stock.M || !stock.L) {
       alert("모든 상품 정보를 입력해주세요.");
       return;
     }
@@ -53,7 +65,9 @@ const Upload = () => {
     formData.append("name", product.name);
     formData.append("price", product.price);
     formData.append("content", product.content);
-    formData.append("stock", product.stock);
+    formData.append("S", stock.S);
+    formData.append("M", stock.M);
+    formData.append("L", stock.L);
 
     // 레이어별 파일 추가
     files.layer1.forEach((file) => formData.append("layer1", file));
@@ -67,7 +81,7 @@ const Upload = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:8080/api/store/upload", formData, {
+      const response = await axios.post("http://localhost:8080/api/admin/store/product", formData, {
         headers: { "Content-Type": "multipart/form-data" },
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
@@ -133,11 +147,31 @@ const Upload = () => {
             ></textarea>
           </label>
           <label>
-            재고:
+            재고 S:
             <input
               type="number"
-              name="stock"
-              value={product.stock}
+              name="S"
+              value={stock.S}
+              placeholder="상품 재고를 입력하세요"
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            재고 M:
+            <input
+              type="number"
+              name="M"
+              value={stock.M}
+              placeholder="상품 재고를 입력하세요"
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            재고 L:
+            <input
+              type="number"
+              name="L"
+              value={stock.L}
               placeholder="상품 재고를 입력하세요"
               onChange={handleInputChange}
             />
