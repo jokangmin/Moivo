@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductStockDTO {
     private Integer id; // 재고 고유 키
-    private ProductDTO productDTO; // 상품 고유 키 (Product 테이블과 연관)
+    private Integer productId; // 상품 고유 키 (Product 테이블과 연관)
     private String size; // 상품 사이즈 (S, M, L)
     private int count; // 재고 수량
 

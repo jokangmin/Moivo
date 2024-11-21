@@ -29,7 +29,7 @@ public class ProductStockEntity {
 
     // 사이즈 3개 : 상품 1개
     @ManyToOne
-    @JoinColumn(name = "productseq", nullable = false)
+    @JoinColumn(name = "productid", nullable = false)
     private ProductEntity productEntity; // 상품 고유 키 (Product 테이블과 연관)
 
     @Enumerated(EnumType.STRING)
