@@ -1,4 +1,4 @@
-/* product_lsit.module.css */
+/* 상품 리스트 스타일 */
 
 @import url("https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css");
 
@@ -49,34 +49,31 @@
 
 .categories {
   display: flex;
+  justify-content: center;
   gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .categoryBtn {
   padding: 0.8rem 1.5rem;
   border: none;
-  background: transparent;
+  background: #f0f0f0;
   color: #4a5568;
   font-size: clamp(1rem, 1.5vw, 1.4rem);
   cursor: pointer;
-  position: relative;
-  transition: all 0.3s ease;
+  border-radius: 5px;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.categoryBtn::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
+.categoryBtn.active {
   background: #2d3748;
-  transition: width 0.3s ease;
+  color: white;
+  transform: translateY(-2px);
 }
 
-.categoryBtn.active::after,
-.categoryBtn:hover::after {
-  width: 100%;
+.categoryBtn:hover {
+  background: #e2e8f0;
 }
 
 .sortSelect {
@@ -86,6 +83,13 @@
   background: white;
   color: #4a5568;
   cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sortSelect:hover {
+  background: #2d3748;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* =========================================
@@ -99,32 +103,25 @@
 }
 
 .card {
+  position: relative;
   background: white;
-  border-radius: 15px;
+  border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  position: relative;
+  transition: transform 0.3s ease;
 }
 
-.badge {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  color: white;
-  font-weight: 600;
-  z-index: 1;
+.card:hover {
+  transform: translateY(-5px);
 }
 
-.hot { background: #e53e3e; }
-.new { background: #38a169; }
-.trending { background: #805ad5; }
-.limited { background: #d69e2e; }
-
+/* 이미지 컨테이너 */
 .imgWrap {
   position: relative;
-  padding-top: 120%;
+  width: 100%;
+  padding-top: 75%; /* 4:3 비율 */
+  overflow: hidden;
+  background: #f0f0f0; /* 비어 있는 이미지 공간을 위한 배경색 */
 }
 
 .img {
@@ -133,9 +130,10 @@
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* 비율 유지하며 영역 채우기 */
 }
 
+/* 오버레이 스타일 */
 .overlay {
   position: absolute;
   top: 0;
@@ -144,10 +142,12 @@
   height: 100%;
   background: rgba(0, 0, 0, 0.3);
   opacity: 0;
-  transition: opacity 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .card:hover .overlay {
@@ -168,6 +168,9 @@
   color: #2d3748;
   cursor: pointer;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .actionBtn:hover {
@@ -191,46 +194,68 @@
   color: white;
 }
 
+/* 상품 정보 */
 .info {
-  padding: 1.5rem;
+  padding: 1rem;
+  text-align: center;
 }
 
 .productTitle {
-  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
   color: #2d3748;
-  margin-bottom: 0.5rem;
-}
-
-.category {
-  font-size: clamp(1rem, 1.5vw, 1.4rem);
-  color: #718096;
-  margin-bottom: 0.5rem;
 }
 
 .price {
-  font-size: clamp(1.25rem, 2vw, 1.8rem);
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: bold;
   color: #2d3748;
-  margin-bottom: 0.5rem;
 }
 
 .stock {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.stockLabel {
+  font-size: 0.9rem;
   color: #718096;
-}
-
-.stockAmount {
-  color: #2d3748;
-  font-weight: 600;
+  margin-top: 0.5rem;
 }
 
 /* =========================================
-   5. 플로팅 버튼
+   5. 페이징 스타일
+========================================= */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.pageBtn {
+  border: 1px solid #e2e8f0;
+  background: white;
+  color: #4a5568;
+  padding: 10px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.pageBtn:hover:not(:disabled) {
+  background: #2d3748;
+  color: white;
+}
+
+.pageBtn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.active {
+  background: #2d3748;
+  color: white;
+}
+
+/* =========================================
+   6. 플로팅 버튼
 ========================================= */
 .floatingButtons {
   position: fixed;
@@ -276,9 +301,8 @@
   animation: shakeCart 0.4s ease-in-out;
 }
 
-
 /* =========================================
-   6. 애니메이션
+   7. 애니메이션
 ========================================= */
 @keyframes shakeCart {
   0%, 100% {
@@ -307,7 +331,7 @@
 }
 
 /* =========================================
-   8. 모달
+   8. 모달 스타일
 ========================================= */
 .modal {
   position: fixed;
@@ -358,4 +382,3 @@
   font-size: 1.5rem;
   cursor: pointer;
 }
-

@@ -88,26 +88,6 @@ const ProductBoard = () => {
           <Slider />
         </motion.section>
 
-        {/* 카테고리 네비게이션 개선 */}
-        <motion.nav 
-          className={styles.categoryNav}
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-          {['all', 'new', 'best'].map((category) => (
-            <motion.button 
-              key={category}
-              className={`${styles.categoryBtn} ${activeCategory === category ? styles.active : ''}`}
-              onClick={() => setActiveCategory(category)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {category === 'all' ? 'All' : 
-               category === 'new' ? 'New Arrivals' : 'Best Sellers'}
-            </motion.button>
-          ))}
-        </motion.nav>
 
         {/* 날씨 패션 섹션 */}
         <motion.section 

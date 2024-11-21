@@ -95,10 +95,7 @@ public class ProductServiceImpl implements ProductService {
 
         // 1-2. 상품 테이블에 저장
         int productId = productRepository.save(productEntity).getId(); // DB에 저장된 기본키 반환
-        System.out.println("saveProduct: " + productEntity);
         System.out.println("saveProduct: " + productId);
-        productEntity.setId(productId);
-        System.out.println("saveProduct: " + productEntity);
 
         // 2. NCP & DB에 이미지 저장
         for (int i = 1; i < 4; i++) {
@@ -127,8 +124,10 @@ public class ProductServiceImpl implements ProductService {
                 String fileName = ncpObjectStorageService.uploadFile("moivo", "products/", file);
 
                 // ProductEntity에 메인 이미지 저장
-                product.setImg(fileName);
-                productRepository.save(product);
+                if (layer == 1) {
+                    product.setImg(fileName);
+                    productRepository.save(product);
+                }
 
                 // 데이터베이스에 저장할 ProductImgEntity 생성
                 ProductImgEntity imgEntity = new ProductImgEntity();

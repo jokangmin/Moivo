@@ -11,14 +11,15 @@ import com.example.demo.user.dto.UserDTO;
 import com.example.demo.user.service.UserService;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    // 회원가입
-    @PostMapping("/signup")
+    
+    //회원가입
+    @PostMapping("/join")
     public ResponseEntity<String> signup(@RequestBody UserDTO userDTO) {
         int userSeq = userService.insert(userDTO);
         return new ResponseEntity<>("회원가입 성공: " + userSeq, HttpStatus.CREATED);
@@ -32,13 +33,10 @@ public class UserController {
         System.out.println("받은 비밀번호 길이: " + (userDTO.getPwd() != null ? userDTO.getPwd().length() : "null"));
 
         try {
-            // ServiceImpl에서 반환된 Map 사용
-            Map<String, Object> result = userService.login(userDTO.getId(), userDTO.getPwd());
-            System.out.println("로그인 성공 - JWT 및 userSeq 반환됨");
-            return ResponseEntity.ok(result); // Map을 그대로 반환
+            Map<String, Object> result = userService.login(userDTO.getUserId(), userDTO.getPwd());
+            return ResponseEntity.ok(result);
         } catch (RuntimeException e) {
-            System.out.println("로그인 실패 - 에러 메시지: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", e.getMessage()));
         }
     }
 
