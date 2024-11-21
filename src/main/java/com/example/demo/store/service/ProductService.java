@@ -8,4 +8,6 @@ public interface ProductService {
 
     public void saveProduct(Map<String, Object> map);
 
+    public Map<String, Object> getProductList();
+
 }
