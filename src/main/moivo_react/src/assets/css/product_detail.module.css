@@ -13,15 +13,14 @@ body {
   padding: 120px 20px 60px;
 }
 
-.productInfo {
+.detailContainer {
   display: flex;
   gap: 30px;
   margin-bottom: 40px;
 }
 
-.imageArea {
+.productImages {
   flex: 1;
-  position: relative;
 }
 
 .mainImage {
@@ -52,35 +51,33 @@ body {
   transform: scale(1.1);
 }
 
-.infoArea {
+.infoSection {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-.title {
+.productName {
   font-size: 2.5rem;
   margin-bottom: 10px;
   font-weight: bold;
 }
 
-.price {
+.productPrice {
   font-size: 2rem;
   font-weight: bold;
   color: #e91e63;
   margin-bottom: 20px;
 }
 
-.options {
+.productDescription {
+  font-size: 1.2rem;
   margin-bottom: 20px;
+  color: #555;
 }
 
-.select {
-  width: 100%;
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.sizeSelector {
+  margin-bottom: 20px;
 }
 
 .quantity {
@@ -89,30 +86,8 @@ body {
 
 .quantityInput {
   width: 60px;
-  padding: 5px;
+  padding: 10px;
   font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.colors {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.colorOption {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: transform 0.2s;
-}
-
-.colorOption.selected {
-  border-color: #333;
-  transform: scale(1.1);
 }
 
 .actions {
@@ -121,17 +96,12 @@ body {
 }
 
 .actionButton {
-  flex: 1;
   padding: 15px;
   font-size: 1rem;
   background-color: #333;
   color: white;
   border: none;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
   transition: background-color 0.3s;
 }
 
@@ -139,36 +109,54 @@ body {
   background-color: #555;
 }
 
-.details {
-  margin-bottom: 40px;
+.additionalImages {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
 }
 
-.tabs {
+.additionalImage {
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.reviewSection {
+  margin-top: 40px;
+}
+
+.reviewForm {
   display: flex;
-  gap: 10px;
+  flex-direction: column;
   margin-bottom: 20px;
 }
 
-.tab {
-  padding: 10px 20px;
-  font-size: 1.2rem;
-  background-color: #f1f1f1;
+.reviewInput {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.ratingInput {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.star {
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.submitButton {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
   border: none;
   cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-}
-
-.tab.active {
-  background-color: #333;
-  color: white;
-}
-
-.description h2,
-.reviews h2,
-.sizeGuide h2 {
-  font-size: 1.8rem;
-  margin-bottom: 20px;
 }
 
 .reviewList {
@@ -177,8 +165,8 @@ body {
 }
 
 .reviewItem {
-  margin-bottom: 30px;
-  padding: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
   background-color: #f8f8f8;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -186,70 +174,14 @@ body {
 
 .reviewText {
   font-size: 1.2rem;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
-.reviewAuthor {
-  font-size: 1rem;
+.reviewRating {
   font-weight: bold;
-  margin-bottom: 5px;
 }
 
 .reviewDate {
   font-size: 0.9rem;
   color: #888;
-}
-
-.replyText {
-  font-size: 1rem;
-  margin-left: 20px;
-  color: #555;
-}
-
-.replyInput {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-}
-
-.replyButton {
-  padding: 10px 15px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-  margin-top: 5px;
-}
-
-.sizeTable {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.sizeTable th,
-.sizeTable td {
-  padding: 10px;
-  text-align: center;
-  border: 1px solid #ccc;
-}
-
-.sizeTable th {
-  background-color: #f1f1f1;
-}
-
-.reviewRating {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  color: #ffc107;
-}
-
-.ratingInput {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin-bottom: 10px;
-  font-size: 1.5rem;
-  color: #ffc107;
-  cursor: pointer;
 }

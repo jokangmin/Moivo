@@ -49,42 +49,31 @@
 
 .categories {
   display: flex;
+  justify-content: center;
   gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .categoryBtn {
   padding: 0.8rem 1.5rem;
   border: none;
-  background: transparent;
+  background: #f0f0f0;
   color: #4a5568;
   font-size: clamp(1rem, 1.5vw, 1.4rem);
   cursor: pointer;
-  position: relative;
-  transition: color 0.3s ease, transform 0.3s ease;
+  border-radius: 5px;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.categoryBtn::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
+.categoryBtn.active {
   background: #2d3748;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
+  color: white;
+  transform: translateY(-2px);
 }
 
-.categoryBtn.active,
 .categoryBtn:hover {
-  color: #2d3748;
-  transform: translateY(-3px);
-}
-
-.categoryBtn.active::before,
-.categoryBtn:hover::before {
-  transform: scaleX(1);
+  background: #e2e8f0;
 }
 
 .sortSelect {
@@ -156,6 +145,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
   transition: opacity 0.3s ease;
 }
 
@@ -229,7 +220,42 @@
 }
 
 /* =========================================
-   5. 플로팅 버튼
+   5. 페이징 스타일
+========================================= */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.pageBtn {
+  border: 1px solid #e2e8f0;
+  background: white;
+  color: #4a5568;
+  padding: 10px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.pageBtn:hover:not(:disabled) {
+  background: #2d3748;
+  color: white;
+}
+
+.pageBtn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.active {
+  background: #2d3748;
+  color: white;
+}
+
+/* =========================================
+   6. 플로팅 버튼
 ========================================= */
 .floatingButtons {
   position: fixed;
@@ -276,7 +302,7 @@
 }
 
 /* =========================================
-   6. 애니메이션
+   7. 애니메이션
 ========================================= */
 @keyframes shakeCart {
   0%, 100% {

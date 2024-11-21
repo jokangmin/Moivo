@@ -17,6 +17,8 @@ const ProductList = () => {
   const [sortBy, setSortBy] = useState("newest");
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const [isWishModalOpen, setIsWishModalOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 15; // 한 페이지에 표시할 상품 수
   const navigate = useNavigate();
 
   const categories = ["all", "Outerwear", "Pants", "Jeans"];
@@ -27,7 +29,7 @@ const ProductList = () => {
   const filteredProducts = products.filter((product) =>
     activeCategory === "all"
       ? true
-      : product.categoryseq === categories.indexOf(activeCategory)
+      : product.categoryid === categories.indexOf(activeCategory)
   );
 
   const sortProducts = () => {
@@ -38,7 +40,7 @@ const ProductList = () => {
       case "priceLow":
         return sorted.sort((a, b) => a.price - b.price);
       default:
-        return sorted.sort((a, b) => b.productseq - a.productseq);
+        return sorted.sort((a, b) => b.id - a.id);
     }
   };
 
@@ -77,7 +79,7 @@ const ProductList = () => {
 
   /* =========================================
      axios 통신 로직
-     
+
      const handleAddToCart = async (product) => {
   try {
     const response = await axios.post("/api/cart/add", {
@@ -105,10 +107,10 @@ const handleAddToWish = async (product) => {
   /* =========================================
      4. 페이지 이동 로직
   ========================================= */
-  const goToDetail = (productseq) => {
-    navigate(`/product-detail/${productseq}`);
+  const goToDetail = (id) => {
+    navigate(`/product-detail/${id}`);
   };
-
+  
   /* =========================================
      5. 렌더링
   ========================================= */
@@ -118,6 +120,12 @@ const handleAddToWish = async (product) => {
     setCartItems(storedCartItems);
     setWishItems(storedWishItems);
   }, []);
+
+  // 페이징 처리
+  const indexOfLastProduct = currentPage * itemsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
+  const currentProducts = sortedProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+  const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
 
   return (
     <div className={styles.container}>
@@ -139,18 +147,14 @@ const handleAddToWish = async (product) => {
         {/* 필터 및 정렬 */}
         <div className={styles.filters}>
           <div className={styles.categories}>
-            {categories.map((category) => (
-              <motion.button
-                key={category}
-                className={`${styles.categoryBtn} ${
-                  activeCategory === category ? styles.active : ""
-                }`}
+            {categories.map((category, index) => (
+              <button
+                key={index}
+                className={`${styles.categoryBtn} ${activeCategory === category ? styles.active : ""}`}
                 onClick={() => setActiveCategory(category)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
               >
-                {category.toUpperCase()}
-              </motion.button>
+                {category}
+              </button>
             ))}
           </div>
           <select
@@ -167,14 +171,15 @@ const handleAddToWish = async (product) => {
         {/* 상품 그리드 */}
         <motion.div className={styles.grid} layout>
           <AnimatePresence>
-            {sortedProducts.map((prod) => (
+            {currentProducts.map((prod) => (
               <motion.div
-                key={prod.productseq}
+                key={prod.id}
                 className={styles.card}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 layout
+                onClick={() => goToDetail(prod.id)}
               >
                 <div className={styles.imgWrap}>
                   <img
@@ -198,14 +203,12 @@ const handleAddToWish = async (product) => {
                       </button>
                       <button
                         className={styles.viewBtn}
-                        onClick={() => goToDetail(prod.productseq)}
+                        onClick={() => goToDetail(prod.id)}
                       >
                         View Details
                       </button>
                     </div>
-                  </div>
-                </div>
-                <div className={styles.info}>
+                    <div className={styles.info}>
                   <h3 className={styles.productTitle}>{prod.name}</h3>
                   <p className={styles.price}>
                     ₩{prod.price?.toLocaleString()}
@@ -214,10 +217,54 @@ const handleAddToWish = async (product) => {
                     재고 수량 : {prod.stock}
                   </p>
                 </div>
+                  </div>
+                </div>
+                
               </motion.div>
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {/* 페이징 버튼 */}
+        <div className={styles.pagination}>
+          <button
+            className={styles.pageBtn}
+            onClick={() => setCurrentPage(1)}
+            disabled={currentPage === 1}
+          >
+            &laquo;
+          </button>
+          <button
+            className={styles.pageBtn}
+            onClick={() => setCurrentPage(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            &lt;
+          </button>
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index}
+              className={`${styles.pageBtn} ${currentPage === index + 1 ? styles.active : ""}`}
+              onClick={() => setCurrentPage(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
+          <button
+            className={styles.pageBtn}
+            onClick={() => setCurrentPage(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            &gt;
+          </button>
+          <button
+            className={styles.pageBtn}
+            onClick={() => setCurrentPage(totalPages)}
+            disabled={currentPage === totalPages}
+          >
+            &raquo;
+          </button>
+        </div>
       </motion.div>
 
       {/* 플로팅 버튼 */}
