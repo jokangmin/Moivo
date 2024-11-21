@@ -25,19 +25,27 @@ const ProductDetail = () => {
   const [reviewRating, setReviewRating] = useState(0);
 
   useEffect(() => {
-    const selectedProduct = products.find((product) => product.productseq === parseInt(id));
-    setProduct(selectedProduct);
+    const selectedProduct = products.find(
+      (product) => product.productseq === parseInt(id)
+    );
     if (selectedProduct) {
-      setMainImg(selectedProduct.productimg?.[0]?.fileurl || "/placeholder.jpg");
+      setProduct(selectedProduct);
+      setMainImg(
+        selectedProduct.productimg?.[0]?.fileurl || "/placeholder.jpg"
+      );
       setReviews(selectedProduct.review || []);
       setRelatedProducts(
         products.filter(
           (product) =>
-            product.categoryseq === selectedProduct.categoryseq && product.productseq !== selectedProduct.productseq
+            product.categoryseq === selectedProduct.categoryseq &&
+            product.productseq !== selectedProduct.productseq
         )
       );
+    } else {
+      setProduct(null); // 제품이 없는 경우 명시적으로 설정합니다.
     }
-  }, [id, products]);
+  }, [id]);
+  
 
   const addToWishlist = async () => {
     try {
@@ -119,7 +127,7 @@ const ProductDetail = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        {product && (
+        {product ? (
           <>
             <div className={styles.productImages}>
               <div className={styles.thumbnails}>
@@ -187,6 +195,8 @@ const ProductDetail = () => {
               </div>
             </div>
           </>
+        ) : (
+          <div>Loading...</div>
         )}
       </motion.div>
 

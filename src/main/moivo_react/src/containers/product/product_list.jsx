@@ -76,6 +76,33 @@ const ProductList = () => {
   };
 
   /* =========================================
+     axios 통신 로직
+     
+     const handleAddToCart = async (product) => {
+  try {
+    const response = await axios.post("/api/cart/add", {
+      productseq: product.productseq,
+      quantity: 1,
+    });
+    console.log(response.data.message);
+  } catch (error) {
+    console.error("Error adding to cart:", error.response.data);
+  }
+};
+
+const handleAddToWish = async (product) => {
+  try {
+    const response = await axios.post("/api/wishlist/add", {
+      productseq: product.productseq,
+    });
+    console.log(response.data.message);
+  } catch (error) {
+    console.error("Error adding to wishlist:", error.response.data);
+  }
+};
+  ========================================= */
+
+  /* =========================================
      4. 페이지 이동 로직
   ========================================= */
   const goToDetail = (productseq) => {
