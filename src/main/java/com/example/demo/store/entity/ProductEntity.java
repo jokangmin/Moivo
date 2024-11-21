@@ -3,7 +3,6 @@ package com.example.demo.store.entity;
 import java.util.List;
 
 import com.example.demo.store.dto.ProductDTO;
-import com.example.demo.user.entity.CartEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
