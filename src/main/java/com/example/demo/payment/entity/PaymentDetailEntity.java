@@ -18,7 +18,6 @@ import lombok.Data;
 public class PaymentDetailEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "paymentdetailid")
     private Integer id; // 결제 상세 고유 키
 
     // 주문상품 n개 : 주문 1개
