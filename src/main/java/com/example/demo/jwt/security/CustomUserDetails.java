@@ -31,8 +31,8 @@ public class CustomUserDetails implements UserDetails {
     }
 
     @Override
-    public String getUsername() {
-        return userEntity.getId();
+    public String getUsername() { // 사용자 입력값 UserId, Pwd
+        return userEntity.getUserId();
     }
 
     @Override

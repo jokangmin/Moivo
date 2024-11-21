@@ -12,13 +12,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.demo.ncp.service.NCPObjectStorageService;
 import com.example.demo.store.dto.ProductDTO;
 import com.example.demo.store.dto.ProductImgDTO;
+import com.example.demo.store.dto.ProductStockDTO;
 import com.example.demo.store.dto.ReviewDTO;
 import com.example.demo.store.entity.ProductCategoryEntity;
 import com.example.demo.store.entity.ProductEntity;
 import com.example.demo.store.entity.ProductImgEntity;
 import com.example.demo.store.entity.ProductStockEntity;
 import com.example.demo.store.entity.ReviewEntity;
-import com.example.demo.store.entity.ProductStockEntity.Size;
 import com.example.demo.store.repository.ProductCategoryRepository;
 import com.example.demo.store.repository.ProductImgRepository;
 import com.example.demo.store.repository.ProductRepository;
@@ -43,12 +43,12 @@ public class ProductServiceImpl implements ProductService {
     private NCPObjectStorageService ncpObjectStorageService;
 
     @Override
-    public Map<String, Object> getProduct(int productSeq) {
+    public Map<String, Object> getProduct(int productId) {
         Map<String, Object> map = new HashMap<>();
 
         // 1. 상품 정보 추출
-        ProductEntity productEntity = productRepository.findById(productSeq).orElseThrow(null);
-        map.put("product", ProductDTO.toProductDTO(productEntity));
+        ProductEntity productEntity = productRepository.findById(productId).orElseThrow(null);
+        map.put("Product", ProductDTO.toGetProductDTO(productEntity));
 
         // 2. 이미지 추출
         List<ProductImgDTO> imgList = new ArrayList<>();
@@ -57,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
             imgList.add(imgDTO);
             System.out.println(imgDTO);
         }
-        map.put("imgList", imgList);
+        map.put("ImgList", imgList);
 
         // 3. 리뷰 추출
         List<ReviewDTO> reviewList = new ArrayList<>();
@@ -66,8 +66,15 @@ public class ProductServiceImpl implements ProductService {
             reviewList.add(reviewDTO);
             System.out.println(reviewDTO);
         }
-        map.put("reviewList", reviewList);
+        map.put("ReviewList", reviewList);
 
+        // 4. 재고 추출
+        Map<String, Integer> stockMap = new HashMap<>();
+        for (ProductStockEntity stockEntity : productEntity.getStockList()) {
+            stockMap.put(stockEntity.getSize().toString(), stockEntity.getCount());
+        }
+
+        map.put("Stock", stockMap);
         return map;
     }
 
@@ -83,10 +90,10 @@ public class ProductServiceImpl implements ProductService {
         productEntity.setCategoryEntity(categoryEntity);
 
         // 1-2. 상품 테이블에 저장
-        int productSeq = productRepository.save(productEntity).getProductSeq(); // DB에 저장된 기본키 반환
+        int productId = productRepository.save(productEntity).getId(); // DB에 저장된 기본키 반환
         System.out.println("saveProduct: " + productEntity);
-        System.out.println("saveProduct: " + productSeq);
-        productEntity.setProductSeq(productSeq);
+        System.out.println("saveProduct: " + productId);
+        productEntity.setId(productId);
         System.out.println("saveProduct: " + productEntity);
 
         // 2. NCP & DB에 이미지 저장
@@ -96,13 +103,15 @@ public class ProductServiceImpl implements ProductService {
         }
 
         // 3. 재고 저장
-        // 사이즈 1: 2개
-        ProductStockEntity stockEntity = new ProductStockEntity();
-        stockEntity.setProductEntity(productEntity);
-        stockEntity.setSize(Size.SIZE_1);
-        stockEntity.setCount(2);
+        // 사이즈 S, M, L
+        for (String size : new String[] { "S", "M", "L" }) {
+            ProductStockDTO stockDTO = new ProductStockDTO();
+            stockDTO.setSize(size);
+            stockDTO.setCount(Integer.parseInt(map.get(size).toString()));
+            ProductStockEntity stockEntity = ProductStockEntity.toSaveStockEntity(stockDTO, productEntity);
 
-        stockRepository.save(stockEntity);
+            stockRepository.save(stockEntity);
+        }
 
     }
 
@@ -112,6 +121,10 @@ public class ProductServiceImpl implements ProductService {
             try {
                 // NCP Object Storage 업로드
                 String fileName = ncpObjectStorageService.uploadFile("moivo", "products/", file);
+
+                // ProductEntity에 메인 이미지 저장
+                product.setImg(fileName);
+                productRepository.save(product);
 
                 // 데이터베이스에 저장할 ProductImgEntity 생성
                 ProductImgEntity imgEntity = new ProductImgEntity();
