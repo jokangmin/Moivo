@@ -108,12 +108,15 @@
 
 .badge {
   position: absolute;
-  top: 1rem;
-  left: 1rem;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
+  top: 10px;
+  left: 10px;
+  background: #4a5568;
   color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
   font-weight: 600;
+  text-transform: uppercase;
   z-index: 1;
 }
 

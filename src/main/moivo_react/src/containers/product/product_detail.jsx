@@ -1,29 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import styles from "../../assets/css/product_detail.module.css";
 import Banner from "../../components/Banner/banner";
 import Footer from "../../components/Footer/Footer";
-import axios from "axios";
+import products from "../../assets/dummydata/productDTO";
 
 const ProductDetail = () => {
   const { state } = useLocation();
   const product = state?.product;
-  const navigate = useNavigate();
 
   const [selectedSize, setSize] = useState("");
   const [quantity, setQuantity] = useState(1);
-  const [mainImg, setMainImg] = useState(product?.images[0]);
+  const [mainImg, setMainImg] = useState(product?.images.main);
   const [showDescription, setShowDescription] = useState(true);
   const [showReviews, setShowReviews] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
-
-  useEffect(() => {
-    if (!product) {
-      navigate("/");
-    } else {
-      setMainImg(product.images[0]);
-    }
-  }, [product, navigate]);
 
   const addToCart = () => {
     if (!selectedSize) {
@@ -31,7 +22,7 @@ const ProductDetail = () => {
       return;
     }
     // 장바구니에 추가하는 로직 구현
-    alert(`장바구니에 추가됨! ${product.title}, 사이즈: ${selectedSize}, 수량: ${quantity}`);
+    alert(`장바구니에 추가됨! ${product.name}, 사이즈: ${selectedSize}, 수량: ${quantity}`);
   };
 
   const buyNow = () => {
@@ -40,7 +31,7 @@ const ProductDetail = () => {
       return;
     }
     // 바로 구매하는 로직 구현
-    alert(`바로 구매! ${product.title}, 사이즈: ${selectedSize}, 수량: ${quantity}`);
+    alert(`바로 구매! ${product.name}, 사이즈: ${selectedSize}, 수량: ${quantity}`);
   };
 
   if (!product) {
@@ -53,9 +44,9 @@ const ProductDetail = () => {
       <div className={styles.container}>
         <div className={styles.productInfo}>
           <div className={styles.imageArea}>
-            <img src={mainImg} alt={product?.title} className={styles.mainImage} />
+            <img src={mainImg} alt={product?.name} className={styles.mainImage} />
             <div className={styles.thumbnails}>
-              {product?.images.map((img, idx) => (
+              {product?.images.thumbnails.map((img, idx) => (
                 <img
                   key={idx}
                   src={img}
@@ -67,7 +58,7 @@ const ProductDetail = () => {
             </div>
           </div>
           <div className={styles.infoArea}>
-            <h1 className={styles.title}>{product?.title}</h1>
+            <h1 className={styles.title}>{product?.name}</h1>
             <p className={styles.price}>₩{product?.price.toLocaleString()}</p>
             <div className={styles.options}>
               <label>사이즈:</label>
@@ -77,9 +68,9 @@ const ProductDetail = () => {
                 className={styles.select}
               >
                 <option value="">사이즈 선택</option>
-                {product?.sizes.map((size) => (
-                  <option key={size} value={size}>
-                    {size}
+                {product?.productstock.map((stock) => (
+                  <option key={stock.stockseq} value={stock.size}>
+                    {stock.size}
                   </option>
                 ))}
               </select>
@@ -102,6 +93,7 @@ const ProductDetail = () => {
                 바로 구매
               </button>
             </div>
+            {/* 상품 설명, 리뷰, 사이즈 가이드 들어갈 공간 */}
           </div>
         </div>
         <div className={styles.detailInfo}>
@@ -140,45 +132,43 @@ const ProductDetail = () => {
           {showDescription && (
             <div className={styles.description}>
               <h2>상품 설명</h2>
-              <p>{product.description}</p>
+              <p>{product?.content}</p>
+              <div className={styles.detailImages}>
+                {product?.images.details.map((img, idx) => (
+                  <img key={idx} src={img} alt={`Detail ${idx}`} className={styles.detailImage} />
+                ))}
+              </div>
             </div>
           )}
           {showReviews && product?.reviews && (
             <div className={styles.reviews}>
               <h2>리뷰</h2>
               <ul className={styles.reviewList}>
-                {product.reviews.map((review, idx) => (
-                  <li key={idx} className={styles.reviewItem}>
-                    <p className={styles.reviewText}>{review.text}</p>
-                    <p className={styles.reviewAuthor}>{review.author}</p>
-                    <p className={styles.reviewDate}>{review.date}</p>
+                {product.reviews.map((review) => (
+                  <li key={review.reviewseq} className={styles.reviewItem}>
+                    <p className={styles.reviewText}>{review.content}</p>
+                    <p className={styles.reviewAuthor}>작성자: {review.userseq}</p>
+                    <p className={styles.reviewDate}>{review.reviewdate}</p>
                   </li>
                 ))}
               </ul>
             </div>
           )}
-          {showGuide && product?.sizeGuide && (
+          {showGuide && (
             <div className={styles.sizeGuide}>
               <h2>사이즈 가이드</h2>
               <table className={styles.sizeTable}>
                 <thead>
                   <tr>
-                    <th>사이즈..
-                    </th>
-                    <th>어깨 너비</th>
-                    <th>가슴 둘레</th>
-                    <th>소매 길이</th>
-                    <th>총장</th>
+                    <th>사이즈</th>
+                    <th>재고</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {product.sizeGuide.map((row, idx) => (
-                    <tr key={idx}>
-                      <td>{row.size}</td>
-                      <td>{row.shoulder}</td>
-                      <td>{row.chest}</td>
-                      <td>{row.sleeve}</td>
-                      <td>{row.length}</td>
+                  {product?.productstock.map((stock) => (
+                    <tr key={stock.stockseq}>
+                      <td>{stock.size}</td>
+                      <td>{stock.stock}</td>
                     </tr>
                   ))}
                 </tbody>

@@ -15,6 +15,7 @@ const ProductList = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [sortBy, setSortBy] = useState('newest');
   const navigate = useNavigate();
+  
   const isLoggedIn = localStorage.getItem("token");
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const [isWishModalOpen, setIsWishModalOpen] = useState(false);
@@ -27,7 +28,7 @@ const ProductList = () => {
      2. 상품 필터링 및 정렬 로직
   ========================================= */
   const filteredProducts = products.filter(product => 
-    activeCategory === 'all' ? true : product.category === activeCategory
+    activeCategory === 'all' ? true : product.categoryseq === categories.indexOf(activeCategory)
   );
 
   const sortProducts = () => {
@@ -166,6 +167,7 @@ const ProductList = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
+                onClick={() => goToDetail(prod)}
               >
                 {prod.badge && (
                   <div className={`${styles.badge} ${styles[prod.badge.toLowerCase()]}`}>
@@ -173,7 +175,7 @@ const ProductList = () => {
                   </div>
                 )}
                 <div className={styles.imgWrap}>
-                  <img src={prod.image} alt={prod.title} className={styles.img} />
+                  <img src={prod.img} alt={prod.name} className={styles.img} />
                   <motion.div 
                     className={styles.overlay}
                     initial={{ opacity: 0 }}
@@ -190,19 +192,18 @@ const ProductList = () => {
                       <button onClick={() => addToCart(prod)} className={styles.actionBtn}>
                         <i className="fa fa-shopping-cart"></i>
                       </button>
-                      <button onClick={() => goToDetail(prod)} className={styles.viewBtn}>
+                      <button onClick={() => goToDetail(prod.id)} className={styles.viewBtn}>
                         View Details
                       </button>
                     </motion.div>
                   </motion.div>
                 </div>
                 <div className={styles.info}>
-                  <h3 className={styles.productTitle}>{prod.title}</h3>
-                  <p className={styles.category}>{prod.category}</p>
+                  <h3 className={styles.productTitle}>{prod.name}</h3>
                   <p className={styles.price}>₩{prod.price.toLocaleString()}</p>
                   <div className={styles.stock}>
                     <span className={styles.stockLabel}>재고:</span>
-                    <span className={styles.stockAmount}>{prod.stock}개</span>
+                    <span className={styles.stockAmount}>{prod.productstock.reduce((total, stock) => total + stock.stock, 0)}</span>
                   </div>
                 </div>
               </motion.div>
