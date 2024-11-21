@@ -3,7 +3,6 @@ package com.example.demo.store.entity;
 import java.util.List;
 
 import com.example.demo.store.dto.ProductDTO;
-import com.example.demo.user.entity.CartEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -25,14 +24,13 @@ public class ProductEntity { // 상품
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "productseq")
-    private int productSeq;
+    private Integer id;
 
     @Column(nullable = false, length = 100)
     private String name;
 
-    // @Column(nullable = false, length = 200)
-    // private String img; // 첫 번째 상품 이미지
+    @Column(nullable = false, length = 200)
+    private String img; // 첫 번째 상품 이미지
 
     @Column(length = 2000)
     private String content; // 상품 설명
@@ -42,13 +40,8 @@ public class ProductEntity { // 상품
 
     // 상품 n개 : 카테고리 1개
     @ManyToOne
-    @JoinColumn(name = "categoryseq", nullable = false)
+    @JoinColumn(name = "categoryid", nullable = false)
     private ProductCategoryEntity categoryEntity;
-
-    // 상품 n개 : 장바구니 1개
-    @ManyToOne
-    @JoinColumn(name = "cartseq")
-    private CartEntity cartEntity;
 
     // 상품 1개 : 이미지 n개
     @OneToMany(mappedBy = "productEntity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -69,7 +62,7 @@ public class ProductEntity { // 상품
         // 상품 등록이기 때문에 seq 존재하지 않음.
         ProductEntity entity = new ProductEntity();
         entity.setName(dto.getName());
-        // entity.setImg(dto.getImg());
+        entity.setImg(dto.getImg());
         entity.setContent(dto.getContent());
         entity.setPrice(dto.getPrice());
 
@@ -80,9 +73,9 @@ public class ProductEntity { // 상품
     public static ProductEntity toGetProductEntity(ProductDTO dto) {
         ProductEntity entity = new ProductEntity();
         // 상품 등록이기 때문에 seq 존재하지 않음.
-        entity.setProductSeq(dto.getProductSeq());
+        entity.setId(dto.getId());
         entity.setName(dto.getName());
-        // entity.setImg(dto.getImg());
+        entity.setImg(dto.getImg());
         entity.setContent(dto.getContent());
         entity.setPrice(dto.getPrice());
 

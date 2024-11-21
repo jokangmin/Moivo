@@ -18,17 +18,16 @@ import lombok.Data;
 public class PaymentDetailEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "paymentdetailseq")
-    private int paymentDetailSeq; // 결제 상세 고유 키
+    private Integer id; // 결제 상세 고유 키
 
     // 주문상품 n개 : 주문 1개
     @ManyToOne
-    @JoinColumn(name = "paymentseq", nullable = false)
+    @JoinColumn(name = "paymentid", nullable = false)
     private PaymentEntity paymentEntity; // 결제와 연관된 결제 정보
 
     // 주문상품 n건 : 상품 1개
     @ManyToOne
-    @JoinColumn(name = "productseq", nullable = false)
+    @JoinColumn(name = "productid", nullable = false)
     private ProductEntity productEntity; // 상품과 연관된 상품 정보
 
     @Column(name = "price", nullable = false)
