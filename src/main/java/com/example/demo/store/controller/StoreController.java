@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.store.dto.ProductDTO;
 import com.example.demo.store.service.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,15 +36,15 @@ public class StoreController {
         return ResponseEntity.ok(map);
     }
 
-    @GetMapping("")
-    public ResponseEntity<Map<String, Object>> getProductAll() {
-        Map<String, Object> map = new HashMap<>();
-        if (map == null) {
-            map.put("ProductDTO", null);
-        } else {
-            map.put("ProductDTO", map);
-        }
-        return ResponseEntity.ok(productService.getProductList());
-    }
+    // @GetMapping("")
+    // public ResponseEntity<Map<String, Object>> getProductAll() {
+    // Map<String, Object> map = new HashMap<>();
+    // if (map == null) {
+    // map.put("ProductDTO", null);
+    // } else {
+    // map.put("ProductDTO", map);
+    // }
+    // return ResponseEntity.ok(productService.getProductList());
+    // }
 
 }

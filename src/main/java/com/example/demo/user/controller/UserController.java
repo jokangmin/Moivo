@@ -17,8 +17,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    
-    //회원가입
+    // 회원가입
     @PostMapping("/join")
     public ResponseEntity<String> signup(@RequestBody UserDTO userDTO) {
         int userSeq = userService.insert(userDTO);

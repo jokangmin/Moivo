@@ -2,10 +2,7 @@ package com.example.demo.user.entity;
 
 import java.util.List;
 
-import com.example.demo.store.entity.ProductEntity;
-
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -28,7 +25,7 @@ public class CartEntity { // 장바구니
 
     // 장바구니 1개 : 사용자 1명
     @OneToOne
-    @JoinColumn(name = "userid")
+    @JoinColumn(name = "userid", unique = true, nullable = false)
     private UserEntity userEntity;
 
     // 장바구니 1개 : 상품 n개

@@ -16,7 +16,7 @@ public class WishEntity {
     private Integer id; // 찜 고유 키
 
     @ManyToOne
-    @JoinColumn(name = "userid", nullable = false)
+    @JoinColumn(name = "userid", nullable = false, unique = true)
     private UserEntity userEntity; // 고객 고유 키
 
     // 찜 상품 리스트
