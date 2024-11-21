@@ -24,7 +24,7 @@ const ProductList = () => {
   const categories = ["all", "Outerwear", "Pants", "Jeans"];
 
   /* =========================================
-     2. 상품 필터링 및 정렬 로직
+     2. 상품 필터링 및 정렬 로직..
   ========================================= */
   const filteredProducts = products.filter((product) =>
     activeCategory === "all"
