@@ -20,7 +20,7 @@ public class ProductImgEntity {
 
     // 이미지 n개 : 상품 1개
     @ManyToOne
-    @JoinColumn(name = "productseq", nullable = false)
+    @JoinColumn(name = "productid", nullable = false)
     private ProductEntity productEntity; // 상품
 
     @Column(name = "filename", length = 100, nullable = false)
