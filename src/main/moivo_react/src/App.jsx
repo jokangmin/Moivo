@@ -18,6 +18,7 @@ import MypageBoard from './containers/mypage/mypage_board';
 import MypageOrder from './containers/mypage/mypage_order';
 import MypageOrderDetails from './containers/mypage/mypage_orderDetails';
 import MypageProfile from './containers/mypage/mypage_profile';
+import Cart from './containers/cart/cart';
 
 const routeConfig = [
   { path: "/", element: <Main_index /> },
@@ -35,7 +36,8 @@ const routeConfig = [
   { path: "/mypage/order", element: <MypageOrder /> },
   { path: "/mypage/orderDetails", element: <MypageOrderDetails /> },
   { path: "/qna_faqboard", element: <Qna_faqboard /> },
-  { path: "/qna_board", element: <Qna_board /> }
+  { path: "/qna_board", element: <Qna_board /> },
+  { path: "/cart", element: <Cart /> },
 
 ];
 
