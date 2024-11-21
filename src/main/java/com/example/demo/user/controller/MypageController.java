@@ -29,13 +29,13 @@ public class MypageController {
         return ResponseEntity.ok(userInfo);
     }
 
-    // 쿠폰 정보 조회
-    @GetMapping("/coupons/{userSeq}")
-    public ResponseEntity<List<CouponDTO>> getCoupons(@PathVariable int userSeq) {
-        List<CouponDTO> coupons = mypageService.getCoupons(userSeq);
-        return ResponseEntity.ok(coupons);
+    // // 쿠폰 정보 조회
+    // @GetMapping("/coupons/{userSeq}")
+    // public ResponseEntity<List<CouponDTO>> getCoupons(@PathVariable int userSeq) {
+    //     List<CouponDTO> coupons = mypageService.getCoupons(userSeq);
+    //     return ResponseEntity.ok(coupons);
         
-    }
+    // }
 
     // 위시리스트 조회
     @GetMapping("/wishlist/{userSeq}")
@@ -45,7 +45,7 @@ public class MypageController {
             return ResponseEntity.ok(wishlist);
         
     }
-
+/*
     // 주문 내역 조회
     @GetMapping("/orders/{userSeq}")
     public ResponseEntity<List<OrderDTO>> getOrders(@PathVariable int userSeq) {
@@ -67,7 +67,7 @@ public class MypageController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-
+ */
 
 
 

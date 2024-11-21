@@ -2,6 +2,7 @@ package com.example.demo.user.service.impl;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,25 +10,33 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.jwt.prop.JwtProps;
+import com.example.demo.payment.entity.PaymentEntity;
+import com.example.demo.payment.repository.PaymentRepository;
 import com.example.demo.user.dto.UserDTO;
 import com.example.demo.user.entity.UserEntity;
+import com.example.demo.user.entity.WishEntity;
 import com.example.demo.user.repository.UserRepository;
+import com.example.demo.user.repository.WishRepository;
 import com.example.demo.user.service.UserService;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import java.util.Optional;
+
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private WishRepository wishRepository;
+    @Autowired
+    private PaymentRepository paymentRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-
 
     @Autowired
     private JwtProps jwtProps;
@@ -39,25 +48,37 @@ public class UserServiceImpl implements UserService {
         userEntity.setPwd(passwordEncoder.encode(userDTO.getPwd()));
 
         // 사용자 저장
-        int id = userRepository.save(userEntity).getId();
-        
+        UserEntity savedUser = userRepository.save(userEntity);
 
         // 저장된 사용자 ID 반환
-        return id;
+        return savedUser.getId();
     }
 
     @Override
-    public Map<String, Object> login(int id, String pwd) {
-        UserEntity userEntity = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+    public Map<String, Object> login(String userId, String pwd) {
+        UserEntity userEntity = userRepository.findByUserId(userId)
+            .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+        if (!passwordEncoder.matches(pwd, userEntity.getPwd())) {
+            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+        }
 
         System.out.println("=== 로그인 디버깅 ===");
         System.out.println("입력된 비밀번호: " + pwd);
         System.out.println("저장된 암호화 비밀번호: " + userEntity.getPwd());
         System.out.println("비밀번호 매칭 결과: " + passwordEncoder.matches(pwd, userEntity.getPwd()));
 
-        if (!passwordEncoder.matches(pwd, userEntity.getPwd())) {
-            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+        // Wish ID 조회
+        Integer wishId = null;
+        List<WishEntity> wishEntities = wishRepository.findByUserEntity_Id(userEntity.getId());
+        if (!wishEntities.isEmpty()) {
+            wishId = wishEntities.get(0).getId(); // 첫 번째 Wish ID 가져오기
+        }
+
+        // Payment ID 조회
+        Integer paymentId = null;
+        List<PaymentEntity> paymentEntities = paymentRepository.findByUserEntity_Id(userEntity.getId());
+        if (!paymentEntities.isEmpty()) {
+            paymentId = paymentEntities.get(0).getId(); // 첫 번째 Payment ID 가져오기
         }
 
         // JWT 생성
@@ -73,6 +94,8 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> result = new HashMap<>();
         result.put("jwt", jwt);
         result.put("userseq", userEntity.getUserId());
+        result.put("wishId", wishId);
+        result.put("paymentId", paymentId);
 
         return result;
     }

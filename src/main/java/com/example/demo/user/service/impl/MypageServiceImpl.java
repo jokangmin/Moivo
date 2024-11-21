@@ -15,20 +15,17 @@ import com.example.demo.user.entity.WishEntity;
 import com.example.demo.user.repository.AttendanceRepository;
 import com.example.demo.user.repository.UserRepository;
 import com.example.demo.user.repository.WishRepository;
-import com.example.demo.user.service.CouponDTO;
 import com.example.demo.user.service.MypageService;
-import com.example.demo.user.service.OrderDTO;
 
 @Service
 public class MypageServiceImpl implements MypageService {
     @Autowired
     private UserRepository userRepository; // 사용자
-    @Autowired
-    private CouponRepository couponRepository;
+    // @Autowired
+    // private CouponRepository couponRepository;
     @Autowired
     private WishRepository wishRepository;
-    @Autowired
-    private OrderRepository orderRepository;
+
     // @Autowired
     //private AttendanceRepository attendanceRepository; // 출석
 
@@ -40,40 +37,31 @@ public class MypageServiceImpl implements MypageService {
         return UserDTO.toGetUserDTO(userEntity);
     }
 
-    @Override
-    public List<CouponDTO> getCouponList(int userseq) {
-        List<CouponEntity> couponEntities = couponRepository.findByUserId(userseq);
-        if (couponEntities.isEmpty()) {
-            throw new RuntimeException("No coupons found for the user.");
-        }
-        // map 내부에서 명시적으로 변환 메서드를 호출
-        return couponEntities.stream()
-                             .map(entity -> CouponDTO.toGetCouponDTO(entity))
-                             .collect(Collectors.toList());
-    }
+    // @Override
+    // public List<CouponDTO> getCouponList(int userseq) {
+    //     List<CouponEntity> couponEntities = couponRepository.findByUserId(userseq);
+    //     if (couponEntities.isEmpty()) {
+    //         throw new RuntimeException("No coupons found for the user.");
+    //     }
+    //     // map 내부에서 명시적으로 변환 메서드를 호출
+    //     return couponEntities.stream()
+    //                          .map(entity -> CouponDTO.toGetCouponDTO(entity))
+    //                          .collect(Collectors.toList());
+    // }
 
     @Override
     public List<WishDTO> getWishlist(int userseq) {
-        List<WishEntity> wishEntities = wishRepository.findByUserId(userseq);
+        List<WishEntity> wishEntities = wishRepository.findByUserEntity_Id(userseq);
         if (wishEntities.isEmpty()) {
             throw new RuntimeException("No wishlist items found for the user.");
         }
 
-        return wishEntities.stream()
-                           .map(entity -> WishDTO.toGetWishDTO(entity))
-                           .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<OrderDTO> getOrders(int userseq) {
-        List<OrderEntity> orderEntities = orderRepository.findByUserId(userseq);
-        if (orderEntities.isEmpty()) {
-            throw new RuntimeException("No orders found for the user.");
+        // WishEntity -> WishDTO 변환
+        List<WishDTO> wishDTOList = new ArrayList<>();
+        for (WishEntity wishEntity : wishEntities) {
+            WishDTO wishDTO = WishDTO.toGetWishDTO(wishEntity);
+            wishDTOList.add(wishDTO);
         }
-
-        return orderEntities.stream()
-                            .map(entity -> OrderDTO.toGetOrderDTO(entity))
-                            .collect(Collectors.toList());
+        return wishDTOList;
     }
-
 }    

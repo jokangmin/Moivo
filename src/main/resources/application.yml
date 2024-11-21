@@ -10,17 +10,10 @@ spring:
     # driver-class-name: oracle.jdbc.driver.OracleDriver
 
     # MySQL 설정
-<<<<<<< HEAD
     url: jdbc:mysql://localhost:3306/moivo?useSSL=false&serverTimezone=Asia/Seoul
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
-=======
-    # url: jdbc:mysql://localhost:3306/moivotest?useSSL=false&serverTimezone=Asia/Seoul
-    # username: root
-    # password: 1234
-    # driver-class-name: com.mysql.cj.jdbc.Driver
->>>>>>> fb491792055cea155b4c3efce02301e8ebeb7042
 
     # MySQL - NAVER Cloud 설정
     # url: jdbc:mysql://db-2vrk3j-kr.vpc-pub-cdb.ntruss.com:3306/moivodb?serverTimezone=Asia/Seoul
