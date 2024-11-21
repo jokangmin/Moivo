@@ -143,4 +143,36 @@ public class ProductServiceImpl implements ProductService {
             }
         }
     }
+
+    //상품 전체 리스트 뿌리기
+    @Override
+    public Map<String, Object> getProductList() {
+        Map<String, Object> map = new HashMap<>();
+
+        //1 DB 전체 상품 추출
+        List<ProductEntity> list = productRepository.findAll();
+
+        List<ProductDTO> dtoList = new ArrayList<>();
+        List<ProductImgDTO> imgList = new ArrayList<>();
+
+        for (ProductEntity productEntity : list) {
+            ProductDTO productDTO = ProductDTO.toGetProductDTO(productEntity);
+            dtoList.add(productDTO);
+
+            //전체 상품에서 layer1 이미지 추출
+//            for (ProductImgEntity imgEntity : productEntity.getImgList()) {
+//                if (imgEntity.getLayer() == 1) {
+//                    ProductImgDTO imgDTO = ProductImgDTO.toGetProductImgDTO(imgEntity);
+//                    imgList.add(imgDTO);
+//                }
+//            }
+        }
+        //결과를 map에 저장
+        map.put("productList", dtoList);
+       // map.put("imgList", imgList);
+        System.out.println("getProductList: " + dtoList);
+        //System.out.println("getProductList: " + imgList);
+        return map;
+    }
+
 }

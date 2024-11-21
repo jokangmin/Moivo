@@ -76,4 +76,15 @@ public class StoreController {
         return ResponseEntity.ok(map);
     }
 
+    @GetMapping("")
+    public ResponseEntity<Map<String, Object>> getProductAll(){
+        Map<String, Object> map = new HashMap<>();
+        if(map == null){
+            map.put("ProductDTO", new ProductDTO());
+        } else{
+            map.put("ProductDTO", map);
+        }
+        return ResponseEntity.ok(productService.getProductList());
+    }
+
 }

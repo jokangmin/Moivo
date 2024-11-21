@@ -27,8 +27,8 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // CSRF 비활성화
                 .authorizeHttpRequests(authorize -> authorize
-                        // .requestMatchers("/api/auth/**").permitAll() // 인증 필요 없는 엔드포인트
-                        .requestMatchers("/api/**").permitAll() // 인증 필요 없는 엔드포인트
+                        .requestMatchers("/api/user/join", "/api/user/login").permitAll() // 인증 필요 없는 엔드포인트
+                        // .requestMatchers("/api/user/**").permitAll() // 인증 필요 없는 엔드포인트
                         .anyRequest().authenticated()) // 나머지 요청은 인증 필요
                 .userDetailsService(customUserDetailsService) // 사용자 인증 서비스
                 .exceptionHandling(exception -> exception

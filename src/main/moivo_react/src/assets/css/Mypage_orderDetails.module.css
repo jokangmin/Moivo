@@ -1,3 +1,5 @@
+@import url("https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css");
+
 .orderDetailsContainer {
     font-family: 'Italiana', serif;
     background: #f6f2ee;
@@ -30,6 +32,7 @@
 }
 
 .orderInfo, .shippingInfo {
+    font-family: 'GmarketSans', serif;
     width: 50%;
     background: #f6f2ee;
     padding: 20px;
@@ -128,9 +131,9 @@
 /* 상품금액 및 상태와 다른 컬럼들의 정렬 유지 */
 /* 구매확정 + 리뷰 버튼 스타일 */
 .column {
-    font-family: 'Italiana', serif;
+    font-family: 'GmarketSans', serif;
     font-size: 14px;
-    font-weight: 550;
+    font-weight: 600;
     line-height: 20px;
     color: #2F2E2C;
     display: flex;
@@ -151,6 +154,10 @@
     margin-bottom: 5px; /* 아래 여백 추가 */
 }
 
+.column2:nth-child(4) {
+    flex: 0 0 80px; /* 수량 열 크기 고정 */
+}
+
 /* Link 컴포넌트 스타일 */
 .orderLink {
     text-decoration: underline; /* 밑줄 추가 */
@@ -165,7 +172,7 @@
 }
 
 .column2 {
-    font-family: 'Italiana', serif;
+    font-family: 'GmarketSans', serif;
     font-size: 14px;
     font-weight: 750;
     line-height: 20px;
@@ -257,6 +264,7 @@
 
 /* 결제 정보 */
 .paymentSummary {
+    font-family: 'GmarketSans', serif;
     text-align: right;
     background: #f6f2ee;
     padding: 20px;

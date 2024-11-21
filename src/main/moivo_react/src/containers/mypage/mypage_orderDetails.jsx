@@ -19,7 +19,8 @@ const MypageOrderDetails = () => {
             image: "../image/order1.png",
             productName: "Ballerina skirt",
             option: "black M",
-            price: 69000, // 숫자 형태로 가격 관리
+            price: 69000,
+            quantity: 2, // 수량 추가
             status: "구매확정",
         },
         {
@@ -29,6 +30,7 @@ const MypageOrderDetails = () => {
             productName: "Golgi cotton bolero",
             option: "white",
             price: 65000,
+            quantity: 1,
             status: "배송중",
         },
         {
@@ -38,14 +40,16 @@ const MypageOrderDetails = () => {
             productName: "Jewel tee",
             option: "pink S",
             price: 39000,
+            quantity: 3,
             status: "배송완료",
         },
     ];
+    
 
     // 자동 계산 로직
     const discount = 10000; // 고정 할인 금액
     const shippingFee = 5000; // 고정 배송비
-    const totalPrice = orderItems.reduce((total, item) => total + item.price, 0);
+    const totalPrice = orderItems.reduce((total, item) => total + item.price * item.quantity, 0);
     const finalPrice = totalPrice - discount + shippingFee;
     
     return (
@@ -102,36 +106,38 @@ const MypageOrderDetails = () => {
                 {/* 주문 상품 정보 */}
                 <section className={styles.tableSection}>
                     <div className={styles.table}>
-                        <div className={styles.row}>
-                            <div className={styles.column2}>주문일자<br />[주문번호]</div>
-                            <div className={styles.column2}>이미지</div>
-                            <div className={styles.column2}>상품정보</div>
-                            <div className={styles.column2}>상품금액</div>
-                            <div className={styles.column2}>주문처리상태</div>
-                        </div>
-                        {/* 주문 상품 데이터 렌더링 */}
-                        {orderItems.map((item, index) => (
-                            <div className={styles.row} key={index}>
-                                <div className={styles.column}>
-                                    {item.orderDate} <br />
-                                    <Link to={`/order/${item.orderNumber}`} className={styles.orderLink}>
-                                        [{item.orderNumber}]
-                                    </Link>
-                                </div>
-                                <div className={styles.image}>
-                                    <img src={item.image} alt={`order-${index}`} />
-                                </div>
-                                <div className={styles.column}>
-                                    {item.productName} <br />[옵션: {item.option}]
-                                </div>
-                                <div className={styles.column}>{item.price}</div>
-                                <div className={styles.column}>
-                                    {item.status}
-                                    {item.status === "구매확정" && (
-                                        <button className={styles.reviewButton}>REVIEW</button>
-                                    )}
-                                </div>
+                    <div className={styles.row}>
+                        <div className={styles.column2}>주문일자<br />[주문번호]</div>
+                        <div className={styles.column2}>이미지</div>
+                        <div className={styles.column2}>상품정보</div>
+                        <div className={styles.column2}>수량</div> {/* 수량 열 추가 */}
+                        <div className={styles.column2}>상품금액</div>
+                        <div className={styles.column2}>주문처리상태</div>
+                    </div>
+                    {orderItems.map((item, index) => (
+                        <div className={styles.row} key={index}>
+                            <div className={styles.column}>
+                                {item.orderDate} <br />
+                                <Link to={`/mypage/order/`} className={styles.orderLink}>
+                                    [{item.orderNumber}]
+                                </Link>
                             </div>
+                            <div className={styles.image}>
+                                <img src={item.image} alt={`order-${index}`} />
+                            </div>
+                            <div className={styles.column}>
+                                {item.productName} <br />[옵션: {item.option}]
+                            </div>
+                            <div className={styles.column}>{item.quantity}</div> {/* 수량 표시 */}
+                            <div className={styles.column}>{(item.price * item.quantity).toLocaleString()}</div>
+                            <div className={styles.column}>
+                                {item.status}
+                                {item.status === "구매확정" && (
+                                    <button className={styles.reviewButton}>REVIEW</button>
+                                )}
+                            </div>
+                        </div>
+
                         ))}
                     </div>
                 </section>

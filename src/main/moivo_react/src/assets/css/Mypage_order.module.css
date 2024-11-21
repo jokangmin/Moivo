@@ -1,3 +1,5 @@
+@import url("https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css");
+
 .memberFrame {
     margin: 0 auto;
     padding: 130px; /* 내부 여백 추가 */
@@ -21,7 +23,7 @@
 }
 
 .navLinks {
-    font-family: 'Italiana', serif;
+    font-family: 'GmarketSans', serif;
     font-size: 16px;
     text-align: center;
     color: #2f2e2c;
@@ -29,7 +31,7 @@
 }
 
 .instructions {
-    font-family: 'Italiana', serif;
+    font-family: 'GmarketSans', serif;
     font-size: 15px;
     font-weight: 570;
     line-height: 24px;
@@ -56,6 +58,11 @@
     border-bottom: none; /* 마지막 행의 경계선 제거 */
 }
 
+.column .additionalCount {
+    font-size: 12px;
+    color: #988c73;
+}
+
 
 /* 상품정보 텍스트 왼쪽 정렬 */
 .column .product-info {
@@ -73,7 +80,7 @@
 }
 
 .header {
-    font-family: 'Italiana', serif;
+    font-family: 'GmarketSans', serif;
     font-size: 14px;
     color: #988c73;
     flex: 1;
@@ -83,9 +90,9 @@
 /* 상품금액 및 상태와 다른 컬럼들의 정렬 유지 */
 /* 구매확정 + 리뷰 버튼 스타일 */
 .column {
-    font-family: 'Italiana', serif;
+    font-family: 'GmarketSans', serif;
     font-size: 14px;
-    font-weight: 550;
+    font-weight: 600;
     line-height: 20px;
     color: #2F2E2C;
     display: flex;

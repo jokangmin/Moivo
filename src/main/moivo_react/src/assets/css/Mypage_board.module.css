@@ -1,3 +1,5 @@
+@import url("https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css");
+
 /* 전체 컨테이너 */
 .reviewPage {
     width: 100%;
@@ -18,6 +20,7 @@
 
 /* 리뷰 리스트 */
 .reviewList {
+    font-family: 'GmarketSans', serif; 
     width: 90%;
     margin: 0 auto;
     display: flex;
@@ -27,6 +30,7 @@
 
 /* 리뷰 카드 */
 .reviewCard {
+    font-family: 'GmarketSans', serif; 
     background: #FFF;
     border: 1px solid #988C73;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
@@ -37,6 +41,7 @@
 
 /* 리뷰 헤더 */
 .reviewHeader {
+    
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
@@ -47,22 +52,24 @@
 
 /* 리뷰 유형 (Review/Inquiry) */
 .reviewType {
+    font-family: 'GmarketSans', serif; 
     background: #F6F2EE;
     padding: 5px 10px;
     border-radius: 15px;
     color: #2f2e2c;
-    font-size: 12px;
-    font-weight: bold;
+    font-size: 10px;
 }
 
 /* 리뷰 작성 날짜 */
 .reviewDate {
-    font-size: 12px;
+    font-family: 'GmarketSans', serif; 
+    font-size: 10px;
     color: #2f2e2c;
 }
 
 /* 리뷰 제목 */
 .reviewTitle {
+    font-family: 'GmarketSans', serif; 
     font-size: 18px;
     font-weight: bold;
     color: #2f2e2c;
@@ -71,6 +78,7 @@
 
 /* 리뷰 내용 */
 .reviewContent {
+    font-family: 'GmarketSans', serif; 
     font-size: 14px;
     color: #2f2e2c;
     line-height: 1.5;
