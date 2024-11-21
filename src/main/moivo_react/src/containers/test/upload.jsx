@@ -7,76 +7,57 @@ const Upload = () => {
   const [product, setProduct] = useState({
     name: "",
     price: "",
-    content: "",
-    categoryseq: "",
+    content: ""
   });
 
-  const [categories, setCategories] = useState([]);
-
-  const [stock, setStock] = useState([
-    { size: 'SIZE_1', count: 0 },
-    { size: 'SIZE_2', count: 0 },
-    { size: 'SIZE_3', count: 0 },
-  ]);
-
-  const [categoryName, setCategoryName] = useState("");
-
-  const [files, setFiles] = useState({
-    layer1: null,
-    layer2: null,
-    layer3: null,
+  const [stock, setStock] = useState({
+    S : 0,
+    M : 0,
+    L : 0
   });
-
+  const [files, setFiles] = useState({ layer1: [], layer2: [], layer3: [] });
   const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    // 카테고리 정보 가져오기
-    axios.get("/api/categories").then((res) => {
-      if (Array.isArray(res.data)) {
-        setCategories(res.data);
-      } else {
-        console.error("카테고리 데이터는 배열이 아닙니다 ? :", res.data);
-      }
-    });
-  }, []);
 
   // 상품 정보 입력 핸들러
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setProduct((prev) => ({ ...prev, [name]: value }));
+    console.log(name);
+    
+    if(name == "S" || name == "M" || name == "L") {
+      setStock((prev) => ({ ...prev, [name]: value }));
+    } else {
+      setProduct((prev) => ({ ...prev, [name]: value }));
+    }
+    
   };
 
-  // 재고 입력 핸들러
-  const handleStockChange = (index, field, value) => {
-    const updatedStock = [...stock];
-    updatedStock[index][field] = value;
-    setStock(updatedStock);
+  // 파일 추가 핸들러 (파일 선택 및 드래그 앤 드롭 모두 처리)
+  const handleFileChange = (newFiles, layer) => {
+    setFiles((prev) => ({
+      ...prev,
+      [layer]: [...prev[layer], ...newFiles],
+    }));
   };
 
-  // 카테고리 이름 입력 핸들러
-  const handleCategoryNameChange = (e) => {
-    setCategoryName(e.target.value);
+  // 드래그 앤 드롭 이벤트 핸들러
+  const handleDragOver = (e) => {
+    e.preventDefault();
   };
 
-  // 파일 추가 핸들러
-  const handleFileChange = (e, layer) => {
-    setFiles((prev) => ({ ...prev, [layer]: e.target.files[0] }));
+  const handleDrop = (e, layer) => {
+    e.preventDefault();
+    const droppedFiles = Array.from(e.dataTransfer.files);
+    handleFileChange(droppedFiles, layer);
   };
 
   // 업로드 핸들러
   const handleUpload = async () => {
-    if (
-      !product.name ||
-      !product.price ||
-      !product.content ||
-      !product.categoryseq
-    ) {
+    if (!product.name || !product.price || !product.content || !stock.S || !stock.M || !stock.L) {
       alert("모든 상품 정보를 입력해주세요.");
       return;
     }
-
-    if (!files.layer1 && !files.layer2 && !files.layer3) {
-      alert("모든 레이어의 이미지를 업로드해주세요.");
+    if (!files.layer1.length || !files.layer2.length || !files.layer3.length) {
+      alert("모든 레이어(layer)에 파일을 업로드해주세요.");
       return;
     }
 
@@ -84,189 +65,161 @@ const Upload = () => {
     formData.append("name", product.name);
     formData.append("price", product.price);
     formData.append("content", product.content);
-    formData.append("categoryseq", product.categoryseq);
+    formData.append("S", stock.S);
+    formData.append("M", stock.M);
+    formData.append("L", stock.L);
 
-    if (categoryName) {
-      formData.append("categoryName", categoryName);
-    }
+    // 레이어별 파일 추가
+    files.layer1.forEach((file) => formData.append("layer1", file));
+    files.layer2.forEach((file) => formData.append("layer2", file));
+    files.layer3.forEach((file) => formData.append("layer3", file));
 
-    // 재고 데이터 추가
-    stock.forEach((item, index) => {
-      formData.append(`stock[${index}][size]`, item.size);
-      formData.append(`stock[${index}][count]`, item.count);
-    });
-
-    // 파일 추가 (layer 정보와 함께)
-    for (let i = 1; i <= 3; i++) {
-      const file = files[`layer${i}`];
-      if (file) {
-        formData.append(`files`, file);
-        formData.append(`layers`, i);
-      }
+    // 로그 추가: FormData 확인
+    console.log("FormData entries:");
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ": " + pair[1]);
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/store/upload",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-          onUploadProgress: (progressEvent) => {
-            const percentCompleted = Math.round(
-              (progressEvent.loaded * 100) / progressEvent.total
-            );
-            setProgress(percentCompleted);
-          },
-        }
-      );
+      const response = await axios.post("http://localhost:8080/api/admin/store/product", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+        onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setProgress(percentCompleted);
+          console.log("Upload progress: " + percentCompleted + "%");
+        },
+      });
 
+      // 로그 추가: 업로드 성공
+      console.log("Upload successful:", response.data);
       alert("상품 업로드가 완료되었습니다.");
       resetForm();
     } catch (error) {
-      console.error("업로드 실패:", error.response.data);
-      alert(`업로드에 실패했습니다: ${error.response.data.message}`);
+      // 로그 추가: 업로드 실패
+      console.error("업로드 실패:", error.response || error);
+      alert("업로드에 실패했습니다.");
     }
   };
 
-  // 폼 초기화
+  // 폼 초기화 함수
   const resetForm = () => {
-    setProduct({ name: "", price: "", content: "", categoryseq: "" });
-    setStock([
-      { size: 'SIZE_1', count: 0 },
-      { size: 'SIZE_2', count: 0 },
-      { size: 'SIZE_3', count: 0 },
-    ]);
-    setFiles({
-      layer1: null,
-      layer2: null,
-      layer3: null,
-    });
+    setProduct({ name: "", price: "", content: "", stock: "" });
+    setFiles({ layer1: [], layer2: [], layer3: [] });
     setProgress(0);
   };
 
-  // 사이즈 문자열 변환 함수
-  const getSizeString = (sizeEnum) => {
-    switch (sizeEnum) {
-      case 'SIZE_1':
-        return 'S';
-      case 'SIZE_2':
-        return 'M';
-      case 'SIZE_3':
-        return 'L';
-      default:
-        return '';
-    }
-  };
-
   return (
-
     <div className={styles.uploadContainer}>
-          <div>
-        <Banner />
-      </div>
-      <h1>상품 업로드</h1>
-      <div className={styles.form}>
-        <label>
-          상품명:
-          <input
-            type="text"
-            name="name"
-            value={product.name}
-            onChange={handleInputChange}
-          />
-        </label>
-        <label>
-          가격:
-          <input
-            type="number"
-            name="price"
-            value={product.price}
-            onChange={handleInputChange}
-          />
-        </label>
-        <label>
-          설명:
-          <textarea
-            name="content"
-            value={product.content}
-            onChange={handleInputChange}
-          ></textarea>
-        </label>
-        <label>
-          카테고리:
-          <select
-            name="categoryseq"
-            value={product.categoryseq}
-            onChange={handleInputChange}
-          >
-            <option value="">카테고리 선택</option>
-            {categories && categories.map((category) => (
-              <option key={category.categoryseq} value={category.categoryseq}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          카테고리 이름:
-          <input
-            type="text"
-            value={categoryName}
-            onChange={handleCategoryNameChange}
-          />
-        </label>
-      </div>
+      <Banner />
+      <br/><br/><br/><br/>
+      <div className={styles.uploadContent}>
+        <h1 className={styles.title}>상품 업로드</h1>
 
-      {/* 재고 관리 섹션 */}
-      <div className={styles.stockSection}>
-        <h2>재고 관리</h2>
-        {stock.map((item, index) => (
-          <div key={index} className={styles.stockItem}>
-            <label>
-              사이즈:
-              <input type="text" value={getSizeString(item.size)} disabled />
-            </label>
-            <label>
-              수량:
-              <input
-                type="number"
-                value={item.count}
-                onChange={(e) =>
-                  handleStockChange(index, 'count', e.target.value)
-                }
-              />
-            </label>
-          </div>
-        ))}
-      </div>
-
-      {/* 파일 업로드 */}
-      <div className={styles.fileSection}>
-        {[1, 2, 3].map((layer) => (
-          <div key={layer} className={styles.fileItem}>
-            <label>
-              Layer {layer} 이미지:
-              <input
-                type="file"
-                onChange={(e) => handleFileChange(e, `layer${layer}`)}
-              />
-            </label>
-            {files[`layer${layer}`] && (
-              <span>{files[`layer${layer}`].name}</span>
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* 업로드 진행률 */}
-      {progress > 0 && (
-        <div className={styles.progressContainer}>
-          <progress value={progress} max="100" />
-          <span>{progress}%</span>
+        {/* 상품 정보 입력 */}
+        <div className={styles.form}>
+          <label>
+            상품명:
+            <input
+              type="text"
+              name="name"
+              value={product.name}
+              placeholder="상품명을 입력하세요"
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            가격:
+            <input
+              type="number"
+              name="price"
+              value={product.price}
+              placeholder="상품 가격을 입력하세요"
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            설명:
+            <textarea
+              name="content"
+              value={product.content}
+              placeholder="상품 설명을 입력하세요"
+              onChange={handleInputChange}
+            ></textarea>
+          </label>
+          <label>
+            재고 S:
+            <input
+              type="number"
+              name="S"
+              value={stock.S}
+              placeholder="상품 재고를 입력하세요"
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            재고 M:
+            <input
+              type="number"
+              name="M"
+              value={stock.M}
+              placeholder="상품 재고를 입력하세요"
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            재고 L:
+            <input
+              type="number"
+              name="L"
+              value={stock.L}
+              placeholder="상품 재고를 입력하세요"
+              onChange={handleInputChange}
+            />
+          </label>
         </div>
-      )}
 
-      <button onClick={handleUpload}>업로드</button>
+        {/* 파일 업로드 섹션 */}
+        <div className={styles.fileSection}>
+          {["layer1", "layer2", "layer3"].map((layer, index) => (
+            <div
+              key={index}
+              className={styles.fileGroup}
+              onDragOver={handleDragOver}
+              onDrop={(e) => handleDrop(e, layer)}
+            >
+              <label>
+                {`Layer ${index + 1} 파일 업로드:`}
+                <input
+                  type="file"
+                  multiple
+                  onChange={(e) => handleFileChange(Array.from(e.target.files), layer)}
+                />
+              </label>
+              <div className={styles.fileList}>
+                {files[layer].map((file, idx) => (
+                  <span key={idx} className={styles.fileItem}>
+                    {file.name}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        {/* 업로드 진행률 */}
+        {progress > 0 && (
+          <div className={styles.progressContainer}>
+            <progress value={progress} max="100" />
+            <span>{progress}%</span>
+          </div>
+        )}
+       
+        {/* 업로드 버튼 */}
+        <button className={styles.uploadButton} onClick={handleUpload}>
+          업로드
+        </button>
+        
+      </div>  
     </div>
   );
 };
