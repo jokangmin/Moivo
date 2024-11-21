@@ -21,13 +21,12 @@ public class QuestionCategoryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "categoryseq")
-    private int categorySeq; // 카테고리 고유 키
+    private Integer id; // 카테고리 고유 키
 
-    @Column(name = "categoryname", nullable = false, unique = true, length = 50)
-    private QuestionCategory categoryName = QuestionCategory.DELIVERY; // 카테고리 이름
+    @Column(name = "name", nullable = false, unique = true, length = 50)
+    private QuestionCategory name = QuestionCategory.DELIVERY; // 카테고리 이름
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "categoryEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
-    private List<QuestionEntity> questions; // 문의 목록
+    private List<QuestionEntity> questionList; // 문의 목록
 }

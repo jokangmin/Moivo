@@ -9,12 +9,12 @@ import com.example.demo.user.dto.WishDTO;
 
 public interface MypageService {
 
-    UserDTO getUserInfo(int userseq);
+    public UserDTO getUserInfo(int userseq);
 
-    List<CouponDTO> getCouponList(int userseq);
+    public List<CouponDTO> getCouponList(int userseq);
 
-    List<WishDTO> getWishlist(int userSeq);
+    public List<WishDTO> getWishlist(int userSeq);
 
-    List<OrderDTO> getOrders(int userSeq);
+    //public List<OrderDTO> getOrders(int userSeq);
 
 }

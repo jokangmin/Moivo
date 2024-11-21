@@ -1,5 +1,7 @@
 package com.example.demo.store.entity;
 
+import com.example.demo.store.dto.ProductStockDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,25 +20,12 @@ import lombok.Data;
 public class ProductStockEntity {
 
     public enum Size {
-        SIZE_1("1"),
-        SIZE_2("2"),
-        SIZE_3("3");
-
-        private final String value;
-
-        Size(String value) {
-            this.value = value;
-        }
-
-        public String getValue() {
-            return value;
-        }
+        S, M, L
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "stockseq")
-    private int stockSeq; // 재고 고유 키
+    private Integer id; // 재고 고유 키
 
     // 사이즈 3개 : 상품 1개
     @ManyToOne
@@ -45,8 +34,33 @@ public class ProductStockEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Size size; // 상품 사이즈 (1, 2, 3)
+    private Size size; // 상품 사이즈 (S, M, L)
 
     @Column(nullable = false)
     private int count; // 재고 수량
+
+    // DTO => Entity 변환
+
+    // 상품 데이터 저장
+    public static ProductStockEntity toSaveStockEntity(ProductStockDTO stockDTO, ProductEntity productEntity) {
+        ProductStockEntity entity = new ProductStockEntity();
+        entity.setProductEntity(productEntity);
+        entity.setCount(stockDTO.getCount());
+        switch (stockDTO.getSize()) {
+            case "S":
+                entity.setSize(Size.S);
+                break;
+            case "M":
+                entity.setSize(Size.M);
+                break;
+            case "L":
+                entity.setSize(Size.L);
+                break;
+            default:
+                entity.setSize(Size.S);
+                break;
+        }
+
+        return entity;
+    }
 }

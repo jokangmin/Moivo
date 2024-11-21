@@ -20,18 +20,17 @@ import lombok.Data;
 public class QuestionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "questionseq")
-    private int questionSeq; // 문의 고유 키
+    private Integer id; // 문의 고유 키
 
     // 문의 n개 : 카테고리 1개
     @ManyToOne
-    @JoinColumn(name = "categoryseq", nullable = false) // 카테고리와 연결
-    private QuestionCategoryEntity category; // 문의 카테고리
+    @JoinColumn(name = "categoryid", nullable = false) // 카테고리와 연결
+    private QuestionCategoryEntity categoryEntity; // 문의 카테고리
 
     // 문의 n개 : 사용자 1개
     @ManyToOne
-    @JoinColumn(name = "userseq", nullable = false)
-    private UserEntity user; // 문의 작성
+    @JoinColumn(name = "userid", nullable = false)
+    private UserEntity userEntity; // 문의 작성
 
     @Column(name = "content", nullable = false)
     private String content; // 문의 내용

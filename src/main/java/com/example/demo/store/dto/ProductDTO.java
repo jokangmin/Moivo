@@ -10,18 +10,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductDTO { // 상품
-    private int productSeq;
+    private Integer id;
     private String name;
     private String img;
     private String content;
     private int price;
 
     // entity => dto 변환
-    public static ProductDTO toProductDTO(ProductEntity entity) {
+
+    // 상품 데이터 출력
+    public static ProductDTO toGetProductDTO(ProductEntity entity) {
         ProductDTO dto = new ProductDTO();
-        dto.setProductSeq(entity.getProductSeq());
+        dto.setId(entity.getId());
         dto.setName(entity.getName());
-        // dto.setImg(entity.getImg());
+        dto.setImg(entity.getImg());
         dto.setContent(entity.getContent());
         dto.setPrice(entity.getPrice());
 
