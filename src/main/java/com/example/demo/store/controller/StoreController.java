@@ -6,6 +6,9 @@ import java.util.Map;
 
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,14 +80,16 @@ public class StoreController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Map<String, Object>> getProductAll(){
+    public ResponseEntity<Map<String, Object>> getProductAll(@PageableDefault(page = 0, size = 9, sort="id", direction = Sort.Direction.DESC) Pageable pageable,
+                                                             @RequestParam(required = false, defaultValue = "newest") String sortby) {
         Map<String, Object> map = new HashMap<>();
         if(map == null){
             map.put("ProductDTO", new ProductDTO());
         } else{
             map.put("ProductDTO", map);
         }
-        return ResponseEntity.ok(productService.getProductList());
+        System.out.println(pageable.getSort().toString());
+        return ResponseEntity.ok(productService.getProductList(pageable, sortby));
     }
 
 }
