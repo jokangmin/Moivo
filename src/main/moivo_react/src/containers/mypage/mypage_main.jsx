@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../../assets/css/Mypage.module.css";
 import Banner from "../../components/Banner/banner";
 import Footer from "../../components/Footer/Footer";
 
 const MypageMain = () => {
-  
+
   const [startIndex, setStartIndex] = useState(0);
 
   const [showTooltip, setShowTooltip] = useState(false);
@@ -64,6 +64,19 @@ const MypageMain = () => {
     // 컴포넌트 언마운트 시 인터벌 제거
     return () => clearInterval(interval);
   }, [maxIndex]);
+
+  //추가
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    const userSeq = sessionStorage.getItem("userSeq");
+
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      navigate("/user");
+      return;
+    }
+
+});
 
   return (
     <div>

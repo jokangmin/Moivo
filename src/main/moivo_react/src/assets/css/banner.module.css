@@ -18,7 +18,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 50px;
+  padding: 20px 0;
 }
 
 .banner:hover {
@@ -33,6 +33,7 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 /* 로고 */
@@ -87,6 +88,7 @@
 
 .navItem:hover .navLink {
   color: #8B7355;
+  background: none;
 }
 
 /* 드롭다운 메뉴 */
