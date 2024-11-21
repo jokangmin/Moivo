@@ -15,11 +15,11 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
 
     //상품 검색 (키워드)
     //Containing = 부분검색, IgnoreCase = 대소문자 무시
-    Page<ProductEntity> findByNameContainingIgnoreCase(String keyword, Pageable pageable);
+    //Page<ProductEntity> findByNameContainingIgnoreCase(String keyword, Pageable pageable);
 
     //카테고리 검색
-    Page<ProductEntity> findByCategoryContainingIgnoreCase(String category, Pageable pageable);
-    Object countByNameContainingIgnoreCase(String keyword);
+    //Page<ProductEntity> findByCategoryContainingIgnoreCase(String category, Pageable pageable);
+//    Object countByNameContainingIgnoreCase(String keyword);
 
 
 }
