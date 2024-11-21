@@ -28,16 +28,15 @@ public class UserEntity { // 사용자 & 관리자
     }
 
     public enum Grade {
-        NEWBIE, FAMILY, SILVER, GOLD, VIP
+        LV1, LV2, LV3, LV4, LV5
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userseq")
-    private int userSeq;
+    private Integer id;
 
-    @Column(nullable = false, unique = true)
-    private String id;
+    @Column(name = "userid", nullable = false, unique = true)
+    private String userId;
 
     @Column(nullable = false, length = 30)
     private String name;
@@ -65,35 +64,66 @@ public class UserEntity { // 사용자 & 관리자
     @Column(nullable = false)
     private LoginType loginType = LoginType.MOIVO;
 
-    @Column(name = "isAdmin", nullable = false)
+    @Column(name = "isadmin", nullable = false)
     private boolean admin = false; // 기본값 설정
 
+    // 등급 적용은 매달 1일
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    private Grade grade = Grade.FAMILY;
+    private Grade grade = Grade.LV1;
 
     private double height;
     private double weight;
 
-    public UserDTO toDTO() {
-        UserDTO dto = new UserDTO();
-        dto.setUserSeq(userSeq);
-        dto.setId(id);
-        dto.setName(name);
-        dto.setPwd(pwd);
-        dto.setEmail(email);
-        dto.setTel(tel);
-        dto.setBirth(birth);
-        dto.setAddr1(addr1);
-        dto.setAddr2(addr2);
-        dto.setZipcode(zipcode);
-        dto.setGender(gender);
-        dto.setLoginType(loginType);
-        dto.setAdmin(admin);
-        dto.setGrade(grade);
-        dto.setHeight(height);
-        dto.setWeight(weight);
+    // DTO -> Entity
 
-        return dto;
+    // 사용자 데이터 출력
+    public static UserEntity toGetUserEntity(UserDTO dto) {
+        UserEntity entity = new UserEntity();
+        entity.setId(dto.getId());
+        entity.setUserId(dto.getUserId());
+        entity.setName(dto.getName());
+        entity.setPwd(dto.getPwd());
+        entity.setEmail(dto.getEmail());
+        entity.setTel(dto.getTel());
+        entity.setBirth(dto.getBirth());
+        entity.setAddr1(dto.getAddr1());
+        entity.setAddr2(dto.getAddr2());
+        entity.setZipcode(dto.getZipcode());
+        entity.setGender(dto.getGender());
+        entity.setLoginType(dto.getLoginType());
+        entity.setAdmin(dto.isAdmin());
+        entity.setGender(dto.getGender());
+        entity.setHeight(dto.getHeight());
+        entity.setWeight(dto.getWeight());
+
+        return entity;
+    }
+
+    // 사용자 데이터 저장
+    public static UserEntity toSaveUserEntity(UserDTO dto) {
+        UserEntity entity = new UserEntity();
+        entity.setUserId(dto.getUserId());
+        entity.setName(dto.getName());
+        entity.setPwd(dto.getPwd());
+        entity.setEmail(dto.getEmail());
+        entity.setTel(dto.getTel());
+        entity.setBirth(dto.getBirth());
+        entity.setAddr1(dto.getAddr1());
+        entity.setAddr2(dto.getAddr2());
+        entity.setZipcode(dto.getZipcode());
+        entity.setGender(dto.getGender());
+        entity.setLoginType(dto.getLoginType());
+
+        return entity;
+    }
+
+    // Social 사용자 데이터 저장
+    public static UserEntity toSaveSocialUserEntity(UserDTO dto) {
+        UserEntity entity = new UserEntity();
+        entity.setUserId(dto.getUserId());
+        entity.setLoginType(dto.getLoginType());
+
+        return entity;
     }
 }

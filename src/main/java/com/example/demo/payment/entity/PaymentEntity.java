@@ -3,6 +3,7 @@ package com.example.demo.payment.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.example.demo.store.dto.ProductDTO;
 import com.example.demo.user.entity.UserEntity;
 
 import jakarta.persistence.CascadeType;
@@ -23,13 +24,12 @@ import lombok.Data;
 public class PaymentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "paymentseq")
-    private int paymentSeq; // 결제 고유 키
+    private Integer id; // 결제 고유 키
 
     // 주문 n건 : 사용자 1명
     @ManyToOne
-    @JoinColumn(name = "userseq", nullable = false)
-    private UserEntity user; // 결제 사용자
+    @JoinColumn(name = "userid", nullable = false)
+    private UserEntity userEntity; // 결제 사용자
 
     @Column(name = "totalprice", nullable = false)
     private int totalPrice; // 총 결제 금액
@@ -55,8 +55,8 @@ public class PaymentEntity {
     @Column(name = "deliverymsg", length = 100)
     private String deliveryMsg; // 배송 메시지
 
-    @Column(name = "itemcount", nullable = false)
-    private int itemCount; // 총 주문 상품 개수
+    @Column(name = "productcount", nullable = false)
+    private int productCount; // 총 주문 상품 개수
 
     @Column(name = "paymentdate", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime paymentDate; // 결제 요청 일시
