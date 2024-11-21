@@ -19,8 +19,7 @@ public class AttendanceEntity { // 출석
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "attendanceseq")
-    private int attendanceseq;
+    private Integer id;
 
     @Column(name = "lastdate")
     private LocalDate lastDate; // 마지막 출석 날짜
@@ -30,6 +29,6 @@ public class AttendanceEntity { // 출석
 
     // 출석 1개 : 사용자 1개
     @OneToOne
-    @JoinColumn(name = "userseq")
+    @JoinColumn(name = "userid")
     private UserEntity user; // 사용자 고유 키
 }

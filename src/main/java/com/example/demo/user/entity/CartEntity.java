@@ -24,54 +24,15 @@ public class CartEntity { // 장바구니
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int cartseq;
+    private Integer id;
 
     // 장바구니 1개 : 사용자 1명
     @OneToOne
-    @JoinColumn(name = "userseq")
-    private UserEntity user;
+    @JoinColumn(name = "userid")
+    private UserEntity userEntity;
 
     // 장바구니 1개 : 상품 n개
     @OneToMany(mappedBy = "cartEntity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<ProductEntity> productList;
+    private List<UserCartEntity> userCartList;
 
-    @Column(name = "size", length = 10)
-    private String size; // 상품 사이즈
-
-    @Column(name = "count")
-    private int count; // 상품 수량
 }
-
-// public class ItemEntity {
-
-// @Id
-// @GeneratedValue(strategy = GenerationType.IDENTITY)
-// @Column(name = "id", nullable = false)
-// private Integer id;
-
-// @ManyToOne
-// @JoinColumn(name = "bucketTb_id")
-// private BucketEntity bucketEntity;
-
-// }
-
-// public class BucketEntity {
-
-// @Id
-// @GeneratedValue(strategy = GenerationType.IDENTITY)
-// @Column(name = "id", nullable = false)
-// private Integer id;
-
-// @OneToOne
-// @JoinColumn(name = "userTb_id")
-// private UserEntity userEntity;
-
-// @OneToMany(mappedBy = "bucketEntity", cascade = CascadeType.ALL, fetch =
-// FetchType.EAGER)
-// private List<ItemEntity> itemList;
-
-// // 1. user
-// // 2. bucket
-// // 3. item
-
-// }

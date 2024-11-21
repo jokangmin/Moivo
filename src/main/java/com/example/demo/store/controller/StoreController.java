@@ -36,6 +36,9 @@ public class StoreController {
             @RequestParam("layer1") List<MultipartFile> layer1Files,
             @RequestParam("layer2") List<MultipartFile> layer2Files,
             @RequestParam("layer3") List<MultipartFile> layer3Files,
+            @RequestParam(name = "S", defaultValue = "0") int SCount,
+            @RequestParam(name = "M", defaultValue = "0") int MCount,
+            @RequestParam(name = "L", defaultValue = "0") int LCount,
             @RequestParam("CategorySeq") int categorySeq) {
 
         // 받을 값
@@ -49,6 +52,9 @@ public class StoreController {
         map.put("layer1", layer1Files);
         map.put("layer2", layer2Files);
         map.put("layer3", layer3Files);
+        map.put("S", SCount);
+        map.put("M", MCount);
+        map.put("L", LCount);
         map.put("CategorySeq", categorySeq);
 
         productService.saveProduct(map);

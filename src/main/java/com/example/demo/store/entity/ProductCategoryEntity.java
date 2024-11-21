@@ -19,8 +19,7 @@ import lombok.Data;
 public class ProductCategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "categoryseq")
-    private int categorySeq;
+    private Integer id;
 
     @Column(length = 30, nullable = false)
     private String name;
@@ -28,10 +27,5 @@ public class ProductCategoryEntity {
     // 카테고리 1개 : 상품 n개
     @OneToMany(mappedBy = "categoryEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductEntity> productList; // 상품 목록
-    
-    // categorySeq 수동 설정 메서드
-    public void setCategoryseq(int categorySeq) {
-        this.categorySeq = categorySeq;
-    }
-    
+
 }
