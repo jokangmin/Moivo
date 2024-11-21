@@ -19,7 +19,6 @@ import com.example.demo.store.entity.ProductEntity;
 import com.example.demo.store.entity.ProductImgEntity;
 import com.example.demo.store.entity.ProductStockEntity;
 import com.example.demo.store.entity.ReviewEntity;
-import com.example.demo.store.entity.ProductStockEntity.Size;
 import com.example.demo.store.repository.ProductCategoryRepository;
 import com.example.demo.store.repository.ProductImgRepository;
 import com.example.demo.store.repository.ProductRepository;
@@ -44,11 +43,11 @@ public class ProductServiceImpl implements ProductService {
     private NCPObjectStorageService ncpObjectStorageService;
 
     @Override
-    public Map<String, Object> getProduct(int productSeq) {
+    public Map<String, Object> getProduct(int productId) {
         Map<String, Object> map = new HashMap<>();
 
         // 1. 상품 정보 추출
-        ProductEntity productEntity = productRepository.findById(productSeq).orElseThrow(null);
+        ProductEntity productEntity = productRepository.findById(productId).orElseThrow(null);
         map.put("Product", ProductDTO.toGetProductDTO(productEntity));
 
         // 2. 이미지 추출

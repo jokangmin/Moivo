@@ -1,10 +1,7 @@
 package com.example.demo.user.entity;
 
-import java.util.List;
-
 import com.example.demo.store.entity.ProductEntity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,7 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
-import net.bytebuddy.implementation.bytecode.ByteCodeAppender.Size;
+import com.example.demo.store.entity.ProductStockEntity.Size;
 
 @Data
 @Entity
