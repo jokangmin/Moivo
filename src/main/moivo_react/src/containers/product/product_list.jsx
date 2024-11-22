@@ -17,6 +17,47 @@ const ProductList = () => {
   const [wishItems, setWishItems] = useState([]);
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const [isWishModalOpen, setIsWishModalOpen] = useState(false);
+  // const [products, setProducts] = useState([]);
+
+   // 더미데이터 대신 api 상품 데이터 가져오기
+  //  useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const response = await axios.get('http://localhost:8080/api/store');
+  //       setProducts(response.data);
+  //     } catch (error) {
+  //       console.error('상품 데이터를 불러오는데 실패했습니다:', error);
+  //     }
+  //   };
+    
+  //   fetchProducts();
+  // }, []);
+
+// API 연동 코드 (주석 처리)
+  /*
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const [productsData, categoriesData] = await Promise.all([
+          storeAPI.getProducts(currentPage, sortBy),
+          storeAPI.getCategories()
+        ]);
+        
+        setProducts(productsData.content);
+        setCategories(categoriesData.map(cat => cat.name));
+        setTotalPages(productsData.totalPages);
+      } catch (error) {
+        console.error('데이터 로딩 실패:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [currentPage, sortBy]);
+  */
+
 
   const categories = ["all", "Outerwear", "Pants", "Jeans"];
 

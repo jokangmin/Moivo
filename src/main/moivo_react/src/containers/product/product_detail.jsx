@@ -15,6 +15,24 @@ const ProductDetail = () => {
   const [selectedSize, setSize] = useState("");
   const [quantity, setQuantity] = useState(1);
 
+  // 더미 리뷰 데이터 추가
+  const [reviews] = useState([
+    {
+      id: 1,
+      username: "user1",
+      rating: 5,
+      content: "정말 좋은 상품이에요!",
+      date: "2024-03-20"
+    },
+    {
+      id: 2,
+      username: "user2",
+      rating: 4,
+      content: "배송이 빨라요",
+      date: "2024-03-19"
+    }
+  ]);
+
   useEffect(() => {
     const selectedProduct = products.find((product) => product.id === parseInt(id));
     if (selectedProduct) {
@@ -24,6 +42,27 @@ const ProductDetail = () => {
       setProduct(null);
     }
   }, [id]);
+
+  // 더미데이터 대신 api 데이터 가져오기
+  // useEffect(() => {
+  //   const fetchProductDetail = async () => {
+  //     try {
+  //       const response = await axios.get(`http://localhost:8080/api/store/${id}`);
+  //       if (response.data) {
+  //         setProduct(response.data);
+  //         setMainImg(response.data.productimg[0].fileurl);
+  //       } else {
+  //         setProduct(null);
+  //       }
+  //     } catch (error) {
+  //       console.error('상품 상세 정보를 불러오는데 실패했습니다:', error);
+  //       setProduct(null);
+  //     }
+  //   };
+
+  //   fetchProductDetail();
+  // }, [id]);
+  
 
   if (!product) {
     return (
@@ -38,91 +77,128 @@ const ProductDetail = () => {
     <div className={styles.container}>
       <Banner />
       
-      <motion.div
-        className={styles.detailContainer}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className={styles.productImages}>
-          <div className={styles.mainImage}>
+      <div className={styles.productDetailWrapper}>
+        {/* 상단 섹션: 메인 이미지와 구매 정보 */}
+        <div className={styles.topSection}>
+          {/* 왼쪽: 메인 이미지 */}
+          <div className={styles.mainImageSection}>
             <img
               src={mainImg || "/placeholder.jpg"}
               alt={product.name || "이미지 없음"}
+              className={styles.mainImage}
             />
+            <div className={styles.thumbnails}>
+              {product.productimg.map((img) => (
+                <img 
+                  key={img.id}
+                  src={img.fileurl} 
+                  alt={product.name} 
+                  onClick={() => setMainImg(img.fileurl)}
+                  className={`${styles.thumbnail} ${mainImg === img.fileurl ? styles.activeThumbnail : ''}`}
+                />
+              ))}
+            </div>
           </div>
-          <div className={styles.thumbnails}>
+
+          {/* 오른쪽: 상품 정보 및 구매 섹션 */}
+          <div className={styles.productInfo}>
+            <h1 className={styles.productName}>{product.name}</h1>
+            <p className={styles.productPrice}>{product.price.toLocaleString()}원</p>
+            <div className={styles.description}>
+              <p>{product.content}</p>
+            </div>
+            
+            <div className={styles.purchaseOptions}>
+              <div className={styles.optionItem}>
+                <label htmlFor="size">사이즈</label>
+                <select
+                  id="size"
+                  value={selectedSize}
+                  onChange={(e) => setSize(e.target.value)}
+                >
+                  <option value="">선택해주세요</option>
+                  {/* 사이즈 옵션들 */}
+                </select>
+              </div>
+
+              <div className={styles.optionItem}>
+                <label htmlFor="quantity">수량</label>
+                <div className={styles.quantityWrapper}>
+                  <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>
+                  <input
+                    type="number"
+                    id="quantity"
+                    min="1"
+                    value={quantity}
+                    onChange={(e) => setQuantity(parseInt(e.target.value))}
+                  />
+                  <button onClick={() => setQuantity(quantity + 1)}>+</button>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.actionButtons}>
+              <motion.button 
+                className={styles.cartButton}
+                onClick={() => {/* 장바구니 추가 로직 */}}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <FaShoppingCart /> 장바구니
+              </motion.button>
+              <motion.button 
+                className={styles.wishlistButton}
+                onClick={() => {/* 위시리스트 추가 로직 */}}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <FaHeart /> 위시리스트
+              </motion.button>
+            </div>
+          </div>
+        </div>
+
+        {/* 하단 섹션: 상세 이미지와 리뷰 */}
+        <div className={styles.bottomSection}>
+          {/* 상세 이미지 섹션 */}
+          <div className={styles.detailImages}>
             {product.productimg.map((img) => (
-              <img 
+              <img
                 key={img.id}
-                src={img.fileurl} 
-                alt={product.name} 
-                onClick={() => setMainImg(img.fileurl)}
-                className={styles.thumbnail}
+                src={img.fileurl}
+                alt={`${product.name} 상세이미지`}
+                className={styles.detailImage}
               />
             ))}
           </div>
-        </div>
-        <div className={styles.infoSection}>
-          <h1 className={styles.productName}>{product.name}</h1>
-          <p className={styles.productPrice}>{product.price.toLocaleString()}원</p>
-          <p className={styles.productDescription}>{product.content}</p>
-          <div className={styles.sizeSelector}>
-            <label htmlFor="size">사이즈:</label>
-            <select
-              id="size"
-              value={selectedSize}
-              onChange={(e) => setSize(e.target.value)}
-            >
-              <option value="">-- 사이즈 선택 --</option>
-              {/* 사이즈 옵션 추가 */}
-            </select>
-          </div>
-          <div className={styles.quantity}>
-            <label>수량:</label>
-            <input
-              type="number"
-              min="1"
-              value={quantity}
-              onChange={(e) => setQuantity(parseInt(e.target.value))}
-              className={styles.quantityInput}
-            />
-          </div>
-          <div className={styles.actions}>
-            <motion.button 
-              onClick={() => {/* 위시리스트 추가 로직 */}}
-              className={styles.actionButton}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <FaHeart /> 위시리스트
-            </motion.button>
-            <motion.button 
-              onClick={() => {/* 장바구니 추가 로직 */}}
-              className={styles.actionButton}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <FaShoppingCart /> 장바구니
-            </motion.button>
+
+          {/* 리뷰 섹션 */}
+          <div className={styles.reviewSection}>
+            <div className={styles.reviewHeader}>
+              <h2>상품 리뷰</h2>
+              <motion.button 
+                className={styles.writeReviewButton}
+                onClick={() => navigate(`/review/${id}`)}
+                whileHover={{ scale: 1.02 }}
+              >
+                리뷰 작성하기
+              </motion.button>
+            </div>
+            
+            <div className={styles.reviewList}>
+              {reviews.map(review => (
+                <div key={review.id} className={styles.reviewCard}>
+                  <div className={styles.reviewInfo}>
+                    <span className={styles.username}>{review.username}</span>
+                    <span className={styles.rating}>{'★'.repeat(review.rating)}</span>
+                    <span className={styles.date}>{review.date}</span>
+                  </div>
+                  <p className={styles.reviewContent}>{review.content}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </motion.div>
-
-      <div className={styles.additionalImages}>
-        {product.productimg.map((img, index) => (
-          <img key={index} src={img.fileurl} alt={`Additional ${index + 1}`} className={styles.additionalImage} />
-        ))}
-      </div>
-
-      <div className={styles.reviewSection}>
-        <h2>리뷰 작성하기</h2>
-        <button 
-          onClick={() => navigate(`/review/${id}`)} 
-          className={styles.reviewButton}
-        >
-          리뷰 작성하러 가기
-        </button>
       </div>
 
       <Footer />
