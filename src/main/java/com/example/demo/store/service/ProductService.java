@@ -1,5 +1,8 @@
 package com.example.demo.store.service;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 import java.util.Map;
 
 public interface ProductService {
@@ -8,6 +11,6 @@ public interface ProductService {
 
     public void saveProduct(Map<String, Object> map);
 
-    public Map<String, Object> getProductList();
+    public Map<String, Object> getProductList(Pageable pageable, String sortby);
 
 }
