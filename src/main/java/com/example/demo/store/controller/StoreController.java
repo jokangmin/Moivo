@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.store.dto.ProductDTO;
@@ -41,18 +42,16 @@ public class StoreController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Map<String, Object>> getProductAll(@PageableDefault(page = 0, size = 9, sort="id", direction = Sort.Direction.DESC) Pageable pageable,
+    public ResponseEntity<?> getProductAll(@PageableDefault(page = 0, size = 9, sort="id", direction = Sort.Direction.DESC) Pageable pageable,
                                                              @RequestParam(required = false, defaultValue = "newest") String sortby) {
 
-    public ResponseEntity<Map<String, Object>> getProductAll() {
-        Map<String, Object> map = new HashMap<>();
-        if (map == null) {
-            map.put("ProductDTO", null);
-        } else {
-            map.put("ProductDTO", map);
-        }
-        System.out.println(pageable.getSort().toString());
-        return ResponseEntity.ok(productService.getProductList(pageable, sortby));
+        Map<String, Object> map = productService.getProductList(pageable, sortby);
+        // 값 존재 X
+        if (map == null)
+            return ResponseEntity.status(HttpStatus.SC_NOT_FOUND).body(null);
+
+        // 값 존재 O
+        return ResponseEntity.ok(map);
     }
 
 }
