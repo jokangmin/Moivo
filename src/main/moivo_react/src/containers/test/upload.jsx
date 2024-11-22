@@ -8,23 +8,22 @@ const Upload = () => {
     name: "",
     price: "",
     content: "",
-    categoryseq: "",
+    categoryId: "",
   });
 
   const [categories, setCategories] = useState([]);
 
-  const [stock, setStock] = useState([
-    { size: 'SIZE_1', count: 0 },
-    { size: 'SIZE_2', count: 0 },
-    { size: 'SIZE_3', count: 0 },
-  ]);
-
-  const [categoryName, setCategoryName] = useState("");
+  const [stock, setStock] = useState({
+    S: 0,
+    M: 0,
+    L: 0,
+  });
 
   const [files, setFiles] = useState({
     layer1: null,
-    layer2: null,
-    layer3: null,
+    layer2: [],
+    layer3: [],
+    layer4: null,
   });
 
   const [progress, setProgress] = useState(0);
@@ -47,20 +46,28 @@ const Upload = () => {
   };
 
   // 재고 입력 핸들러
-  const handleStockChange = (index, field, value) => {
-    const updatedStock = [...stock];
-    updatedStock[index][field] = value;
-    setStock(updatedStock);
+  const handleStockChange = (size, value) => {
+    setStock((prev) => ({ ...prev, [size]: value }));
   };
 
-  // 카테고리 이름 입력 핸들러
-  const handleCategoryNameChange = (e) => {
-    setCategoryName(e.target.value);
-  };
-
-  // 파일 추가 핸들러
-  const handleFileChange = (e, layer) => {
+  // 파일 추가 핸들러 (단일 파일)
+  const handleSingleFileChange = (e, layer) => {
     setFiles((prev) => ({ ...prev, [layer]: e.target.files[0] }));
+  };
+
+  // 파일 추가 핸들러 (다중 파일)
+  const handleMultipleFileChange = (e, layer) => {
+    setFiles((prev) => ({ ...prev, [layer]: Array.from(e.target.files) }));
+  };
+
+  // 드래그 앤 드롭 핸들러
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e, layer) => {
+    e.preventDefault();
+    setFiles((prev) => ({ ...prev, [layer]: Array.from(e.dataTransfer.files) }));
   };
 
   // 업로드 핸들러
@@ -69,13 +76,13 @@ const Upload = () => {
       !product.name ||
       !product.price ||
       !product.content ||
-      !product.categoryseq
+      !product.categoryId
     ) {
       alert("모든 상품 정보를 입력해주세요.");
       return;
     }
 
-    if (!files.layer1 && !files.layer2 && !files.layer3) {
+    if (!files.layer1 || !files.layer4 || files.layer2.length === 0 || files.layer3.length === 0) {
       alert("모든 레이어의 이미지를 업로드해주세요.");
       return;
     }
@@ -84,26 +91,29 @@ const Upload = () => {
     formData.append("name", product.name);
     formData.append("price", product.price);
     formData.append("content", product.content);
-    formData.append("categoryseq", product.categoryseq);
-
-    if (categoryName) {
-      formData.append("categoryName", categoryName);
-    }
+    formData.append("categoryId", product.categoryId);
 
     // 재고 데이터 추가
-    stock.forEach((item, index) => {
-      formData.append(`stock[${index}][size]`, item.size);
-      formData.append(`stock[${index}][count]`, item.count);
+    Object.entries(stock).forEach(([size, count]) => {
+      formData.append(`stock[${size}]`, count);
     });
 
     // 파일 추가 (layer 정보와 함께)
-    for (let i = 1; i <= 3; i++) {
-      const file = files[`layer${i}`];
-      if (file) {
-        formData.append(`files`, file);
-        formData.append(`layers`, i);
-      }
-    }
+    formData.append("files", files.layer1);
+    formData.append("layers", 1);
+
+    files.layer2.forEach((file) => {
+      formData.append("files", file);
+      formData.append("layers", 2);
+    });
+
+    files.layer3.forEach((file) => {
+      formData.append("files", file);
+      formData.append("layers", 3);
+    });
+
+    formData.append("files", files.layer4);
+    formData.append("layers", 4);
 
     try {
       const response = await axios.post(
@@ -130,38 +140,20 @@ const Upload = () => {
 
   // 폼 초기화
   const resetForm = () => {
-    setProduct({ name: "", price: "", content: "", categoryseq: "" });
-    setStock([
-      { size: 'SIZE_1', count: 0 },
-      { size: 'SIZE_2', count: 0 },
-      { size: 'SIZE_3', count: 0 },
-    ]);
+    setProduct({ name: "", price: "", content: "", categoryId: "" });
+    setStock({ S: 0, M: 0, L: 0 });
     setFiles({
       layer1: null,
-      layer2: null,
-      layer3: null,
+      layer2: [],
+      layer3: [],
+      layer4: null,
     });
     setProgress(0);
   };
 
-  // 사이즈 문자열 변환 함수
-  const getSizeString = (sizeEnum) => {
-    switch (sizeEnum) {
-      case 'SIZE_1':
-        return 'S';
-      case 'SIZE_2':
-        return 'M';
-      case 'SIZE_3':
-        return 'L';
-      default:
-        return '';
-    }
-  };
-
   return (
-
     <div className={styles.uploadContainer}>
-          <div>
+      <div>
         <Banner />
       </div>
       <h1>상품 업로드</h1>
@@ -185,88 +177,84 @@ const Upload = () => {
           />
         </label>
         <label>
-          설명:
+          상품 설명:
           <textarea
             name="content"
             value={product.content}
             onChange={handleInputChange}
-          ></textarea>
+          />
         </label>
         <label>
           카테고리:
           <select
-            name="categoryseq"
-            value={product.categoryseq}
+            name="categoryId"
+            value={product.categoryId}
             onChange={handleInputChange}
           >
             <option value="">카테고리 선택</option>
-            {categories && categories.map((category) => (
-              <option key={category.categoryseq} value={category.categoryseq}>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
                 {category.name}
               </option>
             ))}
           </select>
         </label>
-        <label>
-          카테고리 이름:
-          <input
-            type="text"
-            value={categoryName}
-            onChange={handleCategoryNameChange}
-          />
-        </label>
-      </div>
 
-      {/* 재고 관리 섹션 */}
-      <div className={styles.stockSection}>
-        <h2>재고 관리</h2>
-        {stock.map((item, index) => (
-          <div key={index} className={styles.stockItem}>
-            <label>
-              사이즈:
-              <input type="text" value={getSizeString(item.size)} disabled />
-            </label>
-            <label>
-              수량:
-              <input
-                type="number"
-                value={item.count}
-                onChange={(e) =>
-                  handleStockChange(index, 'count', e.target.value)
-                }
-              />
-            </label>
-          </div>
-        ))}
-      </div>
-
-      {/* 파일 업로드 */}
-      <div className={styles.fileSection}>
-        {[1, 2, 3].map((layer) => (
-          <div key={layer} className={styles.fileItem}>
-            <label>
-              Layer {layer} 이미지:
-              <input
-                type="file"
-                onChange={(e) => handleFileChange(e, `layer${layer}`)}
-              />
-            </label>
-            {files[`layer${layer}`] && (
-              <span>{files[`layer${layer}`].name}</span>
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* 업로드 진행률 */}
-      {progress > 0 && (
-        <div className={styles.progressContainer}>
-          <progress value={progress} max="100" />
-          <span>{progress}%</span>
+        <div className={styles.stockSection}>
+          <h2>재고 수량</h2>
+          {Object.entries(stock).map(([size, count]) => (
+            <div key={size} className={styles.stockItem}>
+              <label>
+                {size} 사이즈:
+                <input
+                  type="number"
+                  value={count}
+                  onChange={(e) => handleStockChange(size, e.target.value)}
+                />
+              </label>
+            </div>
+          ))}
         </div>
-      )}
 
-      <button onClick={handleUpload}>업로드</button>
+        <div className={styles.fileSection}>
+          <h2>Layer 1 (단일 파일)</h2>
+          <input type="file" onChange={(e) => handleSingleFileChange(e, "layer1")} />
+
+          <h2>Layer 2 (다중 파일)</h2>
+          <div
+            className={styles.dropzone}
+            onDragOver={handleDragOver}
+            onDrop={(e) => handleDrop(e, "layer2")}
+          >
+            <input
+              type="file"
+              multiple
+              onChange={(e) => handleMultipleFileChange(e, "layer2")}
+            />
+            <p>파일을 선택하거나 드래그해주세요.</p>
+          </div>
+
+          <h2>Layer 3 (다중 파일)</h2>
+          <div
+            className={styles.dropzone}
+            onDragOver={handleDragOver}
+            onDrop={(e) => handleDrop(e, "layer3")}
+          >
+            <input
+              type="file"
+              multiple
+              onChange={(e) => handleMultipleFileChange(e, "layer3")}
+            />
+            <p>파일을 선택하거나 드래그해주세요.</p>
+          </div>
+
+          <h2>Layer 4 (단일 파일 - 배송목록용)</h2>
+          <input type="file" onChange={(e) => handleSingleFileChange(e, "layer4")} />
+        </div>
+
+        <button onClick={handleUpload}>업로드</button>
+        {progress > 0 && <progress value={progress} max="100" />}
+      </div>
     </div>
   );
 };

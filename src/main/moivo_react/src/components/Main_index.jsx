@@ -119,7 +119,7 @@ const Main_index = () => {
                     </li>
                     )}
                     <li>
-                    <Link to="/product">STORE</Link>
+                    <Link to="/product-list">STORE</Link>
                     </li>
                     <li>
                     <Link to="/qna_faqboard">QnA</Link>

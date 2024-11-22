@@ -34,8 +34,8 @@ const Slider = () => {
           <div key={index} className={`${styles.carouselItem} ${index === activeIndex ? styles.active : ''}`}>
             <img src={image} alt={`Fashion Image ${index + 1}`} className={styles.carouselImage} />
             <div className={styles.carouselCaption}>
-              <h2>Discover Your Style</h2>
-              <p>Explore the latest fashion trends</p>
+              <h2 className={styles.captionTitle}>Discover Your Style</h2>
+              <p className={styles.captionText}>Explore the latest fashion trends</p>
             </div>
           </div>
         ))}

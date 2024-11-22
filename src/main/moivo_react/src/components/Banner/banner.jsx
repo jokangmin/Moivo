@@ -16,7 +16,7 @@ const Banner = () => {
         { name: 'ALL', navigateTo: '/product-list' },
         { name: 'NEW', navigateTo: '/product-list' },
         { name: 'BEST', navigateTo: '/product-list' },
-        { name: 'Dashboard', navigateTo: '/product' }
+        { name: 'Dashboard', navigateTo: '/product-board' }
       ]
     },
     {

@@ -45,178 +45,76 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+  padding: 1rem;
+  background: #f7fafc;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .categories {
   display: flex;
-  justify-content: center;
   gap: 1rem;
-  margin-bottom: 2rem;
 }
 
 .categoryBtn {
-  padding: 0.8rem 1.5rem;
+  padding: 0.6rem 1.2rem;
   border: none;
-  background: #f0f0f0;
-  color: #4a5568;
-  font-size: clamp(1rem, 1.5vw, 1.4rem);
-  cursor: pointer;
+  background: white;
   border-radius: 5px;
-  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .categoryBtn.active {
-  background: #2d3748;
+  background: #4a90e2;
   color: white;
-  transform: translateY(-2px);
-}
-
-.categoryBtn:hover {
-  background: #e2e8f0;
 }
 
 .sortSelect {
-  padding: 0.8rem 1.5rem;
+  padding: 0.6rem 1.2rem;
   border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  border-radius: 5px;
   background: white;
-  color: #4a5568;
   cursor: pointer;
-  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.sortSelect:hover {
-  background: #2d3748;
-  color: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* =========================================
    4. 상품 그리드 및 카드
 ========================================= */
-.grid {
+.productGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 2rem;
-  padding: 1rem;
+  margin-bottom: 3rem;
 }
 
-.card {
-  position: relative;
+.productCard {
   background: white;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
 }
 
-.card:hover {
-  transform: translateY(-5px);
-}
-
-/* 이미지 컨테이너 */
-.imgWrap {
-  position: relative;
+.productImage {
   width: 100%;
-  padding-top: 75%; /* 4:3 비율 */
-  overflow: hidden;
-  background: #f0f0f0; /* 비어 있는 이미지 공간을 위한 배경색 */
+  height: 250px;
+  object-fit: cover;
 }
 
-.img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* 비율 유지하며 영역 채우기 */
+.productInfo {
+  padding: 1.5rem;
 }
 
-/* 오버레이 스타일 */
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.card:hover .overlay {
-  opacity: 1;
-}
-
-.actions {
-  display: flex;
-  gap: 1rem;
-}
-
-.actionBtn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: white;
-  border: none;
-  color: #2d3748;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.actionBtn:hover {
-  background: #2d3748;
-  color: white;
-}
-
-.viewBtn {
-  padding: 0.8rem 1.5rem;
-  background: white;
-  border: none;
-  border-radius: 25px;
-  color: #2d3748;
+.productName {
+  font-size: 1.1rem;
   font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.viewBtn:hover {
-  background: #2d3748;
-  color: white;
-}
-
-/* 상품 정보 */
-.info {
-  padding: 1rem;
-  text-align: center;
-}
-
-.productTitle {
-  font-size: 1.2rem;
-  font-weight: bold;
   margin-bottom: 0.5rem;
-  color: #2d3748;
 }
 
-.price {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #2d3748;
-}
-
-.stock {
-  font-size: 0.9rem;
-  color: #718096;
-  margin-top: 0.5rem;
+.productPrice {
+  color: #4a90e2;
+  font-weight: 600;
 }
 
 /* =========================================
@@ -225,33 +123,28 @@
 .pagination {
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin: 20px 0;
+  gap: 0.5rem;
+  margin-top: 2rem;
 }
 
 .pageBtn {
+  padding: 0.5rem 1rem;
   border: 1px solid #e2e8f0;
   background: white;
-  color: #4a5568;
-  padding: 10px 15px;
-  margin: 0 5px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background 0.3s ease, color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
-.pageBtn:hover:not(:disabled) {
-  background: #2d3748;
+.pageBtn.active {
+  background: #4a90e2;
   color: white;
+  border-color: #4a90e2;
 }
 
 .pageBtn:disabled {
-  cursor: not-allowed;
   opacity: 0.5;
-}
-
-.active {
-  background: #2d3748;
-  color: white;
+  cursor: not-allowed;
 }
 
 /* =========================================
