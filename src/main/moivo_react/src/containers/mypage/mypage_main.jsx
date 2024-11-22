@@ -92,8 +92,10 @@ const MypageMain = () => {
           </div>
           <div>
             <div className={styles.membershipInfo}>
-              전수민님의 멤버십 등급은 [GOLD]입니다.<br />
-              VIP까지 남은 구매금액은 KRW 100,000원입니다.
+              전수민님의 멤버십 등급은 [ LV.4 ]입니다.<br />
+              LV.5 까지 남은 구매금액은 KRW 100,000원입니다.<br/><br/>
+              <strong>키:</strong> 170cm &nbsp;
+              <strong>몸무게:</strong> 60kg
             </div>
             <div className={styles.couponSection}>
             <div className={styles.point}>POINT: 5000</div>
@@ -130,10 +132,10 @@ const MypageMain = () => {
                     LV 3: 월 구매 30만원 이상<br />
                     LV 4: 월 구매 50만원 이상<br />
                     LV 5: 월 구매 70만원 이상<br /><br/>
-                    <strong>LV 2 혜택:</strong> 할인 쿠폰 1개 제공<br />
-                    <strong>LV 3 혜택:</strong> 무료 배송, 할인 쿠폰 3개 제공<br />
-                    <strong>LV 4 혜택:</strong> 무료 배송, 할인 쿠폰 4개 제공<br />
-                    <strong>LV 5 혜택:</strong> 무료 배송, 할인 쿠폰 5개 제공<br />
+                    <strong>LV 2 혜택:</strong> LV2 전용 15% 할인 쿠폰<br />
+                    <strong>LV 3 혜택:</strong> LV3 전용 20% 할인 쿠폰<br />
+                    <strong>LV 4 혜택:</strong> LV4 전용 25% 할인 쿠폰<br />
+                    <strong>LV 5 혜택:</strong> LV5 전용 30% 할인 쿠폰<br />
                    
                   </p>
                 </div>
@@ -163,7 +165,8 @@ const MypageMain = () => {
                   <img src={product.image} alt={product.name} />
                 </div>
                 <div className={styles.productText}>
-                  {product.name} <br /> {product.price}
+                  {product.name} <br />
+                  <span className={styles.price}>{product.price}</span>
                 </div>
               </div>
             ))}
