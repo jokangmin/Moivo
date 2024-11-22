@@ -11,47 +11,43 @@ const Modal = ({ isOpen, onClose, title, items, onRemove, onQuantityChange }) =>
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
-        <div className={styles.modalHeader}>
-          <h2>{title}</h2>
-          <span className={styles.itemCount}>총 {items.length}개의 상품</span>
-          <button className={styles.closeBtn} onClick={onClose}>×</button>
-        </div>
-        
+        <h2 className={styles.modalTitle}>{title}</h2>
+        <ul className={styles.modalList}>
+          {items.map((item) => (
+            <li key={item.id} className={styles.modalListItem}>
+              <div className={styles.itemImageWrap}>
+                <img src={item.productimg[0].fileurl} alt={item.name} className={styles.itemImage} />
+              </div>
+              <div className={styles.itemInfo}>
+                <div className={styles.itemHeader}>
+                  <h3 className={styles.itemName}>{item.name}</h3>
+                  <button 
+                    className={styles.removeBtn}
+                    onClick={() => onRemove(item.id)}
+                  >
+                    <i className="fas fa-times"></i>
+                  </button>
+                </div>
+                <p className={styles.itemPrice}>₩{item.price.toLocaleString()}</p>
+                {title === "장바구니" && (
+                  <div className={styles.quantityControl}>
+                    <button 
+                      onClick={() => onQuantityChange && onQuantityChange(item.id, (item.quantity || 1) - 1)}
+                      disabled={(item.quantity || 1) <= 1}
+                    >-</button>
+                    <span>{item.quantity || 1}</span>
+                    <button 
+                      onClick={() => onQuantityChange && onQuantityChange(item.id, (item.quantity || 1) + 1)}
+                    >+</button>
+                  </div>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+        <button className={styles.modalCloseButton} onClick={onClose}>×</button>
         {items.length > 0 ? (
           <>
-            <ul className={styles.itemList}>
-              {items.map((item) => (
-                <li key={item.id} className={styles.itemCard}>
-                  <div className={styles.itemImageWrap}>
-                    <img src={item.productimg[0].fileurl} alt={item.name} className={styles.itemImage} />
-                  </div>
-                  <div className={styles.itemInfo}>
-                    <div className={styles.itemHeader}>
-                      <h3 className={styles.itemName}>{item.name}</h3>
-                      <button 
-                        className={styles.removeBtn}
-                        onClick={() => onRemove(item.id)}
-                      >
-                        <i className="fas fa-times"></i>
-                      </button>
-                    </div>
-                    <p className={styles.itemPrice}>₩{item.price.toLocaleString()}</p>
-                    {title === "장바구니" && (
-                      <div className={styles.quantityControl}>
-                        <button 
-                          onClick={() => onQuantityChange && onQuantityChange(item.id, (item.quantity || 1) - 1)}
-                          disabled={(item.quantity || 1) <= 1}
-                        >-</button>
-                        <span>{item.quantity || 1}</span>
-                        <button 
-                          onClick={() => onQuantityChange && onQuantityChange(item.id, (item.quantity || 1) + 1)}
-                        >+</button>
-                      </div>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ul>
             <div className={styles.modalFooter}>
               <div className={styles.totalPrice}>
                 <span>총 금액</span>

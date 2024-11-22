@@ -153,107 +153,150 @@ const Upload = () => {
 
   return (
     <div className={styles.uploadContainer}>
-      <div>
-        <Banner />
-      </div>
-      <h1>상품 업로드</h1>
-      <div className={styles.form}>
-        <label>
-          상품명:
-          <input
-            type="text"
-            name="name"
-            value={product.name}
-            onChange={handleInputChange}
-          />
-        </label>
-        <label>
-          가격:
-          <input
-            type="number"
-            name="price"
-            value={product.price}
-            onChange={handleInputChange}
-          />
-        </label>
-        <label>
-          상품 설명:
-          <textarea
-            name="content"
-            value={product.content}
-            onChange={handleInputChange}
-          />
-        </label>
-        <label>
-          카테고리:
-          <select
-            name="categoryId"
-            value={product.categoryId}
-            onChange={handleInputChange}
-          >
-            <option value="">카테고리 선택</option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </label>
+      <Banner />
+      <div className={styles.uploadWrapper}>
+        <h1 className={styles.uploadTitle}>상품 업로드</h1>
+        <div className={styles.form}>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>상품명</label>
+            <input
+              className={styles.input}
+              type="text"
+              name="name"
+              value={product.name}
+              onChange={handleInputChange}
+              placeholder="상품명을 입력하세요"
+            />
+          </div>
 
-        <div className={styles.stockSection}>
-          <h2>재고 수량</h2>
-          {Object.entries(stock).map(([size, count]) => (
-            <div key={size} className={styles.stockItem}>
-              <label>
-                {size} 사이즈:
-                <input
-                  type="number"
-                  value={count}
-                  onChange={(e) => handleStockChange(size, e.target.value)}
-                />
-              </label>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>가격</label>
+            <input
+              className={styles.input}
+              type="number"
+              name="price"
+              value={product.price}
+              onChange={handleInputChange}
+              placeholder="가격을 입력하세요"
+            />
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>상품 설명</label>
+            <textarea
+              className={styles.textarea}
+              name="content"
+              value={product.content}
+              onChange={handleInputChange}
+              placeholder="상품 설명을 입력하세요"
+            />
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>카테고리</label>
+            <select
+              className={styles.select}
+              name="categoryId"
+              value={product.categoryId}
+              onChange={handleInputChange}
+            >
+              <option value="">카테고리 선택</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className={styles.stockSection}>
+            <h2 className={styles.sectionTitle}>재고 수량</h2>
+            <div className={styles.stockGrid}>
+              {Object.entries(stock).map(([size, count]) => (
+                <div key={size} className={styles.stockItem}>
+                  <label className={styles.label}>{size} 사이즈</label>
+                  <input
+                    className={styles.input}
+                    type="number"
+                    value={count}
+                    onChange={(e) => handleStockChange(size, e.target.value)}
+                  />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-
-        <div className={styles.fileSection}>
-          <h2>Layer 1 (단일 파일)</h2>
-          <input type="file" onChange={(e) => handleSingleFileChange(e, "layer1")} />
-
-          <h2>Layer 2 (다중 파일)</h2>
-          <div
-            className={styles.dropzone}
-            onDragOver={handleDragOver}
-            onDrop={(e) => handleDrop(e, "layer2")}
-          >
-            <input
-              type="file"
-              multiple
-              onChange={(e) => handleMultipleFileChange(e, "layer2")}
-            />
-            <p>파일을 선택하거나 드래그해주세요.</p>
           </div>
 
-          <h2>Layer 3 (다중 파일)</h2>
-          <div
-            className={styles.dropzone}
-            onDragOver={handleDragOver}
-            onDrop={(e) => handleDrop(e, "layer3")}
-          >
-            <input
-              type="file"
-              multiple
-              onChange={(e) => handleMultipleFileChange(e, "layer3")}
-            />
-            <p>파일을 선택하거나 드래그해주세요.</p>
+          <div className={styles.fileSection}>
+            <h2 className={styles.sectionTitle}>이미지 업로드</h2>
+            
+            <div className={styles.inputGroup}>
+              <label className={styles.label}>Layer 1 (대표 이미지)</label>
+              <input
+                className={styles.fileInput}
+                type="file"
+                onChange={(e) => handleSingleFileChange(e, "layer1")}
+              />
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label className={styles.label}>Layer 2 (상세 이미지)</label>
+              <div
+                className={styles.dropzone}
+                onDragOver={handleDragOver}
+                onDrop={(e) => handleDrop(e, "layer2")}
+              >
+                <input
+                  type="file"
+                  multiple
+                  onChange={(e) => handleMultipleFileChange(e, "layer2")}
+                />
+                <p className={styles.dropzoneText}>
+                  파일을 선택하거나 드래그해주세요
+                </p>
+              </div>
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label className={styles.label}>Layer 3 (추가 상세 이미지)</label>
+              <div
+                className={styles.dropzone}
+                onDragOver={handleDragOver}
+                onDrop={(e) => handleDrop(e, "layer3")}
+              >
+                <input
+                  type="file"
+                  multiple
+                  onChange={(e) => handleMultipleFileChange(e, "layer3")}
+                />
+                <p className={styles.dropzoneText}>
+                  파일을 선택하거나 드래그해주세요
+                </p>
+              </div>
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label className={styles.label}>Layer 4 (상품 정보 이미지)</label>
+              <input
+                className={styles.fileInput}
+                type="file"
+                onChange={(e) => handleSingleFileChange(e, "layer4")}
+              />
+            </div>
           </div>
 
-          <h2>Layer 4 (단일 파일 - 배송목록용)</h2>
-          <input type="file" onChange={(e) => handleSingleFileChange(e, "layer4")} />
-        </div>
+          <button className={styles.uploadButton} onClick={handleUpload}>
+            상품 등록하기
+          </button>
 
-        <button onClick={handleUpload}>업로드</button>
-        {progress > 0 && <progress value={progress} max="100" />}
+          {progress > 0 && (
+            <div className={styles.progressBar}>
+              <div
+                className={styles.progressFill}
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

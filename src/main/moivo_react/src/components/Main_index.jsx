@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import styles from '../assets/css/Main_index.module.css';
 import video from '../assets/image/main_banner1.mp4';
 import { Link } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { useRef } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 
 //확인하기 위해 아래 사용 NCP 연동 시 수정 및 삭제
 import image1 from "../assets/image/1_outer.jpg";
@@ -15,6 +15,8 @@ import image4 from "../assets/image/6_outer.jpg";
 
 const Main_index = () => {
     const [animate, setAnimate] = useState(true);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const { isLoggedIn, logout } = useContext(AuthContext);
 
     //확인하기 위해 아래 사용 NCP 연동 시 수정 및 삭제
     const slides = [
@@ -27,16 +29,8 @@ const Main_index = () => {
     const onStop = () => setAnimate(false);
     const onRun = () => setAnimate(true);
 
-     const [menuOpen, setMenuOpen] = useState(false); // 메뉴 상태 관리
-     const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
-
      const toggleMenu = () => {
           setMenuOpen(!menuOpen); // 메뉴 상태 토글
-      };
-
-      const handleLogout = () => {
-        setIsLoggedIn(false); // 로그아웃 처리
-        alert('로그아웃 상태 적용.');
       };
 
     useEffect(() => {
@@ -83,6 +77,11 @@ const Main_index = () => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+        logout();
+    };
 
     return (
         <div className={styles.maindiv}>

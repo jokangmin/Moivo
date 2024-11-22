@@ -1,97 +1,158 @@
 /* upload.module.css */
 
 .uploadContainer {
-  max-width: 1000px;
-  margin: 100px auto 0;
-  padding: 40px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.uploadForm {
   width: 100%;
+  min-height: 100vh;
+  background: #f8f9fa;
 }
 
-.formGroup {
+.uploadWrapper {
+  max-width: 1200px;
+  margin: 120px auto 0;
+  padding: 3rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.uploadTitle {
+  font-size: 2.5rem;
+  color: #2d3748;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.form {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
+  gap: 2rem;
 }
 
-.formLabel {
+.inputGroup {
   display: flex;
   flex-direction: column;
-  font-size: 18px;
-  color: #666;
-  margin-bottom: 20px;
+  gap: 0.5rem;
 }
 
-.formInput {
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
+.label {
+  font-size: 1rem;
+  color: #4a5568;
+  font-weight: 500;
 }
 
-.formTextarea {
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
+.input {
+  padding: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.input:focus {
+  border-color: #4a90e2;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.textarea {
+  composes: input;
+  min-height: 150px;
   resize: vertical;
-  min-height: 100px;
 }
 
-.formSelect {
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
+.select {
+  composes: input;
   appearance: none;
-  background: #fff;
+  background: url("data:image/svg+xml,...") no-repeat right 1rem center;
 }
 
-.dropzoneContainer {
-  border: 2px dashed #ddd;
-  padding: 20px;
+.stockSection {
+  background: #f8fafc;
+  padding: 2rem;
+  border-radius: 15px;
+  margin: 2rem 0;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  color: #2d3748;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.stockGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.stockItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.fileSection {
+  background: #f8fafc;
+  padding: 2rem;
+  border-radius: 15px;
+  margin: 2rem 0;
+}
+
+.dropzone {
+  border: 2px dashed #cbd5e0;
+  padding: 2rem;
+  border-radius: 10px;
   text-align: center;
-  margin-bottom: 20px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 1rem 0;
+}
+
+.dropzone:hover {
+  border-color: #4a90e2;
+  background: rgba(74, 144, 226, 0.05);
 }
 
 .dropzoneText {
-  color: #666;
-  margin: 10px 0;
+  color: #718096;
+  margin: 1rem 0;
+}
+
+.fileInput {
+  margin: 1rem 0;
 }
 
 .uploadButton {
-  width: 100%;
-  padding: 15px;
   background: #4a90e2;
   color: white;
+  padding: 1rem 2rem;
   border: none;
-  border-radius: 5px;
-  font-size: 18px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 2rem;
 }
 
-.progressBarContainer {
-  width: 100%;
-  margin-top: 20px;
+.uploadButton:hover {
+  background: #357abd;
+  transform: translateY(-2px);
 }
 
 .progressBar {
   width: 100%;
-  height: 10px;
-  background: #f0f0f0;
-  border-radius: 5px;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  margin-top: 1rem;
+  overflow: hidden;
 }
 
-.progressBarFill {
+.progressFill {
   height: 100%;
   background: #4a90e2;
-  border-radius: 5px;
   transition: width 0.3s ease;
 }
