@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.ncp.service.NCPObjectStorageService;
+import com.example.demo.store.dto.ProductCategoryDTO;
 import com.example.demo.store.dto.ProductDTO;
 import com.example.demo.store.dto.ProductImgDTO;
 import com.example.demo.store.dto.ProductStockDTO;
@@ -143,12 +144,12 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    //상품 전체 리스트 뿌리기
+    // 상품 전체 리스트 뿌리기
     @Override
     public Map<String, Object> getProductList() {
         Map<String, Object> map = new HashMap<>();
 
-        //1 DB 전체 상품 추출
+        // 1 DB 전체 상품 추출
         List<ProductEntity> list = productRepository.findAll();
 
         List<ProductDTO> dtoList = new ArrayList<>();
@@ -158,20 +159,34 @@ public class ProductServiceImpl implements ProductService {
             ProductDTO productDTO = ProductDTO.toGetProductDTO(productEntity);
             dtoList.add(productDTO);
 
-            //전체 상품에서 layer1 이미지 추출
-//            for (ProductImgEntity imgEntity : productEntity.getImgList()) {
-//                if (imgEntity.getLayer() == 1) {
-//                    ProductImgDTO imgDTO = ProductImgDTO.toGetProductImgDTO(imgEntity);
-//                    imgList.add(imgDTO);
-//                }
-//            }
+            // 전체 상품에서 layer1 이미지 추출
+            // for (ProductImgEntity imgEntity : productEntity.getImgList()) {
+            // if (imgEntity.getLayer() == 1) {
+            // ProductImgDTO imgDTO = ProductImgDTO.toGetProductImgDTO(imgEntity);
+            // imgList.add(imgDTO);
+            // }
+            // }
         }
-        //결과를 map에 저장
+        // 결과를 map에 저장
         map.put("productList", dtoList);
-       // map.put("imgList", imgList);
+        // map.put("imgList", imgList);
         System.out.println("getProductList: " + dtoList);
-        //System.out.println("getProductList: " + imgList);
+        // System.out.println("getProductList: " + imgList);
         return map;
+    }
+
+    @Override
+    public List<ProductCategoryDTO> getCategory() {
+        List<ProductCategoryDTO> list = new ArrayList<>();
+        Iterable<ProductCategoryEntity> categoryEntityList = categoryRepository.findAll();
+
+        for (ProductCategoryEntity categoryEntity : categoryEntityList) {
+            ProductCategoryDTO categoryDTO = ProductCategoryDTO.getCategoryDTO(categoryEntity);
+            System.out.println(categoryDTO);
+            list.add(categoryDTO);
+        }
+
+        return list;
     }
 
 }

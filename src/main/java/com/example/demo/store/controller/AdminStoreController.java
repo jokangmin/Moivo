@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.store.dto.ProductCategoryDTO;
 import com.example.demo.store.dto.ProductDTO;
 import com.example.demo.store.service.ProductService;
 
@@ -15,6 +16,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -59,4 +61,10 @@ public class AdminStoreController {
         return ResponseEntity.ok(null);
     }
 
+    // 카테고리 출력
+    @GetMapping("/category")
+    public ResponseEntity<List<ProductCategoryDTO>> getCategory() {
+        List<ProductCategoryDTO> list = productService.getCategory();
+        return ResponseEntity.ok(list);
+    }
 }
