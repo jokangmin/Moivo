@@ -8,12 +8,12 @@ const user_login = () => {
 
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
-  const [formData, setFormData] = useState({ userId: '', pwd: '' });
+  const [formData, setFormData] = useState({ id: '', pwd: '' });
   const [error, setError] = useState('');
 
     //사용자 데이터 요청하는 함수임
     const fetchUserData = async () => {
-        const token = sessionStorage.getItem("token"); // JWT를 가져옴
+        const token = localStorage.getItem("token"); // JWT를 가져옴
         try {
             const response = await axios.get("http://localhost:8080/api/user/info", {    //  /api/user -> LoginController로 이동
                 headers: {
@@ -30,15 +30,11 @@ const user_login = () => {
         e.preventDefault();
         try {
             console.log(formData);
-            const response = await axios.post("http://localhost:8080/api/user/login", formData);
-
-            const {jwt, userseq} = response.data;
-
-            sessionStorage.setItem("token", jwt);
-            sessionStorage.setItem("userseq", userseq);
+            const response = await axios.post("http://localhost:8080/api/auth/login", formData);
+            localStorage.setItem("token", response.data);
             login();
             alert("로그인 성공!");
-            navigate("/");
+            navigate("/mypage");
         } catch (error) {
             console.error("로그인 실패:", error);
             alert("로그인에 실패했습니다.");
@@ -85,7 +81,7 @@ const user_login = () => {
             {error && <div className={styles.error}>{error}</div>}
             <input
               type="text"
-              name="userId"
+              name="id"
               value={formData.id}
               onChange={handleChange}
               placeholder="ID"

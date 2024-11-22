@@ -14,18 +14,26 @@ const qna_faqboard = () => {
   };
 
     return (
-        <div className={QnA.QnAmainDiv}>
+        <div className={QnA.faqmainDiv}>
             <div><Banner /></div>
-            <div className={QnA.QnAheader}></div>
-            <div className={QnA.QnAcoment}> 자주 묻는 질문 </div>
+            <div className={QnA.faqheader}></div>
+            <div className={QnA.faqcoment}> 고객센터 </div>
             <div className={QnA.faqDiv}>
                 
-                {/* 고객센터 */}
-                    <div className={QnA.servicecenter}>
-                        <Link to="/qna_board">
-                            <button className={QnA.boardbtn}>고객샌터</button>
-                        </Link>
-                    </div>
+            {/* 고객센터 네비*/}
+            <div className={QnA.faqNavi}>
+                <Link to="/qna_faqboard">
+                    <button className={QnA.faqNaviBtn}>자주 묻는 질문</button>
+                 </Link>
+    
+                <Link to="/qna_board">
+                    <button className={QnA.faqNaviBtn}>문의 작성하기</button>
+                </Link>
+
+                <Link to="/qna_boardlist">
+                    <button className={QnA.faqNaviBtn}>문의 게시글</button>
+                </Link>
+            </div>
                 
                 <div className={QnA.faq}>
                     {/* FAQ 항목 1 */}
@@ -122,7 +130,6 @@ const qna_faqboard = () => {
                 </div>
             </div>
             <Footer/>
-
         </div>
         );
 };

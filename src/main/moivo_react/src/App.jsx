@@ -10,6 +10,7 @@ import ProductSearch from './containers/product/product_search';
 import ProductDetail from './containers/product/product_detail';
 import Qna_faqboard from './containers/qna/qna_faqboard';
 import Qna_board from './containers/qna/qna_board';
+import Qna_boardlist from './containers/qna/qna_bardlist';
 import MainProvider from './contexts/MainContext';
 import Upload from './containers/test/upload';
 import MypageMain from './containers/mypage/mypage_main';
@@ -37,6 +38,7 @@ const routeConfig = [
   { path: "/mypage/orderDetails", element: <MypageOrderDetails /> },
   { path: "/qna_faqboard", element: <Qna_faqboard /> },
   { path: "/qna_board", element: <Qna_board /> },
+  { path: "/qna_boardlist", element: <Qna_boardlist /> },
   { path: "/cart", element: <Cart /> },
 ];
 
