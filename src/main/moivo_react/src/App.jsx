@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './contexts/AuthContext'; // AuthProvider 추가
+import { AuthProvider } from './contexts/AuthContext';
 import Main_index from './components/main_index';
 import User_login from './containers/user/user_login';
 import User_signup from './containers/user/user_signup';
@@ -24,7 +24,7 @@ const routeConfig = [
   { path: "/", element: <Main_index /> },
   { path: "/user", element: <User_login /> },
   { path: "/user_signup", element: <User_signup /> },
-  { path: "/product", element: <ProductBoard /> },
+  { path: "/product-board", element: <ProductBoard /> },
   { path: "/product-list", element: <ProductList /> },
   { path: "/product-search", element: <ProductSearch /> },
   { path: "/product-detail/:id", element: <ProductDetail /> },
@@ -38,24 +38,22 @@ const routeConfig = [
   { path: "/qna_faqboard", element: <Qna_faqboard /> },
   { path: "/qna_board", element: <Qna_board /> },
   { path: "/cart", element: <Cart /> },
-
 ];
 
 const App = () => {
   return (
     <AuthProvider>
-    <MainProvider>
-      <Router>
-        <Routes>
-          {routeConfig.map(({ path, element }, index) => (
-            <Route key={index} path={path} element={element} />
-          ))}
-        </Routes>
-      </Router>
-    </MainProvider>
+      <MainProvider>
+        <Router>
+          <Routes>
+            {routeConfig.map(({ path, element }, index) => (
+              <Route key={index} path={path} element={element} />
+            ))}
+          </Routes>
+        </Router>
+      </MainProvider>
     </AuthProvider>
   );
 };
-
 
 export default App;

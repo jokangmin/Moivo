@@ -1,49 +1,63 @@
 import React from 'react';
 import styles from '../../assets/css/footer.module.css';
 
-const footer = () => {
+const Footer = () => {
      return (
           <div>
-                <footer id="main-footer" className={styles.mainFooter}>
-                <div className="container">
-                    <div className={styles.footerGridContainer}>
-                        <div>
-                            <section className={styles.navLogo}>
-                                Moivo
-                            </section>
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque provident labore suscipit, id illo magni odit?
-                            </p>
-                        </div>
-                        <div>
-                            <h2>PRIVACY & TERMS</h2>
-                            <ul className={styles.anchorLinks}>
-                                <li><a href="#">Privacy & Security</a></li>
-                                <li><a href="#">Terms and Conditions</a></li>
-                                <li><a href="#">Policy</a></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h2>GET NOTIFIED FOR NEW PRODUCTS</h2>
-                            <form>
-                                <input type="email" placeholder="Email" />
-                                <input type="submit" className={styles.btn} value="Submit" />
-                            </form>
-                        </div>
-                        <div>
-                            <h2>SITE LINKS</h2>
-                            <ul className={styles.anchorLinks}>
-                                <li><a href="#">About us</a></li>
-                                <li><a href="#">Help & Support</a></li>
-                                <li><a href="#">Career</a></li>
-                                <li><a href="#">Refund Policy</a></li>
-                            </ul>
-                        </div>
+               <footer className={styles.mainFooter}>
+                    <div className={styles.container}>
+                         <div className={styles.footerGridContainer}>
+                              <div className={styles.footerSection}>
+                                   <section className={styles.navLogo}>
+                                        Moivo
+                                   </section>
+                                   <p>
+                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                                   </p>
+                              </div>
+                              <div className={styles.footerSection}>
+                                   <h2>PRIVACY & TERMS</h2>
+                                   <ul className={styles.linkList}>
+                                        <li className={styles.linkItem}>
+                                             <a href="#" className={styles.linkAnchor}>Privacy & Security</a>
+                                        </li>
+                                        <li className={styles.linkItem}>
+                                             <a href="#" className={styles.linkAnchor}>Terms and Conditions</a>
+                                        </li>
+                                        <li className={styles.linkItem}>
+                                             <a href="#" className={styles.linkAnchor}>Policy</a>
+                                        </li>
+                                   </ul>
+                              </div>
+                              <div className={styles.footerSection}>
+                                   <h2>GET NOTIFIED</h2>
+                                   <form>
+                                        <input type="email" className={styles.emailInput} placeholder="Email" />
+                                        <button type="submit" className={styles.submitBtn}>Submit</button>
+                                   </form>
+                              </div>
+                              <div className={styles.footerSection}>
+                                   <h2>SITE LINKS</h2>
+                                   <ul className={styles.linkList}>
+                                        <li className={styles.linkItem}>
+                                             <a href="#" className={styles.linkAnchor}>About us</a>
+                                        </li>
+                                        <li className={styles.linkItem}>
+                                             <a href="#" className={styles.linkAnchor}>Help & Support</a>
+                                        </li>
+                                        <li className={styles.linkItem}>
+                                             <a href="#" className={styles.linkAnchor}>Career</a>
+                                        </li>
+                                        <li className={styles.linkItem}>
+                                             <a href="#" className={styles.linkAnchor}>Refund Policy</a>
+                                        </li>
+                                   </ul>
+                              </div>
+                         </div>
                     </div>
-                </div>
-            </footer>
+               </footer>
           </div>
      );
 };
 
-export default footer;
+export default Footer;

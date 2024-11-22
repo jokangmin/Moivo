@@ -1,139 +1,158 @@
 /* upload.module.css */
 
 .uploadContainer {
-  max-width: 1000px;
-  margin: 100px auto 0;
-  padding: 40px;
-  background: #1d1d1d;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 0 0 2px rgba(255, 255, 255, 0.1);
-  color: #fff;
+  width: 100%;
+  min-height: 100vh;
+  background: #f8f9fa;
 }
 
-.uploadContainer h1 {
-  font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 30px;
+.uploadWrapper {
+  max-width: 1200px;
+  margin: 120px auto 0;
+  padding: 3rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.uploadTitle {
+  font-size: 2.5rem;
+  color: #2d3748;
+  margin-bottom: 2.5rem;
   text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #fff;
+  font-weight: 600;
 }
 
 .form {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  gap: 2rem;
 }
 
-.form label {
+.inputGroup {
   display: flex;
   flex-direction: column;
-  font-size: 16px;
-  color: #ccc;
-  margin-bottom: 15px;
+  gap: 0.5rem;
 }
 
-.form input,
-.form textarea,
-.form select {
-  padding: 12px;
-  border: none;
-  border-radius: 5px;
-  font-size: 14px;
-  background: #2d2d2d;
-  color: #fff;
-  transition: box-shadow 0.3s;
+.label {
+  font-size: 1rem;
+  color: #4a5568;
+  font-weight: 500;
 }
 
-.form input:focus,
-.form textarea:focus,
-.form select:focus {
+.input {
+  padding: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.input:focus {
+  border-color: #4a90e2;
   outline: none;
-  box-shadow: 0 0 0 2px #007bff;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.textarea {
+  composes: input;
+  min-height: 150px;
+  resize: vertical;
+}
+
+.select {
+  composes: input;
+  appearance: none;
+  background: url("data:image/svg+xml,...") no-repeat right 1rem center;
 }
 
 .stockSection {
-  margin-top: 30px;
+  background: #f8fafc;
+  padding: 2rem;
+  border-radius: 15px;
+  margin: 2rem 0;
 }
 
-.stockSection h2 {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #fff;
+.sectionTitle {
+  font-size: 1.5rem;
+  color: #2d3748;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.stockGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
 }
 
 .stockItem {
   display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.stockItem label {
-  flex: 1;
+  align-items: center;
+  gap: 1rem;
 }
 
 .fileSection {
-  margin-top: 30px;
+  background: #f8fafc;
+  padding: 2rem;
+  border-radius: 15px;
+  margin: 2rem 0;
 }
 
-.fileList {
-  margin-top: 10px;
-}
-
-.fileItem {
-  display: inline-block;
-  background: #2d2d2d;
-  padding: 8px 12px;
-  margin: 5px;
-  border-radius: 5px;
-  font-size: 14px;
-  color: #ccc;
-}
-
-.progressContainer {
-  margin-top: 30px;
-  text-align: center;
-}
-
-progress {
-  width: 100%;
-  height: 10px;
-  margin-bottom: 10px;
-  appearance: none;
-  background: #2d2d2d;
+.dropzone {
+  border: 2px dashed #cbd5e0;
+  padding: 2rem;
   border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 1rem 0;
+}
+
+.dropzone:hover {
+  border-color: #4a90e2;
+  background: rgba(74, 144, 226, 0.05);
+}
+
+.dropzoneText {
+  color: #718096;
+  margin: 1rem 0;
+}
+
+.fileInput {
+  margin: 1rem 0;
+}
+
+.uploadButton {
+  background: #4a90e2;
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.uploadButton:hover {
+  background: #357abd;
+  transform: translateY(-2px);
+}
+
+.progressBar {
+  width: 100%;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  margin-top: 1rem;
   overflow: hidden;
 }
 
-progress::-webkit-progress-bar {
-  background: #2d2d2d;
-  border-radius: 10px;
-}
-
-progress::-webkit-progress-value {
-  background: #007bff;
-  border-radius: 10px;
-}
-
-button {
-  display: block;
-  width: 100%;
-  padding: 15px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #fff;
-  background: #007bff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-top: 30px;
-}
-
-button:hover {
-  background: #0056b3;
+.progressFill {
+  height: 100%;
+  background: #4a90e2;
+  transition: width 0.3s ease;
 }

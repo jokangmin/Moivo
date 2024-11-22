@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "../../assets/css/product_list.module.css";
@@ -7,25 +7,19 @@ import Footer from "../../components/Footer/Footer";
 import products from "../../assets/dummydata/productDTO";
 import Modal from "../../components/Modal/Modal";
 
-/* =========================================
-   1. 상태 관리 및 초기 설정
-========================================= */
 const ProductList = () => {
-  const [cartItems, setCartItems] = useState([]);
-  const [wishItems, setWishItems] = useState([]);
   const [activeCategory, setActiveCategory] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 15;
+  const navigate = useNavigate();
+  const [cartItems, setCartItems] = useState([]);
+  const [wishItems, setWishItems] = useState([]);
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const [isWishModalOpen, setIsWishModalOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 15; // 한 페이지에 표시할 상품 수
-  const navigate = useNavigate();
 
   const categories = ["all", "Outerwear", "Pants", "Jeans"];
 
-  /* =========================================
-     2. 상품 필터링 및 정렬 로직..
-  ========================================= */
   const filteredProducts = products.filter((product) =>
     activeCategory === "all"
       ? true
@@ -46,196 +40,186 @@ const ProductList = () => {
 
   const sortedProducts = sortProducts();
 
-  /* =========================================
-     3. 장바구니 및 위시리스트 핸들러
-  ========================================= */
   const handleAddToCart = (product) => {
-    const updatedCart = [...cartItems];
-    const productIndex = updatedCart.findIndex(
-      (item) => item.productseq === product.productseq
-    );
-
-    if (productIndex > -1) {
-      updatedCart[productIndex].quantity += 1;
-    } else {
-      updatedCart.push({ ...product, quantity: 1 });
-    }
-    setCartItems(updatedCart);
-    localStorage.setItem("cartItems", JSON.stringify(updatedCart));
+    const cartProduct = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      productimg: product.productimg,
+      quantity: 1
+    };
+    setCartItems(prev => [...prev, cartProduct]);
+    setIsCartModalOpen(true);
   };
 
   const handleAddToWish = (product) => {
-    const updatedWish = [...wishItems];
-    const productIndex = updatedWish.findIndex(
-      (item) => item.productseq === product.productseq
-    );
-
-    if (productIndex === -1) {
-      updatedWish.push({ ...product });
-    }
-    setWishItems(updatedWish);
-    localStorage.setItem("wishItems", JSON.stringify(updatedWish));
+    const wishProduct = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      productimg: product.productimg
+    };
+    setWishItems(prev => [...prev, wishProduct]);
+    setIsWishModalOpen(true);
   };
 
-  /* =========================================
-     axios 통신 로직
+  const removeFromCart = (id) => {
+    setCartItems(prev => prev.filter(item => item.id !== id));
+  };
 
-     const handleAddToCart = async (product) => {
-  try {
-    const response = await axios.post("/api/cart/add", {
-      productseq: product.productseq,
-      quantity: 1,
-    });
-    console.log(response.data.message);
-  } catch (error) {
-    console.error("Error adding to cart:", error.response.data);
-  }
-};
+  const updateCartQuantity = (id, newQuantity) => {
+    if (newQuantity < 1) return;
+    setCartItems(prev =>
+      prev.map(item =>
+        item.id === id
+          ? { ...item, quantity: newQuantity }
+          : item
+      )
+    );
+  };
 
-const handleAddToWish = async (product) => {
-  try {
-    const response = await axios.post("/api/wishlist/add", {
-      productseq: product.productseq,
-    });
-    console.log(response.data.message);
-  } catch (error) {
-    console.error("Error adding to wishlist:", error.response.data);
-  }
-};
-  ========================================= */
+  const removeFromWish = (id) => {
+    setWishItems(prev => prev.filter(item => item.id !== id));
+  };
 
-  /* =========================================
-     4. 페이지 이동 로직
-  ========================================= */
+  const openCartModal = () => setIsCartModalOpen(true);
+  const closeCartModal = () => setIsCartModalOpen(false);
+  const openWishModal = () => setIsWishModalOpen(true);
+  const closeWishModal = () => setIsWishModalOpen(false);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = sortedProducts.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
+
   const goToDetail = (id) => {
     navigate(`/product-detail/${id}`);
   };
-  
-  /* =========================================
-     5. 렌더링
-  ========================================= */
-  useEffect(() => {
-    const storedCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const storedWishItems = JSON.parse(localStorage.getItem("wishItems")) || [];
-    setCartItems(storedCartItems);
-    setWishItems(storedWishItems);
-  }, []);
 
-  // 페이징 처리
-  const indexOfLastProduct = currentPage * itemsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
-  const currentProducts = sortedProducts.slice(indexOfFirstProduct, indexOfLastProduct);
-  const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
 
   return (
     <div className={styles.container}>
-      {/* 배너 */}
       <Banner />
-
-      <motion.div
-        className={styles.content}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        {/* 타이틀 섹션 */}
-        <div className={styles.header}>
-          <h1 className={styles.title}>Our Collection</h1>
-          <p className={styles.subtitle}>Discover your perfect style</p>
-        </div>
-
-        {/* 필터 및 정렬 */}
-        <div className={styles.filters}>
-          <div className={styles.categories}>
-            {categories.map((category, index) => (
-              <button
-                key={index}
-                className={`${styles.categoryBtn} ${activeCategory === category ? styles.active : ""}`}
+      <div className={styles.productListWrapper}>
+        <div className={styles.filterSection}>
+          <div className={styles.categoryList}>
+            {categories.map((category) => (
+              <motion.button
+                key={category}
+                className={`${styles.categoryItem} ${
+                  activeCategory === category ? styles.active : ''
+                }`}
                 onClick={() => setActiveCategory(category)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 {category}
-              </button>
+              </motion.button>
             ))}
           </div>
           <select
-            className={styles.sortSelect}
+            className={styles.sortDropdown}
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
           >
             <option value="newest">최신순</option>
-            <option value="priceHigh">가격 높은순</option>
-            <option value="priceLow">가격 낮은순</option>
+            <option value="priceHigh">높은 가격순</option>
+            <option value="priceLow">낮은 가격순</option>
           </select>
         </div>
 
-        {/* 상품 그리드 */}
-        <motion.div className={styles.grid} layout>
-          <AnimatePresence>
-            {currentProducts.map((prod) => (
-              <motion.div
-                key={prod.id}
-                className={styles.card}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                layout
-                onClick={() => goToDetail(prod.id)}
-              >
-                <div className={styles.imgWrap}>
-                  <img
-                    className={styles.img}
-                    src={prod.productimg[0].fileurl}
-                    alt={prod.name}
-                  />
-                  <div className={styles.overlay}>
-                    <div className={styles.actions}>
-                      <button
-                        className={styles.actionBtn}
-                        onClick={() => handleAddToWish(prod)}
-                      >
-                        <i className="fa fa-heart"></i>
-                      </button>
-                      <button
-                        className={styles.actionBtn}
-                        onClick={() => handleAddToCart(prod)}
-                      >
-                        <i className="fa fa-shopping-cart"></i>
-                      </button>
-                      <button
-                        className={styles.viewBtn}
-                        onClick={() => goToDetail(prod.id)}
-                      >
-                        View Details
-                      </button>
-                    </div>
-                    <div className={styles.info}>
-                  <h3 className={styles.productTitle}>{prod.name}</h3>
-                  <p className={styles.price}>
-                    ₩{prod.price?.toLocaleString()}
-                  </p>
-                  <p className={styles.stock}>
-                    재고 수량 : {prod.stock}
-                  </p>
-                </div>
+        <motion.div 
+          className={styles.productGrid}
+          layout
+        >
+          {currentItems.map((product) => (
+            <motion.div
+              key={product.id}
+              className={styles.productCard}
+              layout
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <div className={styles.productImageWrapper}>
+                <img
+                  src={product.productimg[0].fileurl}
+                  alt={product.name}
+                  className={styles.productImage}
+                />
+                <div className={styles.productOverlay}>
+                  <div className={styles.actionButtons}>
+                    <motion.button
+                      className={styles.actionButton}
+                      onClick={() => handleAddToCart(product)}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <i className="fas fa-shopping-cart" />
+                    </motion.button>
+                    <motion.button
+                      className={styles.actionButton}
+                      onClick={() => handleAddToWish(product)}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <i className="fas fa-heart" />
+                    </motion.button>
+                    <motion.button
+                      className={styles.actionButton}
+                      onClick={() => goToDetail(product.id)}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <i className="fas fa-eye" />
+                    </motion.button>
                   </div>
                 </div>
-                
-              </motion.div>
-            ))}
-          </AnimatePresence>
+                <div className={styles.productInfo}>
+                  <h3 className={styles.productTitle}>{product.name}</h3>
+                  <p className={styles.productPrice}>
+                    ₩{product.price?.toLocaleString()}
+                  </p>
+                  <p className={styles.productStock}>
+                    재고: {product.stock}개
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
 
-        {/* 페이징 버튼 */}
-        <div className={styles.pagination}>
+        <motion.div className={styles.paginationContainer}>
           <button
-            className={styles.pageBtn}
+            className={styles.pageButton}
             onClick={() => setCurrentPage(1)}
             disabled={currentPage === 1}
           >
             &laquo;
           </button>
           <button
-            className={styles.pageBtn}
+            className={styles.pageButton}
             onClick={() => setCurrentPage(currentPage - 1)}
             disabled={currentPage === 1}
           >
@@ -244,68 +228,65 @@ const handleAddToWish = async (product) => {
           {Array.from({ length: totalPages }, (_, index) => (
             <button
               key={index}
-              className={`${styles.pageBtn} ${currentPage === index + 1 ? styles.active : ""}`}
+              className={`${styles.pageButton} ${currentPage === index + 1 ? styles.active : ""}`}
               onClick={() => setCurrentPage(index + 1)}
             >
               {index + 1}
             </button>
           ))}
           <button
-            className={styles.pageBtn}
+            className={styles.pageButton}
             onClick={() => setCurrentPage(currentPage + 1)}
             disabled={currentPage === totalPages}
           >
             &gt;
           </button>
           <button
-            className={styles.pageBtn}
+            className={styles.pageButton}
             onClick={() => setCurrentPage(totalPages)}
             disabled={currentPage === totalPages}
           >
             &raquo;
           </button>
+        </motion.div>
+
+        <div className={styles.floatingButtonContainer}>
+          <motion.div
+            className={styles.floatingButton}
+            data-totalitems={wishItems.length}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={openWishModal}
+          >
+            <i className="fas fa-heart"></i>
+          </motion.div>
+          <motion.div
+            className={styles.floatingButton}
+            data-totalitems={cartItems.length}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={openCartModal}
+          >
+            <i className="fas fa-shopping-cart"></i>
+          </motion.div>
         </div>
-      </motion.div>
 
-      {/* 플로팅 버튼 */}
-      <div className={styles.floatingButtons}>
-        <motion.div
-          id="wish"
-          className={styles.wish}
-          data-totalitems={wishItems.length}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={() => setIsWishModalOpen(true)}
-        >
-          <i className="fas fa-heart"></i>
-        </motion.div>
-        <motion.div
-          id="cart"
-          className={styles.cart}
-          data-totalitems={cartItems.length}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={() => setIsCartModalOpen(true)}
-        >
-          <i className="fas fa-shopping-cart"></i>
-        </motion.div>
+        <Modal
+          isOpen={isCartModalOpen}
+          onClose={closeCartModal}
+          title="장바구니"
+          items={cartItems}
+          onRemove={removeFromCart}
+          onQuantityChange={updateCartQuantity}
+        />
+        <Modal
+          isOpen={isWishModalOpen}
+          onClose={closeWishModal}
+          title="위시리스트"
+          items={wishItems}
+          onRemove={removeFromWish}
+        />
       </div>
-
-      {/* 모달 */}
-      <Modal
-        isOpen={isCartModalOpen}
-        onClose={() => setIsCartModalOpen(false)}
-        title="장바구니"
-        items={cartItems}
-      />
-      <Modal
-        isOpen={isWishModalOpen}
-        onClose={() => setIsWishModalOpen(false)}
-        title="위시리스트"
-        items={wishItems}
-      />
-
-      {/* 푸터 */}
       <Footer />
     </div>
   );

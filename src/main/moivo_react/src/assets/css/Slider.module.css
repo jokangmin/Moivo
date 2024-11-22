@@ -43,12 +43,12 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
-.carouselCaption h2 {
+.captionTitle {
   font-size: 2rem;
   margin-bottom: 0.5rem;
 }
 
-.carouselCaption p {
+.captionText {
   font-size: 1.2rem;
 }
 
@@ -75,8 +75,7 @@
   transform: scale(1.2);
 }
 
-.carouselControlPrev,
-.carouselControlNext {
+.carouselControlBtn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -90,20 +89,20 @@
   opacity: 0;
 }
 
-.carousel:hover .carouselControlPrev,
-.carousel:hover .carouselControlNext {
+.carousel:hover .carouselControlBtn {
   opacity: 1;
 }
 
-.carouselControlPrev:hover,
-.carouselControlNext:hover {
+.carouselControlBtn:hover {
   background: rgba(0, 0, 0, 0.8);
 }
 
 .carouselControlPrev {
+  composes: carouselControlBtn;
   left: 1rem;
 }
 
 .carouselControlNext {
+  composes: carouselControlBtn;
   right: 1rem;
 } 
